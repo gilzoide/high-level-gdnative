@@ -1,0 +1,3 @@
+[submodule "example/godot-headers"]
+	path = example/godot-headers
+	url = https://github.com/godotengine/godot-headers.git
