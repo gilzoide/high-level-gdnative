@@ -57,6 +57,16 @@ extern const godot_gdnative_ext_videodecoder_api_struct *gdnhlc_videodecoder_api
 extern const godot_gdnative_ext_net_api_struct *gdnhlc_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
 
+#define GDNHLC_LOG_ERROR(msg) \
+    gdnhlc_core_api->godot_print_error(msg, __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define GDNHLC_LOG_ERROR_IF_FALSE(cond, msg) \
+    if (!(cond)) GDNHLC_LOG_ERROR("Error: !(" #cond ") " msg)
+#define GDNHLC_ASSERT_ARRAY_SIZE(arr, min_size) \
+    if (gdnhlc_core_api->godot_array_size(arr) < min_size) { \
+        GDNHLC_LOG_ERROR("Error: array should have at least " #min_size " elements"); \
+        return gdnhlc_nil_variant(); \
+    }
+
 /// Initialize globals. Call this on your own `godot_gdnative_init`
 /// before any other gdnhlc functions.
 GDNHLC_DECL void gdnhlc_gdnative_init(const godot_gdnative_init_options *options);
@@ -64,11 +74,18 @@ GDNHLC_DECL void gdnhlc_gdnative_init(const godot_gdnative_init_options *options
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
 GDNHLC_DECL void gdnhlc_gdnative_terminate(const godot_gdnative_terminate_options *options);
 
+/// Create a nil Variant
 GDNHLC_DECL godot_variant gdnhlc_nil_variant();
+/// Create a bool Variant
 GDNHLC_DECL godot_variant gdnhlc_bool_variant(godot_bool b);
+/// Create an unsigned Variant
 GDNHLC_DECL godot_variant gdnhlc_uint_variant(const uint64_t u);
+/// Create an integral Variant
 GDNHLC_DECL godot_variant gdnhlc_int_variant(const int64_t i);
+/// Create a real Variant
 GDNHLC_DECL godot_variant gdnhlc_real_variant(const double f);
+
+
 
 /**
  * String abstraction.
@@ -128,9 +145,6 @@ const godot_gdnative_ext_arvr_1_2_api_struct *gdnhlc_arvr_1_2_api;
 const godot_gdnative_ext_videodecoder_api_struct *gdnhlc_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *gdnhlc_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
-
-#define GDNHLC_LOG_ERROR(msg) gdnhlc_core_api->godot_print_error(msg, __PRETTY_FUNCTION__, __FILE__, __LINE__)
-#define GDNHLC_LOG_ERROR_IF_FALSE(cond, msg) if(!(cond)) GDNHLC_LOG_ERROR("Error: !(" #cond ") " msg)
 
 // Init and terminate
 void gdnhlc_gdnative_init(const godot_gdnative_init_options *options) {
