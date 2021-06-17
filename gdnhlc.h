@@ -57,8 +57,12 @@ extern const godot_gdnative_ext_videodecoder_api_struct *gdnhlc_videodecoder_api
 extern const godot_gdnative_ext_net_api_struct *gdnhlc_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
 
-/// Initialize globals. Always call this before doing anything else
-void gdnhlc_api_init(const godot_gdnative_init_options *options);
+/// Initialize globals. Call this on your own `godot_gdnative_init`
+/// before any other gdnhlc functions.
+GDNHLC_DECL void gdnhlc_gdnative_init(const godot_gdnative_init_options *options);
+
+/// Terminate globals. Call this on your own `godot_gdnative_terminate`
+GDNHLC_DECL void gdnhlc_gdnative_terminate(const godot_gdnative_terminate_options *options);
 
 /**
  * Generic buffer abstraction.
@@ -77,11 +81,11 @@ typedef struct gdnhlc_buffer gdnhlc_buffer;
 typedef struct gdnhlc_string gdnhlc_string;
 
 /// Creates a buffer from a Variant, only borrowing memory.
-gdnhlc_buffer gdnhlc_buffer_from_variant(const godot_variant *var);
+GDNHLC_DECL gdnhlc_buffer gdnhlc_buffer_from_variant(const godot_variant *var);
 
 /// Duplicates a buffer's memory using `godot_alloc`.
 /// If `out_size` is not NULL, it will be filled with the buffer size.
-void *gdnhlc_buffer_memdup(size_t *out_size);
+GDNHLC_DECL void *gdnhlc_buffer_memdup(size_t *out_size);
 
 #ifdef __cplusplus
 }
@@ -109,9 +113,8 @@ const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
 #define GDNHLC_LOG_ERROR(msg) gdnhlc_core_api->godot_print_error(msg, __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define GDNHLC_LOG_ERROR_IF_FALSE(cond, msg) if(!(cond)) GDNHLC_LOG_ERROR("Error: !(" #cond ") " msg)
 
-void gdnhlc_api_init(const godot_gdnative_init_options *options) {
+void gdnhlc_gdnative_init(const godot_gdnative_init_options *options) {
     gdnhlc_core_api = options->api_struct;
-
     for (const godot_gdnative_api_struct *ext = gdnhlc_core_api->next; ext; ext = ext->next) {
         if (ext->version.major == 1 && ext->version.minor == 1) {
 			gdnhlc_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
@@ -120,7 +123,7 @@ void gdnhlc_api_init(const godot_gdnative_init_options *options) {
 		}
     }
 
-    for(int i = 0; i < gdnhlc_core_api->num_extensions; i++) {
+    for(unsigned int i = 0; i < gdnhlc_core_api->num_extensions; i++) {
         switch(gdnhlc_core_api->extensions[i]->type) {
             case GDNATIVE_EXT_NATIVESCRIPT:
                 gdnhlc_nativescript_api = (const godot_gdnative_ext_nativescript_api_struct *) gdnhlc_core_api->extensions[i];
@@ -165,6 +168,10 @@ void gdnhlc_api_init(const godot_gdnative_init_options *options) {
                 break;
         }
     }
+}
+
+void gdnhlc_gdnative_terminate(const godot_gdnative_terminate_options *options) {
+    // Nothing for now
 }
 
 #endif  // GDNHLC_IMPLEMENTATION
