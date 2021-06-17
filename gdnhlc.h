@@ -44,9 +44,18 @@ extern "C" {
 #endif
 
 // Globals 
-extern const godot_gdnative_core_api_struct *gdnhlc_api;
-extern const godot_gdnative_core_1_1_api_struct *gdnhlc_1_1_api;
-extern const godot_gdnative_core_1_2_api_struct *gdnhlc_1_2_api;
+extern const godot_gdnative_core_api_struct *gdnhlc_core_api;
+extern const godot_gdnative_core_1_1_api_struct *gdnhlc_core_1_1_api;
+extern const godot_gdnative_core_1_2_api_struct *gdnhlc_core_1_2_api;
+extern const godot_gdnative_ext_nativescript_api_struct *gdnhlc_nativescript_api;
+extern const godot_gdnative_ext_nativescript_1_1_api_struct *gdnhlc_nativescript_1_1_api;
+extern const godot_gdnative_ext_pluginscript_api_struct *gdnhlc_pluginscript_api;
+extern const godot_gdnative_ext_android_api_struct *gdnhlc_android_api;
+extern const godot_gdnative_ext_arvr_api_struct *gdnhlc_arvr_api;
+extern const godot_gdnative_ext_arvr_1_2_api_struct *gdnhlc_arvr_1_2_api;
+extern const godot_gdnative_ext_videodecoder_api_struct *gdnhlc_videodecoder_api;
+extern const godot_gdnative_ext_net_api_struct *gdnhlc_net_api;
+extern const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
 
 /// Initialize globals. Always call this before doing anything else
 void gdnhlc_api_init(const godot_gdnative_init_options *options);
@@ -84,17 +93,76 @@ void *gdnhlc_buffer_memdup(size_t *out_size);
 
 #ifdef GDNHLC_IMPLEMENTATION
 
-#define GDNHLC_LOG_ERROR(msg) gdnhlc_api->godot_print_error(msg, __PRETTY_FUNCTION__, __FILE__, __LINE__)
+const godot_gdnative_core_api_struct *gdnhlc_core_api;
+const godot_gdnative_core_1_1_api_struct *gdnhlc_core_1_1_api;
+const godot_gdnative_core_1_2_api_struct *gdnhlc_core_1_2_api;
+const godot_gdnative_ext_nativescript_api_struct *gdnhlc_nativescript_api;
+const godot_gdnative_ext_nativescript_1_1_api_struct *gdnhlc_nativescript_1_1_api;
+const godot_gdnative_ext_pluginscript_api_struct *gdnhlc_pluginscript_api;
+const godot_gdnative_ext_android_api_struct *gdnhlc_android_api;
+const godot_gdnative_ext_arvr_api_struct *gdnhlc_arvr_api;
+const godot_gdnative_ext_arvr_1_2_api_struct *gdnhlc_arvr_1_2_api;
+const godot_gdnative_ext_videodecoder_api_struct *gdnhlc_videodecoder_api;
+const godot_gdnative_ext_net_api_struct *gdnhlc_net_api;
+const godot_gdnative_ext_net_3_2_api_struct *gdnhlc_net_3_2_api;
+
+#define GDNHLC_LOG_ERROR(msg) gdnhlc_core_api->godot_print_error(msg, __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define GDNHLC_LOG_ERROR_IF_FALSE(cond, msg) if(!(cond)) GDNHLC_LOG_ERROR("Error: !(" #cond ") " msg)
 
 void gdnhlc_api_init(const godot_gdnative_init_options *options) {
-    gdnhlc_api = options->api_struct;
-    // Now find our extensions.
-    for(int i = 0; i < gdnhlc_api->num_extensions; i++) {
-        char msg[2] = { '0' + gdnhlc_api->extensions[i]->type, 0 };
-        GDNHLC_LOG_ERROR(msg);
-        switch(gdnhlc_api->extensions[i]->type) {
-            default: break;
+    gdnhlc_core_api = options->api_struct;
+
+    for (const godot_gdnative_api_struct *ext = gdnhlc_core_api->next; ext; ext = ext->next) {
+        if (ext->version.major == 1 && ext->version.minor == 1) {
+			gdnhlc_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
+		} else if (ext->version.major == 1 && ext->version.minor == 2) {
+			gdnhlc_core_1_2_api = (const godot_gdnative_core_1_2_api_struct *) ext;
+		}
+    }
+
+    for(int i = 0; i < gdnhlc_core_api->num_extensions; i++) {
+        switch(gdnhlc_core_api->extensions[i]->type) {
+            case GDNATIVE_EXT_NATIVESCRIPT:
+                gdnhlc_nativescript_api = (const godot_gdnative_ext_nativescript_api_struct *) gdnhlc_core_api->extensions[i];
+                for (const godot_gdnative_api_struct *ext = gdnhlc_nativescript_api->next; ext; ext = ext->next) {
+                    if (ext->version.major == 1 && ext->version.minor == 1) {
+                        gdnhlc_nativescript_1_1_api = (const godot_gdnative_ext_nativescript_1_1_api_struct *) ext;
+                    }
+                }
+                break;
+
+            case GDNATIVE_EXT_PLUGINSCRIPT:
+                gdnhlc_pluginscript_api = (const godot_gdnative_ext_pluginscript_api_struct *) gdnhlc_core_api->extensions[i];
+                break;
+
+            case GDNATIVE_EXT_ANDROID:
+                gdnhlc_android_api = (const godot_gdnative_ext_android_api_struct *) gdnhlc_core_api->extensions[i];
+                break;
+
+            case GDNATIVE_EXT_ARVR:
+                gdnhlc_arvr_api = (const godot_gdnative_ext_arvr_api_struct *) gdnhlc_core_api->extensions[i];
+                for (const godot_gdnative_api_struct *ext = gdnhlc_arvr_api->next; ext; ext = ext->next) {
+                    if (ext->version.major == 1 && ext->version.minor == 2) {
+                        gdnhlc_arvr_1_2_api = (const godot_gdnative_ext_arvr_1_2_api_struct *) ext;
+                    }
+                }
+                break;
+
+            case GDNATIVE_EXT_VIDEODECODER:
+                gdnhlc_videodecoder_api = (const godot_gdnative_ext_videodecoder_api_struct *) gdnhlc_core_api->extensions[i];
+                break;
+
+            case GDNATIVE_EXT_NET:
+                gdnhlc_net_api = (const godot_gdnative_ext_net_api_struct *) gdnhlc_core_api->extensions[i];
+                for (const godot_gdnative_api_struct *ext = gdnhlc_net_api->next; ext; ext = ext->next) {
+                    if (ext->version.major == 3 && ext->version.minor == 2) {
+                        gdnhlc_net_3_2_api = (const godot_gdnative_ext_net_3_2_api_struct *) ext;
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
     }
 }
