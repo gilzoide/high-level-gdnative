@@ -13,3 +13,7 @@ high level API for C/C++.
 - Functions and structs to get data from Variants, including abstractions for
   handling strings (`const char *`), generic memory buffers (`void *`) and
   other arrays.
+
+
+## Documentation
+Code is documented using [Doxygen](https://www.doxygen.nl) and is available [here](https://gilzoide.github.io/high-level-gdnative/).
