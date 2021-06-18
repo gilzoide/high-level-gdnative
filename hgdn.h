@@ -82,6 +82,10 @@ HGDN_DECL godot_variant hgdn_uint_variant(const uint64_t u);
 HGDN_DECL godot_variant hgdn_int_variant(const int64_t i);
 /// Create a real Variant
 HGDN_DECL godot_variant hgdn_real_variant(const double f);
+/// Create a string Variant from NULL terminated char string
+HGDN_DECL godot_variant hgdn_string_variant(const char *cstr);
+/// Create a string Variant from size char string
+HGDN_DECL godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len);
 
 
 
@@ -100,6 +104,7 @@ HGDN_DECL hgdn_string hgdn_string_from_godot_string(godot_string str);
 HGDN_DECL hgdn_string hgdn_string_from_utf8(const char *cstr);
 HGDN_DECL hgdn_string hgdn_string_from_utf8_with_len(const char *cstr, godot_int len);
 HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
+HGDN_DECL godot_variant hgdn_string_to_variant(const hgdn_string *str);
 HGDN_DECL godot_int hgdn_string_length(const hgdn_string *str);
 HGDN_DECL const char *hgdn_string_chars(const hgdn_string *str);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
@@ -255,6 +260,22 @@ godot_variant hgdn_real_variant(const double f) {
     return var;
 }
 
+godot_variant hgdn_string_variant(const char *cstr) {
+    godot_string str = hgdn_core_api->godot_string_chars_to_utf8(cstr);
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_string(&var, &str);
+    hgdn_core_api->godot_string_destroy(&str);
+    return var;
+}
+
+godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len) {
+    godot_string str = hgdn_core_api->godot_string_chars_to_utf8_with_len(cstr, len);
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_string(&var, &str);
+    hgdn_core_api->godot_string_destroy(&str);
+    return var;
+}
+
 // String API
 hgdn_string hgdn_string_from_godot_string(godot_string str) {
     hgdn_string s = {
@@ -274,6 +295,12 @@ hgdn_string hgdn_string_from_utf8_with_len(const char *cstr, godot_int len) {
 
 hgdn_string hgdn_string_from_variant(const godot_variant *var) {
     return hgdn_string_from_godot_string(hgdn_core_api->godot_variant_as_string(var));
+}
+
+godot_variant hgdn_string_to_variant(const hgdn_string *str) {
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_string(&var, &str->gdstring);
+    return var;
 }
 
 godot_int hgdn_string_length(const hgdn_string *str) {
