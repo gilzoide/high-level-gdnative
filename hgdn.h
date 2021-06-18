@@ -1,5 +1,5 @@
 /** @file
- * hgdn.h -- Higher level GDNative C/C++ API
+ * hgdn.h -- High level GDNative C/C++ API
  *
  * Project URL: TODO
  *
@@ -30,8 +30,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdbool.h>
 
 #include "gdnative_api_struct.gen.h"
 
@@ -93,7 +91,10 @@ HGDN_DECL godot_variant hgdn_real_variant(const double f);
  * Handles godot_string and godot_char_string instances, providing access to
  * char buffers.
  */
-typedef struct hgdn_string hgdn_string;
+typedef struct hgdn_string {
+    godot_string gdstring;
+    godot_char_string gdchars;
+} hgdn_string;
 
 HGDN_DECL hgdn_string hgdn_string_from_godot_string(godot_string str);
 HGDN_DECL hgdn_string hgdn_string_from_utf8(const char *cstr);
@@ -103,25 +104,38 @@ HGDN_DECL godot_int hgdn_string_length(const hgdn_string *str);
 HGDN_DECL const char *hgdn_string_chars(const hgdn_string *str);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 
+/// Gets a PoolByteArray without converting other number-based pool arrays.
+/// Useful if you want raw pointer access, whatever the input type is.
+HGDN_DECL godot_pool_byte_array hgdn_byte_array_from_variant(const godot_variant *var);
+
 /**
  * Generic buffer abstraction.
  *
  * Handles any kind of data, providing access to any kind of buffers, great
  * for using with APIs that require `void *` or other arrays.
  */
-typedef struct hgdn_buffer hgdn_buffer;
+typedef struct hgdn_buffer {
+    union {
+        godot_bool b;
+        godot_int i;
+        godot_real f;
+        hgdn_string s;
+        godot_pool_byte_array a;
+    };
+    godot_int type;
+} hgdn_buffer;
 
 /// Creates a buffer from a Variant, only borrowing memory.
 HGDN_DECL hgdn_buffer hgdn_buffer_from_variant(const godot_variant *var);
+/// Gets a pointer to the data.
+HGDN_DECL void *hgdn_buffer_ptr(hgdn_buffer *buffer);
+/// Gets the size of the buffer.
+HGDN_DECL size_t hgdn_buffer_size(const hgdn_buffer *buffer);
+HGDN_DECL void hgdn_buffer_destroy(hgdn_buffer *buffer);
 
 /// Duplicates a buffer's memory using `godot_alloc`.
 /// If `out_size` is not NULL, it will be filled with the buffer size.
-HGDN_DECL void *hgdn_buffer_memdup(size_t *out_size);
-
-struct hgdn_string {
-    godot_string gdstring;
-    godot_char_string gdchars;
-};
+HGDN_DECL void *hgdn_buffer_memdup(hgdn_buffer *buffer, size_t *out_size);
 
 #ifdef __cplusplus
 }
@@ -132,6 +146,8 @@ struct hgdn_string {
 ///////////////////////////////////////////////////////////////////////////////
 
 #ifdef HGDN_IMPLEMENTATION
+
+#include <string.h>
 
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
@@ -205,7 +221,7 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
 }
 
 void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
-    // Nothing for now
+    // Noop for now
 }
 
 // Basic variants
@@ -271,6 +287,146 @@ const char *hgdn_string_chars(const hgdn_string *str) {
 void hgdn_string_destroy(hgdn_string *str) {
     hgdn_core_api->godot_char_string_destroy(&str->gdchars);
     hgdn_core_api->godot_string_destroy(&str->gdstring);
+}
+
+// Pool Arrays API
+godot_pool_byte_array hgdn_byte_array_from_variant(const godot_variant *var) {
+    godot_pool_byte_array array;
+    switch (hgdn_core_api->godot_variant_get_type(var)) {
+        case GODOT_VARIANT_TYPE_POOL_INT_ARRAY: {
+            godot_pool_int_array int_array = hgdn_core_api->godot_variant_as_pool_int_array(var);
+            memcpy(&array, &int_array, sizeof(godot_pool_byte_array));
+            break;
+        }
+        case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY: {
+            godot_pool_real_array real_array = hgdn_core_api->godot_variant_as_pool_real_array(var);
+            memcpy(&array, &real_array, sizeof(godot_pool_byte_array));
+            break;
+        }
+        case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY: {
+            godot_pool_vector2_array vector2_array = hgdn_core_api->godot_variant_as_pool_vector2_array(var);
+            memcpy(&array, &vector2_array, sizeof(godot_pool_byte_array));
+            break;
+        }
+        case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY: {
+            godot_pool_vector3_array vector3_array = hgdn_core_api->godot_variant_as_pool_vector3_array(var);
+            memcpy(&array, &vector3_array, sizeof(godot_pool_byte_array));
+            break;
+        }
+        case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY: {
+            godot_pool_color_array color_array = hgdn_core_api->godot_variant_as_pool_color_array(var);
+            memcpy(&array, &color_array, sizeof(godot_pool_byte_array));
+            break;
+        }
+        default:
+            array = hgdn_core_api->godot_variant_as_pool_byte_array(var);
+            break;
+    }
+    return array;
+}
+
+// Buffer API
+hgdn_buffer hgdn_buffer_from_variant(const godot_variant *var) {
+    hgdn_buffer buffer = {
+        {},
+        hgdn_core_api->godot_variant_get_type(var),
+    };
+    switch (buffer.type) {
+        case GODOT_VARIANT_TYPE_BOOL:
+            buffer.b = hgdn_core_api->godot_variant_as_bool(var);
+            break;
+
+        case GODOT_VARIANT_TYPE_INT:
+            buffer.i = hgdn_core_api->godot_variant_as_int(var);
+            break;
+
+        case GODOT_VARIANT_TYPE_REAL:
+            buffer.f = hgdn_core_api->godot_variant_as_real(var);
+            break;
+
+        case GODOT_VARIANT_TYPE_STRING:
+            buffer.s = hgdn_string_from_variant(var);
+            break;
+
+        case GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_INT_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY:
+            buffer.a = hgdn_byte_array_from_variant(var);
+            break;
+
+        default: break;
+    }
+    return buffer;
+}
+
+void *hgdn_buffer_ptr(hgdn_buffer *buffer) {
+    switch (buffer->type) {
+        case GODOT_VARIANT_TYPE_BOOL:
+            return &buffer->b;
+        case GODOT_VARIANT_TYPE_INT:
+            return &buffer->i;
+        case GODOT_VARIANT_TYPE_REAL:
+            return &buffer->f;
+        case GODOT_VARIANT_TYPE_STRING:
+            return (void *) hgdn_string_chars(&buffer->s);
+        case GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_INT_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY: {
+            godot_pool_byte_array_write_access *write = hgdn_core_api->godot_pool_byte_array_write(&buffer->a);
+            void *ptr = hgdn_core_api->godot_pool_byte_array_write_access_ptr(write);
+            hgdn_core_api->godot_pool_byte_array_write_access_destroy(write);
+            return ptr;
+        }
+        default:
+            return NULL;
+    }
+}
+
+size_t hgdn_buffer_size(const hgdn_buffer *buffer) {
+    switch (buffer->type) {
+        case GODOT_VARIANT_TYPE_BOOL:
+            return sizeof(godot_bool);
+        case GODOT_VARIANT_TYPE_INT:
+            return sizeof(godot_int);
+        case GODOT_VARIANT_TYPE_REAL:
+            return sizeof(godot_real);
+        case GODOT_VARIANT_TYPE_STRING:
+            return hgdn_string_length(&buffer->s);
+        case GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_INT_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY:
+            return hgdn_core_api->godot_pool_byte_array_size(&buffer->a);
+        default:
+            return 0;
+    }
+}
+
+void hgdn_buffer_destroy(hgdn_buffer *buffer) {
+    switch (buffer->type) {
+        case GODOT_VARIANT_TYPE_STRING:
+            hgdn_string_destroy(&buffer->s);
+            break;
+
+        case GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_INT_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY:
+        case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY:
+            hgdn_core_api->godot_pool_byte_array_destroy(&buffer->a);
+            break;
+
+        default: break;
+    }
 }
 
 #endif  // HGDN_IMPLEMENTATION
