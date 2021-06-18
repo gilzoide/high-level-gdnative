@@ -84,9 +84,12 @@ HGDN_DECL godot_variant hgdn_int_variant(const int64_t i);
 HGDN_DECL godot_variant hgdn_real_variant(const double f);
 /// Create a string Variant from NULL terminated char string
 HGDN_DECL godot_variant hgdn_string_variant(const char *cstr);
-/// Create a string Variant from size char string
+/// Create a string Variant from sized char string
 HGDN_DECL godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len);
-
+/// Create a PoolByteArray Variant from NULL terminated byte string
+HGDN_DECL godot_variant hgdn_byte_array_variant(const uint8_t *buffer);
+/// Create a PoolByteArray Variant from sized byte string
+HGDN_DECL godot_variant hgdn_byte_array_variant_with_len(const uint8_t *buffer, godot_int len);
 
 
 /**
@@ -273,6 +276,31 @@ godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_string(&var, &str);
     hgdn_core_api->godot_string_destroy(&str);
+    return var;
+}
+
+godot_variant hgdn_byte_array_variant(const uint8_t *buffer) {
+    godot_pool_byte_array array;
+    hgdn_core_api->godot_pool_byte_array_new(&array);
+    for (const uint8_t *it = buffer; *it; it++) {
+        hgdn_core_api->godot_pool_byte_array_append(&array, *it);
+    }
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_pool_byte_array(&var, &array);
+    hgdn_core_api->godot_pool_byte_array_destroy(&array);
+    return var;
+}
+
+godot_variant hgdn_byte_array_variant_with_len(const uint8_t *buffer, godot_int len) {
+    godot_pool_byte_array array;
+    hgdn_core_api->godot_pool_byte_array_new(&array);
+    hgdn_core_api->godot_pool_byte_array_resize(&array, len);
+    godot_pool_byte_array_write_access *write = hgdn_core_api->godot_pool_byte_array_write(&array);
+    memcpy(hgdn_core_api->godot_pool_byte_array_write_access_ptr(write), buffer, len);
+    hgdn_core_api->godot_pool_byte_array_write_access_destroy(write);
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_pool_byte_array(&var, &array);
+    hgdn_core_api->godot_pool_byte_array_destroy(&array);
     return var;
 }
 
