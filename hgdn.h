@@ -130,6 +130,9 @@ HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
 HGDN_DECL godot_variant hgdn_string_to_variant(const hgdn_string *str);
 HGDN_DECL godot_int hgdn_string_length(const hgdn_string *str);
 HGDN_DECL const char *hgdn_string_ptr(const hgdn_string *str);
+/// Duplicates a string's memory using `godot_alloc`.
+/// If `out_len` is not NULL, it will be filled with the string length.
+/// The output is NULL terminated.
 HGDN_DECL char *hgdn_string_strdup(const hgdn_string *str, size_t *out_len);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 
