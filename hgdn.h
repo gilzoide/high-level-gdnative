@@ -41,7 +41,7 @@ extern "C" {
     #endif
 #endif
 
-// Globals 
+// Global API pointers
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 extern const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
@@ -68,7 +68,6 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 /// Initialize globals. Call this on your own `godot_gdnative_init`
 /// before any other hgdn functions.
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
-
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
 
@@ -130,7 +129,8 @@ HGDN_DECL hgdn_string hgdn_string_from_utf8_with_len(const char *cstr, godot_int
 HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
 HGDN_DECL godot_variant hgdn_string_to_variant(const hgdn_string *str);
 HGDN_DECL godot_int hgdn_string_length(const hgdn_string *str);
-HGDN_DECL const char *hgdn_string_chars(const hgdn_string *str);
+HGDN_DECL const char *hgdn_string_ptr(const hgdn_string *str);
+HGDN_DECL char *hgdn_string_strdup(const hgdn_string *str, size_t *out_len);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 
 /// Gets a PoolByteArray without converting other number-based pool arrays.
@@ -138,10 +138,11 @@ HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 HGDN_DECL godot_pool_byte_array hgdn_byte_array_from_variant(const godot_variant *var);
 
 /**
- * Generic buffer abstraction.
+ * Memory buffer abstraction.
  *
- * Handles any kind of data, providing access to any kind of buffers, great
+ * Handles several kinds of data, providing access to any kind of buffers, great
  * for using with APIs that require `void *` or other arrays.
+ * Don't mess with it directly, instead use `hgdn_buffer_ptr` and `hgdn_buffer_size`.
  */
 typedef struct hgdn_buffer {
     union {
@@ -154,17 +155,17 @@ typedef struct hgdn_buffer {
     godot_int type;
 } hgdn_buffer;
 
-/// Creates a buffer from a Variant, only borrowing memory.
+/// Creates a buffer from a Variant.
 HGDN_DECL hgdn_buffer hgdn_buffer_from_variant(const godot_variant *var);
 /// Gets a pointer to the data.
-HGDN_DECL void *hgdn_buffer_ptr(hgdn_buffer *buffer);
+HGDN_DECL const void *hgdn_buffer_ptr(const hgdn_buffer *buffer);
 /// Gets the size of the buffer.
 HGDN_DECL size_t hgdn_buffer_size(const hgdn_buffer *buffer);
-HGDN_DECL void hgdn_buffer_destroy(hgdn_buffer *buffer);
-
 /// Duplicates a buffer's memory using `godot_alloc`.
 /// If `out_size` is not NULL, it will be filled with the buffer size.
-HGDN_DECL void *hgdn_buffer_memdup(hgdn_buffer *buffer, size_t *out_size);
+HGDN_DECL void *hgdn_buffer_memdup(const hgdn_buffer *buffer, size_t *out_size);
+/// Destroy buffer and any objects it may hold.
+HGDN_DECL void hgdn_buffer_destroy(hgdn_buffer *buffer);
 
 #ifdef __cplusplus
 }
@@ -391,8 +392,20 @@ godot_int hgdn_string_length(const hgdn_string *str) {
     return hgdn_core_api->godot_string_length(&str->gdstring);
 }
 
-const char *hgdn_string_chars(const hgdn_string *str) {
+const char *hgdn_string_ptr(const hgdn_string *str) {
     return hgdn_core_api->godot_char_string_get_data(&str->gdchars);
+}
+
+char *hgdn_string_strdup(const hgdn_string *str, size_t *out_len) {
+    size_t len = hgdn_string_length(str);
+    char *dup = (char *) hgdn_core_api->godot_alloc(len + 1);
+    if (dup) {
+        memcpy(dup, hgdn_string_ptr(str), len + 1);
+        if (out_len) {
+            *out_len = len;
+        }
+    }
+    return dup;
 }
 
 void hgdn_string_destroy(hgdn_string *str) {
@@ -473,7 +486,7 @@ hgdn_buffer hgdn_buffer_from_variant(const godot_variant *var) {
     return buffer;
 }
 
-void *hgdn_buffer_ptr(hgdn_buffer *buffer) {
+const void *hgdn_buffer_ptr(const hgdn_buffer *buffer) {
     switch (buffer->type) {
         case GODOT_VARIANT_TYPE_BOOL:
             return &buffer->b;
@@ -482,16 +495,16 @@ void *hgdn_buffer_ptr(hgdn_buffer *buffer) {
         case GODOT_VARIANT_TYPE_REAL:
             return &buffer->f;
         case GODOT_VARIANT_TYPE_STRING:
-            return (void *) hgdn_string_chars(&buffer->s);
+            return (const void *) hgdn_string_ptr(&buffer->s);
         case GODOT_VARIANT_TYPE_POOL_BYTE_ARRAY:
         case GODOT_VARIANT_TYPE_POOL_INT_ARRAY:
         case GODOT_VARIANT_TYPE_POOL_REAL_ARRAY:
         case GODOT_VARIANT_TYPE_POOL_VECTOR2_ARRAY:
         case GODOT_VARIANT_TYPE_POOL_VECTOR3_ARRAY:
         case GODOT_VARIANT_TYPE_POOL_COLOR_ARRAY: {
-            godot_pool_byte_array_write_access *write = hgdn_core_api->godot_pool_byte_array_write(&buffer->a);
-            void *ptr = hgdn_core_api->godot_pool_byte_array_write_access_ptr(write);
-            hgdn_core_api->godot_pool_byte_array_write_access_destroy(write);
+            godot_pool_byte_array_read_access *read = hgdn_core_api->godot_pool_byte_array_read(&buffer->a);
+            const void *ptr = hgdn_core_api->godot_pool_byte_array_read_access_ptr(read);
+            hgdn_core_api->godot_pool_byte_array_read_access_destroy(read);
             return ptr;
         }
         default:
@@ -519,6 +532,18 @@ size_t hgdn_buffer_size(const hgdn_buffer *buffer) {
         default:
             return 0;
     }
+}
+
+void *hgdn_buffer_memdup(const hgdn_buffer *buffer, size_t *out_size) {
+    size_t size = hgdn_buffer_size(buffer);
+    void *dup = hgdn_core_api->godot_alloc(size);
+    if (dup) {
+        memcpy(dup, hgdn_buffer_ptr(buffer), size);
+        if (out_size) {
+            *out_size = size;
+        }
+    }
+    return dup;
 }
 
 void hgdn_buffer_destroy(hgdn_buffer *buffer) {
