@@ -66,7 +66,7 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
     }
 
 /// Initialize globals. Call this on your own `godot_gdnative_init`
-/// before any other hgdn functions.
+/// before any other HGDN functions.
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
