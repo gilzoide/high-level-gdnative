@@ -199,6 +199,20 @@ HGDN_DECL hgdn_string hgdn_array_get_string(const godot_array *array, const godo
 /// Helper for getting a buffer value from godot_array
 HGDN_DECL hgdn_buffer hgdn_array_get_buffer(const godot_array *array, const godot_int index);
 
+
+/// Helper for getting a bool value from method arguments
+HGDN_DECL godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index);
+/// Helper for getting a uint value from method arguments
+HGDN_DECL uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index);
+/// Helper for getting a int value from method arguments
+HGDN_DECL int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index);
+/// Helper for getting a real value from method arguments
+HGDN_DECL double hgdn_args_get_real(const godot_variant **args, const godot_int index);
+/// Helper for getting a string value from method arguments
+HGDN_DECL hgdn_string hgdn_args_get_string(const godot_variant **args, const godot_int index);
+/// Helper for getting a buffer value from method arguments
+HGDN_DECL hgdn_buffer hgdn_args_get_buffer(const godot_variant **args, const godot_int index);
+
 #ifdef __cplusplus
 }
 #endif
@@ -624,6 +638,31 @@ hgdn_string hgdn_array_get_string(const godot_array *array, const godot_int inde
 
 hgdn_buffer hgdn_array_get_buffer(const godot_array *array, const godot_int index) {
     return hgdn_buffer_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index));
+}
+
+// Get values from args helpers
+godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index) {
+    return hgdn_core_api->godot_variant_as_bool(args[index]);
+}
+
+uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index) {
+    return hgdn_core_api->godot_variant_as_uint(args[index]);
+}
+
+int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index) {
+    return hgdn_core_api->godot_variant_as_int(args[index]);
+}
+
+double hgdn_args_get_real(const godot_variant **args, const godot_int index) {
+    return hgdn_core_api->godot_variant_as_real(args[index]);
+}
+
+hgdn_string hgdn_args_get_string(const godot_variant **args, const godot_int index) {
+    return hgdn_string_from_variant(args[index]);
+}
+
+hgdn_buffer hgdn_args_get_buffer(const godot_variant **args, const godot_int index) {
+    return hgdn_buffer_from_variant(args[index]);
 }
 
 #endif  // HGDN_IMPLEMENTATION
