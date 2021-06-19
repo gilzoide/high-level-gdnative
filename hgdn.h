@@ -62,7 +62,7 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 #define HGDN_ASSERT_ARRAY_SIZE(arr, min_size) \
     if (hgdn_core_api->godot_array_size(arr) < min_size) { \
         HGDN_LOG_ERROR("Error: array should have at least " #min_size " elements"); \
-        return hgdn_nil_variant(); \
+        return hgdn_new_nil_variant(); \
     }
 
 /// Initialize globals. Call this on your own `godot_gdnative_init`
@@ -72,53 +72,52 @@ HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
 
 /// Create a PoolByteArray from NULL terminated buffer
-HGDN_DECL godot_pool_byte_array hgdn_byte_array(const uint8_t *buffer);
+HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer);
 /// Create a PoolByteArray from sized buffer
-HGDN_DECL godot_pool_byte_array hgdn_byte_array_with_len(const uint8_t *buffer, godot_int len);
+HGDN_DECL godot_pool_byte_array hgdn_new_byte_array_with_len(const uint8_t *buffer, godot_int len);
 /// Create a PoolIntArray from NULL terminated int buffer
-HGDN_DECL godot_pool_int_array hgdn_int_array(const godot_int *buffer);
+HGDN_DECL godot_pool_int_array hgdn_new_int_array(const godot_int *buffer);
 /// Create a PoolIntArray from sized int buffer
-HGDN_DECL godot_pool_int_array hgdn_int_array_with_len(const godot_int *buffer, godot_int len);
+HGDN_DECL godot_pool_int_array hgdn_new_int_array_with_len(const godot_int *buffer, godot_int len);
 /// Create a PoolRealArray from NULL terminated real buffer
-HGDN_DECL godot_pool_real_array hgdn_real_array(const godot_real *buffer);
+HGDN_DECL godot_pool_real_array hgdn_new_real_array(const godot_real *buffer);
 /// Create a PoolRealArray from sized real buffer
-HGDN_DECL godot_pool_real_array hgdn_real_array_with_len(const godot_real *buffer, godot_int len);
+HGDN_DECL godot_pool_real_array hgdn_new_real_array_with_len(const godot_real *buffer, godot_int len);
 /// Create a PoolStringArray from NULL terminated buffer of NULL terminated strings
-HGDN_DECL godot_pool_string_array hgdn_string_array(const char **buffer);
+HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char **buffer);
 /// Create a PoolStringArray from sized buffer of NULL terminated strings
-HGDN_DECL godot_pool_string_array hgdn_string_array_with_len(const char **buffer, godot_int len);
-
+HGDN_DECL godot_pool_string_array hgdn_new_string_array_with_len(const char **buffer, godot_int len);
 
 /// Create a nil Variant
-HGDN_DECL godot_variant hgdn_nil_variant();
+HGDN_DECL godot_variant hgdn_new_nil_variant();
 /// Create a bool Variant
-HGDN_DECL godot_variant hgdn_bool_variant(godot_bool b);
+HGDN_DECL godot_variant hgdn_new_bool_variant(godot_bool b);
 /// Create an unsigned Variant
-HGDN_DECL godot_variant hgdn_uint_variant(const uint64_t u);
+HGDN_DECL godot_variant hgdn_new_uint_variant(const uint64_t u);
 /// Create an integral Variant
-HGDN_DECL godot_variant hgdn_int_variant(const int64_t i);
+HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t i);
 /// Create a real Variant
-HGDN_DECL godot_variant hgdn_real_variant(const double f);
+HGDN_DECL godot_variant hgdn_new_real_variant(const double f);
 /// Create a string Variant from NULL terminated char string
-HGDN_DECL godot_variant hgdn_string_variant(const char *cstr);
+HGDN_DECL godot_variant hgdn_new_string_variant(const char *cstr);
 /// Create a string Variant from sized char string
-HGDN_DECL godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len);
+HGDN_DECL godot_variant hgdn_new_string_variant_with_len(const char *cstr, godot_int len);
 /// Create a PoolByteArray Variant from NULL terminated byte string
-HGDN_DECL godot_variant hgdn_byte_array_variant(const uint8_t *buffer);
+HGDN_DECL godot_variant hgdn_new_byte_array_variant(const uint8_t *buffer);
 /// Create a PoolByteArray Variant from sized byte string
-HGDN_DECL godot_variant hgdn_byte_array_variant_with_len(const uint8_t *buffer, godot_int len);
+HGDN_DECL godot_variant hgdn_new_byte_array_variant_with_len(const uint8_t *buffer, godot_int len);
 /// Create a PoolIntArray Variant from NULL terminated byte string
-HGDN_DECL godot_variant hgdn_int_array_variant(const godot_int *buffer);
+HGDN_DECL godot_variant hgdn_new_int_array_variant(const godot_int *buffer);
 /// Create a PoolIntArray Variant from sized byte string
-HGDN_DECL godot_variant hgdn_int_array_variant_with_len(const godot_int *buffer, godot_int len);
+HGDN_DECL godot_variant hgdn_new_int_array_variant_with_len(const godot_int *buffer, godot_int len);
 /// Create a PoolRealArray Variant from NULL terminated byte string
-HGDN_DECL godot_variant hgdn_real_array_variant(const godot_real *buffer);
+HGDN_DECL godot_variant hgdn_new_real_array_variant(const godot_real *buffer);
 /// Create a PoolRealArray Variant from sized byte string
-HGDN_DECL godot_variant hgdn_real_array_variant_with_len(const godot_real *buffer, godot_int len);
+HGDN_DECL godot_variant hgdn_new_real_array_variant_with_len(const godot_real *buffer, godot_int len);
 /// Create a PoolStringArray Variant from NULL terminated buffer of NULL terminated strings
-HGDN_DECL godot_variant hgdn_string_array_variant(const char **buffer);
+HGDN_DECL godot_variant hgdn_new_string_array_variant(const char **buffer);
 /// Create a PoolStringArray Variant from sized buffer of NULL terminated strings
-HGDN_DECL godot_variant hgdn_string_array_variant_with_len(const char **buffer, godot_int len);
+HGDN_DECL godot_variant hgdn_new_string_array_variant_with_len(const char **buffer, godot_int len);
 
 
 /**
@@ -211,7 +210,7 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
 		}
     }
 
-    for(unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
+    for (unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
         switch(hgdn_core_api->extensions[i]->type) {
             case GDNATIVE_EXT_NATIVESCRIPT:
                 hgdn_nativescript_api = (const godot_gdnative_ext_nativescript_api_struct *) hgdn_core_api->extensions[i];
@@ -264,7 +263,7 @@ void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
 
 // Array creation API
 #define HGDN_DECLARE_POOL_ARRAY_FUNC(kind, ctype) \
-    godot_pool_##kind##_array hgdn_##kind##_array(const ctype *buffer) { \
+    godot_pool_##kind##_array hgdn_new_##kind##_array(const ctype *buffer) { \
         godot_pool_##kind##_array array; \
         hgdn_core_api->godot_pool_##kind##_array_new(&array); \
         for (const ctype *it = buffer; *it; it++) { \
@@ -274,7 +273,7 @@ void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
     }
 
 #define HGDN_DECLARE_POOL_ARRAY_WITH_LEN_FUNC(kind, ctype) \
-    godot_pool_##kind##_array hgdn_##kind##_array_with_len(const ctype *buffer, godot_int len) { \
+    godot_pool_##kind##_array hgdn_new_##kind##_array_with_len(const ctype *buffer, godot_int len) { \
         godot_pool_##kind##_array array; \
         hgdn_core_api->godot_pool_##kind##_array_new(&array); \
         hgdn_core_api->godot_pool_##kind##_array_resize(&array, len); \
@@ -291,7 +290,7 @@ HGDN_DECLARE_POOL_ARRAY_WITH_LEN_FUNC(int, godot_int)
 HGDN_DECLARE_POOL_ARRAY_FUNC(real, godot_real)
 HGDN_DECLARE_POOL_ARRAY_WITH_LEN_FUNC(real, godot_real)
 
-godot_pool_string_array hgdn_string_array(const char **buffer) {
+godot_pool_string_array hgdn_new_string_array(const char **buffer) {
     godot_pool_string_array array;
     hgdn_core_api->godot_pool_string_array_new(&array);
     for (const char **it = buffer; *it; it++) {
@@ -302,7 +301,7 @@ godot_pool_string_array hgdn_string_array(const char **buffer) {
     return array;
 }
 
-godot_pool_string_array hgdn_string_array_with_len(const char **buffer, godot_int len) {
+godot_pool_string_array hgdn_new_string_array_with_len(const char **buffer, godot_int len) {
     godot_pool_string_array array;
     hgdn_core_api->godot_pool_string_array_new(&array);
     hgdn_core_api->godot_pool_string_array_resize(&array, len);
@@ -318,37 +317,37 @@ godot_pool_string_array hgdn_string_array_with_len(const char **buffer, godot_in
 #undef HGDN_DECLARE_POOL_ARRAY_FUNC
 
 // Basic variants
-godot_variant hgdn_nil_variant() {
+godot_variant hgdn_new_nil_variant() {
     godot_variant var;
     hgdn_core_api->godot_variant_new_nil(&var);
     return var;
 }
 
-godot_variant hgdn_bool_variant(godot_bool b) {
+godot_variant hgdn_new_bool_variant(godot_bool b) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_bool(&var, b);
     return var;
 }
 
-godot_variant hgdn_uint_variant(const uint64_t u) {
+godot_variant hgdn_new_uint_variant(const uint64_t u) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_uint(&var, u);
     return var;
 }
 
-godot_variant hgdn_int_variant(const int64_t i) {
+godot_variant hgdn_new_int_variant(const int64_t i) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_int(&var, i);
     return var;
 }
 
-godot_variant hgdn_real_variant(const double f) {
+godot_variant hgdn_new_real_variant(const double f) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_real(&var, f);
     return var;
 }
 
-godot_variant hgdn_string_variant(const char *cstr) {
+godot_variant hgdn_new_string_variant(const char *cstr) {
     godot_string str = hgdn_core_api->godot_string_chars_to_utf8(cstr);
     godot_variant var;
     hgdn_core_api->godot_variant_new_string(&var, &str);
@@ -356,7 +355,7 @@ godot_variant hgdn_string_variant(const char *cstr) {
     return var;
 }
 
-godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len) {
+godot_variant hgdn_new_string_variant_with_len(const char *cstr, godot_int len) {
     godot_string str = hgdn_core_api->godot_string_chars_to_utf8_with_len(cstr, len);
     godot_variant var;
     hgdn_core_api->godot_variant_new_string(&var, &str);
@@ -365,8 +364,8 @@ godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len) {
 }
 
 #define HGDN_DECLARE_POOL_ARRAY_VARIANT_FUNC(kind, ctype) \
-    godot_variant hgdn_##kind##_array_variant(const ctype *buffer) { \
-        godot_pool_##kind##_array array = hgdn_##kind##_array(buffer); \
+    godot_variant hgdn_new_##kind##_array_variant(const ctype *buffer) { \
+        godot_pool_##kind##_array array = hgdn_new_##kind##_array(buffer); \
         godot_variant var; \
         hgdn_core_api->godot_variant_new_pool_##kind##_array(&var, &array); \
         hgdn_core_api->godot_pool_##kind##_array_destroy(&array); \
@@ -374,8 +373,8 @@ godot_variant hgdn_string_variant_with_len(const char *cstr, godot_int len) {
     }
 
 #define HGDN_DECLARE_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(kind, ctype) \
-    godot_variant hgdn_##kind##_array_variant_with_len(const ctype *buffer, godot_int len) { \
-        godot_pool_##kind##_array array = hgdn_##kind##_array_with_len(buffer, len); \
+    godot_variant hgdn_new_##kind##_array_variant_with_len(const ctype *buffer, godot_int len) { \
+        godot_pool_##kind##_array array = hgdn_new_##kind##_array_with_len(buffer, len); \
         godot_variant var; \
         hgdn_core_api->godot_variant_new_pool_##kind##_array(&var, &array); \
         hgdn_core_api->godot_pool_##kind##_array_destroy(&array); \
