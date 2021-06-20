@@ -497,6 +497,7 @@ HGDN_DECL char *hgdn_string_dup(const godot_string *str, size_t *out_len) {
             godot_pool_##kind##_array_read_access *read = hgdn_core_api->godot_pool_##kind##_array_read(array); \
             memcpy(new_array, hgdn_core_api->godot_pool_##kind##_array_read_access_ptr(read), size * sizeof(ctype)); \
             hgdn_core_api->godot_pool_##kind##_array_read_access_destroy(read); \
+            *out_size = size; \
         } \
         return new_array; \
     }
