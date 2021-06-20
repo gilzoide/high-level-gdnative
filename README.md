@@ -23,6 +23,7 @@ Code is documented using [Doxygen](https://www.doxygen.nl) and is available [her
 
 ```c
 // example.c
+#define HGDN_STATIC
 #define HGDN_IMPLEMENTATION
 #include "hgdn.h"
 
