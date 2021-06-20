@@ -321,6 +321,18 @@ HGDN_DECL godot_real *hgdn_args_get_real_array(const godot_variant **args, const
 /// Returned pointer must be freed with `hgdn_free_string_array`.
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL char **hgdn_args_get_string_array(const godot_variant **args, const godot_int index, size_t *out_size);
+/// Helper for getting a Vector2 array from method arguments.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector2 *hgdn_args_get_vector2_array(const godot_variant **args, const godot_int index, size_t *out_size);
+/// Helper for getting a Vector3 array from method arguments.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector3 *hgdn_args_get_vector3_array(const godot_variant **args, const godot_int index, size_t *out_size);
+/// Helper for getting a Color array from method arguments.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_color *hgdn_args_get_color_array(const godot_variant **args, const godot_int index, size_t *out_size);
 
 /// Create a PoolByteArray from NULL terminated buffer
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer);
@@ -772,20 +784,19 @@ char *hgdn_args_get_string(const godot_variant **args, const godot_int index, si
     return hgdn_string_from_variant(args[index], out_len);
 }
 
-uint8_t *hgdn_args_get_byte_array(const godot_variant **args, const godot_int index, size_t *out_size) {
-    return hgdn_byte_array_from_variant(args[index], out_size);
-}
+#define HGDN_DECLARE_ARGS_GET_POOL_ARRAY(kind, ctype) \
+    ctype *hgdn_array_get_##kind##_array(const godot_variant **args, const godot_int index, size_t *out_size) { \
+        return hgdn_##kind##_array_from_variant(args[index], out_size); \
+    }
 
-godot_int *hgdn_args_get_int_array(const godot_variant **args, const godot_int index, size_t *out_size) {
-    return hgdn_int_array_from_variant(args[index], out_size);
-}
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(byte, uint8_t)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(int, godot_int)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(real, godot_real)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(string, char *)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(vector2, godot_vector2)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(vector3, godot_vector3)
+HGDN_DECLARE_ARGS_GET_POOL_ARRAY(color, godot_color)
 
-godot_real *hgdn_args_get_real_array(const godot_variant **args, const godot_int index, size_t *out_size) {
-    return hgdn_real_array_from_variant(args[index], out_size);
-}
-
-char **hgdn_args_get_string_array(const godot_variant **args, const godot_int index, size_t *out_size) {
-    return hgdn_string_array_from_variant(args[index], out_size);
-}
+#undef HGDN_DECLARE_ARRAY_GET_POOL_ARRAY
 
 #endif  // HGDN_IMPLEMENTATION
