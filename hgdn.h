@@ -190,14 +190,10 @@ HGDN_DECL void hgdn_free(void *ptr);
 HGDN_DECL void hgdn_free_string_array(char **ptr, size_t size);
 
 
-/// Allocates a new NULL terminated char string and copy `str` contents.
-/// Returned pointer must be freed with `hgdn_free`.
-/// If `out_size` is not NULL, it will be filled with the string length.
-HGDN_DECL char *hgdn_string_dup(const godot_string *str, size_t *out_size);
-
-// Helper functions that allocate buffers and copy Pool*Array contents
+// Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
-// If `out_size` is not NULL, it will be filled with the string length.
+// If `out_size` is not NULL, it will be filled with the string/array size.
+HGDN_DECL char *hgdn_string_dup(const godot_string *str, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_byte_array_dup(const godot_pool_byte_array *array, size_t *out_size);
 HGDN_DECL godot_int *hgdn_int_array_dup(const godot_pool_int_array *array, size_t *out_size);
 HGDN_DECL godot_real *hgdn_real_array_dup(const godot_pool_real_array *array, size_t *out_size);
@@ -208,12 +204,10 @@ HGDN_DECL godot_color *hgdn_color_array_dup(const godot_pool_color_array *array,
 HGDN_DECL char **hgdn_string_array_dup(const godot_pool_string_array *array, size_t *out_size);
 
 
-/// Uses @ref hgdn_string_dup, so the same caveats apply.
-HGDN_DECL char *hgdn_string_from_variant(const godot_variant *var, size_t *out_size);
-
-// Helper functions that allocate buffers and copy Variants' Pool*Array content
+// Helper functions that allocate buffers and copy Variants' String/Pool*Array content
 // Returned pointer must be freed with `hgdn_free`.
-// If `out_size` is not NULL, it will be filled with the array size.
+// If `out_size` is not NULL, it will be filled with the string/array size.
+HGDN_DECL char *hgdn_string_from_variant(const godot_variant *var, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_byte_array_from_variant(const godot_variant *var, size_t *out_size);
 HGDN_DECL godot_int *hgdn_int_array_from_variant(const godot_variant *var, size_t *out_size);
 HGDN_DECL godot_real *hgdn_real_array_from_variant(const godot_variant *var, size_t *out_size);
@@ -229,18 +223,15 @@ HGDN_DECL godot_bool hgdn_array_get_bool(const godot_array *array, const godot_i
 HGDN_DECL uint64_t hgdn_array_get_uint(const godot_array *array, const godot_int index);
 HGDN_DECL int64_t hgdn_array_get_int(const godot_array *array, const godot_int index);
 HGDN_DECL double hgdn_array_get_real(const godot_array *array, const godot_int index);
-/// Uses @ref hgdn_string_dup, so the same caveats apply.
+// These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_array_get_string(const godot_array *array, const godot_int index, size_t *out_size);
-
-// Helper functions to get Pool*Array values directly from a godot_array position.
-// All returned pointers must be freed accordingly.
 HGDN_DECL uint8_t *hgdn_array_get_byte_array(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL godot_int *hgdn_array_get_int_array(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL godot_real *hgdn_array_get_real_array(const godot_array *array, const godot_int index, size_t *out_size);
-HGDN_DECL char **hgdn_array_get_string_array(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL godot_vector2 *hgdn_array_get_vector2_array(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL godot_vector3 *hgdn_array_get_vector3_array(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL godot_color *hgdn_array_get_color_array(const godot_array *array, const godot_int index, size_t *out_size);
+HGDN_DECL char **hgdn_array_get_string_array(const godot_array *array, const godot_int index, size_t *out_size);
 
 
 // Helper functions to get values directly from method arguments
@@ -248,28 +239,30 @@ HGDN_DECL godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_
 HGDN_DECL uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index);
 HGDN_DECL int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index);
 HGDN_DECL double hgdn_args_get_real(const godot_variant **args, const godot_int index);
-/// Uses @ref hgdn_string_dup, so the same caveats apply.
+// These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_args_get_string(const godot_variant **args, const godot_int index, size_t *out_size);
-
-// Helper functions to get Pool*Array values directly from a godot_array position.
-// All returned pointers must be freed accordingly.
 HGDN_DECL uint8_t *hgdn_args_get_byte_array(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL godot_int *hgdn_args_get_int_array(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL godot_real *hgdn_args_get_real_array(const godot_variant **args, const godot_int index, size_t *out_size);
-HGDN_DECL char **hgdn_args_get_string_array(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL godot_vector2 *hgdn_args_get_vector2_array(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL godot_vector3 *hgdn_args_get_vector3_array(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL godot_color *hgdn_args_get_color_array(const godot_variant **args, const godot_int index, size_t *out_size);
+HGDN_DECL char **hgdn_args_get_string_array(const godot_variant **args, const godot_int index, size_t *out_size);
 
+// Helper functions to create Strings
+HGDN_DECL godot_string hgdn_new_string(const char *cstr);
+HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
+#define HGDN_NEW_LITERAL_STRING(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
 
 // Helper functions to create Pool*Arrays from sized buffers
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer, const godot_int len);
 HGDN_DECL godot_pool_int_array hgdn_new_int_array(const godot_int *buffer, const godot_int len);
 HGDN_DECL godot_pool_real_array hgdn_new_real_array(const godot_real *buffer, const godot_int len);
-HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char **buffer, const godot_int len);
 HGDN_DECL godot_pool_vector2_array hgdn_new_vector2_array(const godot_vector2 *buffer, const godot_int len);
 HGDN_DECL godot_pool_vector3_array hgdn_new_vector3_array(const godot_vector3 *buffer, const godot_int len);
 HGDN_DECL godot_pool_color_array hgdn_new_color_array(const godot_color *buffer, const godot_int len);
+// All strings must be NULL terminated.
+HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char **buffer, const godot_int len);
 
 
 // Helper functions to create Variant values
@@ -286,10 +279,11 @@ HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color v);
 HGDN_DECL godot_variant hgdn_new_byte_array_variant(const uint8_t *buffer, const godot_int len);
 HGDN_DECL godot_variant hgdn_new_int_array_variant(const godot_int *buffer, const godot_int len);
 HGDN_DECL godot_variant hgdn_new_real_array_variant(const godot_real *buffer, const godot_int len);
-HGDN_DECL godot_variant hgdn_new_string_array_variant(const char **buffer, const godot_int len);
 HGDN_DECL godot_variant hgdn_new_vector2_array_variant(const godot_vector2 *buffer, const godot_int len);
 HGDN_DECL godot_variant hgdn_new_vector3_array_variant(const godot_vector3 *buffer, const godot_int len);
 HGDN_DECL godot_variant hgdn_new_color_array_variant(const godot_color *buffer, const godot_int len);
+// All strings must be NULL terminated.
+HGDN_DECL godot_variant hgdn_new_string_array_variant(const char **buffer, const godot_int len);
 
 #ifdef __cplusplus
 }
@@ -402,6 +396,15 @@ void hgdn_free_string_array(char **ptr, size_t size) {
     hgdn_free(ptr);
 }
 
+// String creation API
+godot_string hgdn_new_string(const char *cstr) {
+    return hgdn_core_api->godot_string_chars_to_utf8(cstr);
+}
+
+godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len) {
+    return hgdn_core_api->godot_string_chars_to_utf8_with_len(cstr, len);
+}
+
 // Array creation API
 #define HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(kind, ctype) \
     godot_pool_##kind##_array hgdn_new_##kind##_array(const ctype *buffer, godot_int len) { \
@@ -417,8 +420,11 @@ void hgdn_free_string_array(char **ptr, size_t size) {
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(byte, uint8_t)
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(int, godot_int)
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(real, godot_real)
+HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(vector2, godot_vector2)
+HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(vector3, godot_vector3)
+HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(color, godot_color)
 
-godot_pool_string_array hgdn_new_string_array(const char **buffer, godot_int len) {
+godot_pool_string_array hgdn_new_string_array(const char **buffer, const godot_int len) {
     godot_pool_string_array array;
     hgdn_core_api->godot_pool_string_array_new(&array);
     hgdn_core_api->godot_pool_string_array_resize(&array, len);
@@ -429,10 +435,6 @@ godot_pool_string_array hgdn_new_string_array(const char **buffer, godot_int len
     }
     return array;
 }
-
-HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(vector2, godot_vector2)
-HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(vector3, godot_vector3)
-HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(color, godot_color)
 
 #undef HGDN_DECLARE_NEW_POOL_ARRAY_FUNC
 
