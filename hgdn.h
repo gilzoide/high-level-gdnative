@@ -366,6 +366,7 @@ HGDN_DECL godot_pool_vector3_array hgdn_new_vector3_array_with_len(const godot_v
 /// Create a PoolColorArray from sized color buffer
 HGDN_DECL godot_pool_color_array hgdn_new_color_array_with_len(const godot_color *buffer, const godot_int len);
 
+
 /// Create a nil Variant
 HGDN_DECL godot_variant hgdn_new_nil_variant();
 /// Create a bool Variant
@@ -402,8 +403,12 @@ HGDN_DECL godot_variant hgdn_new_real_array_variant_with_len(const godot_real *b
 HGDN_DECL godot_variant hgdn_new_string_array_variant(const char **buffer);
 /// Create a PoolStringArray Variant from sized buffer of NULL terminated strings
 HGDN_DECL godot_variant hgdn_new_string_array_variant_with_len(const char **buffer, const godot_int len);
-
-
+/// Create a PoolVector2Array Variant from sized buffer of vector2
+HGDN_DECL godot_variant hgdn_new_vector2_array_variant_with_len(const godot_vector2 *buffer, const godot_int len);
+/// Create a PoolVector3Array Variant from sized buffer of vector3
+HGDN_DECL godot_variant hgdn_new_vector3_array_variant_with_len(const godot_vector3 *buffer, const godot_int len);
+/// Create a PoolColorArray Variant from sized buffer of color
+HGDN_DECL godot_variant hgdn_new_color_array_variant_with_len(const godot_color *buffer, const godot_int len);
 
 #ifdef __cplusplus
 }
@@ -653,6 +658,13 @@ godot_variant hgdn_new_color_variant(const godot_color c) {
         return var; \
     }
 
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(byte, uint8_t)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(int, godot_int)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(real, godot_real)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(string, char *)
+
+#undef HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC
+
 #define HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(kind, ctype) \
     godot_variant hgdn_new_##kind##_array_variant_with_len(const ctype *buffer, const godot_int len) { \
         godot_pool_##kind##_array array = hgdn_new_##kind##_array_with_len(buffer, len); \
@@ -662,17 +674,15 @@ godot_variant hgdn_new_color_variant(const godot_color c) {
         return var; \
     }
 
-HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(byte, uint8_t)
 HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(byte, uint8_t)
-HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(int, godot_int)
 HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(int, godot_int)
-HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(real, godot_real)
 HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(real, godot_real)
-HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC(string, char *)
 HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(string, char *)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(vector2, godot_vector2)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(vector3, godot_vector3)
+HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC(color, godot_color)
 
 #undef HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_WITH_LEN_FUNC
-#undef HGDN_DECLARE_NEW_POOL_ARRAY_VARIANT_FUNC
 
 // Allocate arrays from Godot data types
 HGDN_DECL char *hgdn_string_dup(const godot_string *str, size_t *out_len) {
