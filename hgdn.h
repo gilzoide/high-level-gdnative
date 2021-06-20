@@ -67,9 +67,12 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 /// If `cond` is false, print a generic error message and return nil Variant
 #define HGDN_ASSERT(cond) \
     HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
-/// If `arr` doesn't have at lease `min_size` elements, print error message and return nil Variant
+/// If `arr` doesn't have at least `min_size` elements, print error message and return nil Variant
 #define HGDN_ASSERT_ARRAY_SIZE(arr, min_size) \
     HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size)
+/// If `argc` isn't at least `min_size`, print error message and return nil Variant
+#define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
+    HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments")
 
 /// Initialize globals. Call this on your own `godot_gdnative_init`
 /// before any other HGDN functions.
