@@ -5,14 +5,18 @@ high level API for C/C++.
 - Single header: just copy `hgdn.h` to your project, put `#define HGDN_IMPLEMENTATION`
   in a single C/C++ source file before `#include`ing it and compile.
 - Depends only on [godot-headers](https://github.com/godotengine/godot-headers),
-  so GDNative libraries can be built with one liner compiler invocations.
+  so GDNative libraries can be built with a single compiler invocation.
   No need to generate Godot API bindings if you only use core GDNative stuff.
 - `hgdn_gdnative_init` fetches all current GDNative APIs.
+- Useful definitions for Vector2, Vector3 and a Vector4 type that serves as
+  Rect2, Plane, Quat and Color.
+- Functions to get buffers from strings and pool arrays.
+- Functions to get values from method arguments or native calls
+  argument arrays.
 - Functions to create Variants and Pool Arrays in single calls.
   TODO: functions create Arrays and Dictionaries.
-- Functions and structs to get data from Variants, including abstractions for
-  handling strings (`const char *`), generic memory buffers (`void *`) and
-  other arrays.
+- Macros to assert arguments preconditions, like expected argument count and
+  (TODO) expected argument types.
 
 
 ## Documentation
