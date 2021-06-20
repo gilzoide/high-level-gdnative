@@ -281,6 +281,18 @@ HGDN_DECL godot_real *hgdn_array_get_real_array(const godot_array *array, const 
 /// Returned pointer must be freed with `hgdn_free_string_array`.
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL char **hgdn_array_get_string_array(const godot_array *array, const godot_int index, size_t *out_size);
+/// Helper for getting a Vector2 array from godot_array.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector2 *hgdn_array_get_vector2_array(const godot_array *array, const godot_int index, size_t *out_size);
+/// Helper for getting a Vector3 array from godot_array.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector3 *hgdn_array_get_vector3_array(const godot_array *array, const godot_int index, size_t *out_size);
+/// Helper for getting a Color array from godot_array.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_color *hgdn_array_get_color_array(const godot_array *array, const godot_int index, size_t *out_size);
 
 
 /// Helper for getting a bool value from method arguments
@@ -724,21 +736,20 @@ char *hgdn_array_get_string(const godot_array *array, const godot_int index, siz
     return hgdn_string_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_len);
 }
 
-uint8_t *hgdn_array_get_byte_array(const godot_array *array, const godot_int index, size_t *out_size) {
-    return hgdn_byte_array_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size);
-}
+#define HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(kind, ctype) \
+    ctype *hgdn_array_get_##kind##_array(const godot_array *array, const godot_int index, size_t *out_size) { \
+        return hgdn_##kind##_array_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size); \
+    }
 
-godot_int *hgdn_array_get_int_array(const godot_array *array, const godot_int index, size_t *out_size) {
-    return hgdn_int_array_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size);
-}
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(byte, uint8_t)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(int, godot_int)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(real, godot_real)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(string, char *)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(vector2, godot_vector2)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(vector3, godot_vector3)
+HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(color, godot_color)
 
-godot_real *hgdn_array_get_real_array(const godot_array *array, const godot_int index, size_t *out_size) {
-    return hgdn_real_array_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size);
-}
-
-char **hgdn_array_get_string_array(const godot_array *array, const godot_int index, size_t *out_size) {
-    return hgdn_string_array_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size);
-}
+#undef HGDN_DECLARE_ARRAY_GET_POOL_ARRAY
 
 // Get values from args helpers
 godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index) {
