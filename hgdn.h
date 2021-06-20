@@ -239,6 +239,18 @@ HGDN_DECL godot_real *hgdn_real_array_from_variant(const godot_variant *var, siz
 /// Returned pointer must be freed with `hgdn_free_string_array`.
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL char **hgdn_string_array_from_variant(const godot_variant *var, size_t *out_size);
+/// Allocates a new Vector2 array and copy `var` Vector2 array content.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector2 *hgdn_vector2_array_from_variant(const godot_variant *var, size_t *out_size);
+/// Allocates a new Vector3 array and copy `var` Vector3 array content.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector3 *hgdn_vector3_array_from_variant(const godot_variant *var, size_t *out_size);
+/// Allocates a new Color array and copy `var` Color array content.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_color *hgdn_color_array_from_variant(const godot_variant *var, size_t *out_size);
 
 
 /// Helper for getting a bool value from godot_array.
@@ -685,9 +697,11 @@ HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(byte, uint8_t)
 HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(int, godot_int)
 HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(real, godot_real)
 HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(string, char *)
+HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(vector2, godot_vector2)
+HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(vector3, godot_vector3)
+HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(color, godot_color)
 
 #undef HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT
-
 
 // Get values from array helpers
 godot_bool hgdn_array_get_bool(const godot_array *array, const godot_int index) {
