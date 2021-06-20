@@ -32,6 +32,14 @@ GDN_EXPORT godot_real square(godot_real x) {
     return x * x;
 }
 
+GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += buffer[i];
+    }
+    return sum;
+}
+
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
         return hgdn_new_string_variant(MESSAGE);
@@ -42,6 +50,14 @@ godot_variant native_callback(void *symbol, godot_array *array) {
         godot_real arg0 = hgdn_array_get_real(array, 0);
         godot_real result = square(arg0);
         return hgdn_new_real_variant(result);
+    }
+    else if (symbol == &sum_ints) {
+        HGDN_ASSERT_ARRAY_SIZE(array, 1);
+        size_t size;
+        godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
+        int res = sum_ints(buffer, size);
+        hgdn_free(buffer);
+        return hgdn_new_int_variant(res);
     }
     return hgdn_new_nil_variant();
 }
@@ -65,4 +81,5 @@ example.library = preload("res://path_to_gdnativelibrary.tres")
 example.initialize()
 print(example.call_native("native", "MESSAGE", []))  # --> "Hello world!"
 print(example.call_native("native", "square", [5]))  # --> 25
+print(example.call_native("native", "sum_ints", [[1, 2.5, 3]]))  # --> 6
 ```
