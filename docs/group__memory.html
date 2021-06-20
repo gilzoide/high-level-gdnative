@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>High level GDNative: Globals</title>
+<title>High level GDNative: Memory functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,24 +61,47 @@ $(function() {
 </iframe>
 </div>
 
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">Memory functions</div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>HGDN_ASSERT
-: <a class="el" href="hgdn_8h.html#a5391b06fc9c9ae6d990bdc5989dec941">hgdn.h</a>
-</li>
-<li>HGDN_ASSERT_ARGS_SIZE
-: <a class="el" href="hgdn_8h.html#a0623ba6a5c81ae0dd7e2ea691c8acaea">hgdn.h</a>
-</li>
-<li>HGDN_ASSERT_ARRAY_SIZE
-: <a class="el" href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">hgdn.h</a>
-</li>
-<li>HGDN_ASSERT_MSG
-: <a class="el" href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">hgdn.h</a>
-</li>
-<li>HGDN_LOG_ERROR
-: <a class="el" href="hgdn_8h.html#abb7d0f2d38af4b21505179f41ac014d1">hgdn.h</a>
-</li>
-</ul>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5e754da4d2c0ea1aea26e7d999e67b05"><td class="memItemLeft" align="right" valign="top">HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory.html#ga5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a> (const godot_gdnative_init_options *options)</td></tr>
+<tr class="memdesc:ga5e754da4d2c0ea1aea26e7d999e67b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize globals.  <a href="group__memory.html#ga5e754da4d2c0ea1aea26e7d999e67b05">More...</a><br /></td></tr>
+<tr class="separator:ga5e754da4d2c0ea1aea26e7d999e67b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b33afc16cb7739aafa2945cb1b335d5"><td class="memItemLeft" align="right" valign="top"><a id="ga6b33afc16cb7739aafa2945cb1b335d5"></a>
+HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory.html#ga6b33afc16cb7739aafa2945cb1b335d5">hgdn_gdnative_terminate</a> (const godot_gdnative_terminate_options *options)</td></tr>
+<tr class="memdesc:ga6b33afc16cb7739aafa2945cb1b335d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate globals. Call this on your own <code>godot_gdnative_terminate</code> <br /></td></tr>
+<tr class="separator:ga6b33afc16cb7739aafa2945cb1b335d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga5e754da4d2c0ea1aea26e7d999e67b05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e754da4d2c0ea1aea26e7d999e67b05">&#9670;&nbsp;</a></span>hgdn_gdnative_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HGDN_DECL void hgdn_gdnative_init </td>
+          <td>(</td>
+          <td class="paramtype">const godot_gdnative_init_options *&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize globals. </p>
+<p>Call this on your own <code>godot_gdnative_init</code> before any other HGDN functions. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
