@@ -32,20 +32,34 @@ GDN_EXPORT godot_real square(godot_real x) {
     return x * x;
 }
 
+GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += buffer[i];
+    }
+    return sum;
+}
+
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
-        return hgdn_string_variant(MESSAGE);
+        return hgdn_new_string_variant(MESSAGE);
     }
     else if (symbol == &square) {
         // returns null and prints an error if array size < 1
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
-        // TODO: create getter functions for variants from array
-        const godot_variant *var = hgdn_core_api->godot_array_operator_index_const(array, 0);
-        godot_real arg0 = hgdn_core_api->godot_variant_as_real(var);
+        godot_real arg0 = hgdn_array_get_real(array, 0);
         godot_real result = square(arg0);
-        return hgdn_real_variant(result);
+        return hgdn_new_real_variant(result);
     }
-    return hgdn_nil_variant();
+    else if (symbol == &sum_ints) {
+        HGDN_ASSERT_ARRAY_SIZE(array, 1);
+        size_t size;
+        godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
+        int res = sum_ints(buffer, size);
+        hgdn_free(buffer);
+        return hgdn_new_int_variant(res);
+    }
+    return hgdn_new_nil_variant();
 }
 
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
@@ -67,4 +81,5 @@ example.library = preload("res://path_to_gdnativelibrary.tres")
 example.initialize()
 print(example.call_native("native", "MESSAGE", []))  # --> "Hello world!"
 print(example.call_native("native", "square", [5]))  # --> 25
+print(example.call_native("native", "sum_ints", [[1, 2.5, 3]]))  # --> 6
 ```
