@@ -252,7 +252,7 @@ HGDN_DECL char **hgdn_args_get_string_array(const godot_variant **args, const go
 // Helper functions to create Strings
 HGDN_DECL godot_string hgdn_new_string(const char *cstr);
 HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
-#define HGDN_NEW_LITERAL_STRING(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
+#define HGDN_NEW_STRING_LITERAL(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
 
 // Helper functions to create Pool*Arrays from sized buffers
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer, const godot_int len);
@@ -273,6 +273,7 @@ HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t i);
 HGDN_DECL godot_variant hgdn_new_real_variant(const double f);
 HGDN_DECL godot_variant hgdn_new_string_variant(const char *cstr);
 HGDN_DECL godot_variant hgdn_new_string_variant_with_len(const char *cstr, const godot_int len);
+#define HGDN_NEW_STRING_LITERAL_VARIANT(literal_str) (hgdn_new_string_variant_with_len((literal_str), sizeof(literal_str)))
 HGDN_DECL godot_variant hgdn_new_vector2_variant(const godot_vector2 v);
 HGDN_DECL godot_variant hgdn_new_vector3_variant(const godot_vector3 v);
 HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color v);
