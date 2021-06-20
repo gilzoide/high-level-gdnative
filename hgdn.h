@@ -31,6 +31,16 @@
 extern "C" {
 #endif
 
+
+#ifndef HGDN_DECL
+    #ifdef HGDN_STATIC
+        #define HGDN_DECL static
+    #else
+        #define HGDN_DECL extern
+    #endif
+#endif
+
+
 /// Custom Vector2 definition
 typedef union hgdn_vector2 {
     float elements[2];
@@ -128,13 +138,6 @@ typedef hgdn_vector4 godot_color;
 
 #include "gdnative_api_struct.gen.h"
 
-#ifndef HGDN_DECL
-    #ifdef HGDN_STATIC
-        #define HGDN_DECL static
-    #else
-        #define HGDN_DECL extern
-    #endif
-#endif
 
 // Global API pointers
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
@@ -151,6 +154,7 @@ extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 /// GDNativeLibrary object being initialized
 extern const godot_object *hgdn_library;
+
 
 /// Prints the message `msg` as error
 #define HGDN_LOG_ERROR(msg) \
@@ -171,10 +175,12 @@ extern const godot_object *hgdn_library;
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
     HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments")
 
+
 /// Initialize globals. Call this on your own `godot_gdnative_init` before any other HGDN functions.
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
+
 
 /// Wrapper for `godot_alloc` compatible with `malloc`
 HGDN_DECL void *hgdn_alloc(size_t size);
@@ -185,6 +191,7 @@ HGDN_DECL void *hgdn_realloc(void *ptr, size_t size);
 HGDN_DECL void hgdn_free(void *ptr);
 /// Helper to free an array of strings.
 HGDN_DECL void hgdn_free_string_array(char **ptr, size_t size);
+
 
 /// Allocates a new NULL terminated char string and copy `str` contents.
 /// Returned pointer must be freed with `hgdn_free`.
@@ -218,6 +225,7 @@ HGDN_DECL godot_vector3 *hgdn_vector3_array_dup(const godot_pool_vector3_array *
 /// Returned pointer must be freed with `hgdn_free`.
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL godot_color *hgdn_color_array_dup(const godot_pool_color_array *array, size_t *out_size);
+
 
 /// Allocates a new NULL terminated char string and copy `var` string content.
 /// Returned pointer must be freed with `hgdn_free`.
@@ -334,6 +342,7 @@ HGDN_DECL godot_vector3 *hgdn_args_get_vector3_array(const godot_variant **args,
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL godot_color *hgdn_args_get_color_array(const godot_variant **args, const godot_int index, size_t *out_size);
 
+
 /// Create a PoolByteArray from NULL terminated buffer
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer);
 /// Create a PoolByteArray from sized buffer
@@ -350,6 +359,12 @@ HGDN_DECL godot_pool_real_array hgdn_new_real_array_with_len(const godot_real *b
 HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char **buffer);
 /// Create a PoolStringArray from sized buffer of NULL terminated strings
 HGDN_DECL godot_pool_string_array hgdn_new_string_array_with_len(const char **buffer, const godot_int len);
+/// Create a PoolVector2Array from sized vector3 buffer
+HGDN_DECL godot_pool_vector2_array hgdn_new_vector2_array_with_len(const godot_vector2 *buffer, const godot_int len);
+/// Create a PoolVector3Array from sized vector3 buffer
+HGDN_DECL godot_pool_vector3_array hgdn_new_vector3_array_with_len(const godot_vector3 *buffer, const godot_int len);
+/// Create a PoolColorArray from sized color buffer
+HGDN_DECL godot_pool_color_array hgdn_new_color_array_with_len(const godot_color *buffer, const godot_int len);
 
 /// Create a nil Variant
 HGDN_DECL godot_variant hgdn_new_nil_variant();
@@ -512,23 +527,9 @@ void hgdn_free_string_array(char **ptr, size_t size) {
         return array; \
     }
 
-#define HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(kind, ctype) \
-    godot_pool_##kind##_array hgdn_new_##kind##_array_with_len(const ctype *buffer, godot_int len) { \
-        godot_pool_##kind##_array array; \
-        hgdn_core_api->godot_pool_##kind##_array_new(&array); \
-        hgdn_core_api->godot_pool_##kind##_array_resize(&array, len); \
-        godot_pool_##kind##_array_write_access *write = hgdn_core_api->godot_pool_##kind##_array_write(&array); \
-        memcpy(hgdn_core_api->godot_pool_##kind##_array_write_access_ptr(write), buffer, len * sizeof(ctype)); \
-        hgdn_core_api->godot_pool_##kind##_array_write_access_destroy(write); \
-        return array; \
-    }
-
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(byte, uint8_t)
-HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(byte, uint8_t)
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(int, godot_int)
-HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(int, godot_int)
 HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(real, godot_real)
-HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(real, godot_real)
 
 godot_pool_string_array hgdn_new_string_array(const char **buffer) {
     godot_pool_string_array array;
@@ -540,6 +541,25 @@ godot_pool_string_array hgdn_new_string_array(const char **buffer) {
     }
     return array;
 }
+
+// Vector2, Vector3 and Color don't support NULL terminated arrays
+
+#undef HGDN_DECLARE_NEW_POOL_ARRAY_FUNC
+
+#define HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(kind, ctype) \
+    godot_pool_##kind##_array hgdn_new_##kind##_array_with_len(const ctype *buffer, godot_int len) { \
+        godot_pool_##kind##_array array; \
+        hgdn_core_api->godot_pool_##kind##_array_new(&array); \
+        hgdn_core_api->godot_pool_##kind##_array_resize(&array, len); \
+        godot_pool_##kind##_array_write_access *write = hgdn_core_api->godot_pool_##kind##_array_write(&array); \
+        memcpy(hgdn_core_api->godot_pool_##kind##_array_write_access_ptr(write), buffer, len * sizeof(ctype)); \
+        hgdn_core_api->godot_pool_##kind##_array_write_access_destroy(write); \
+        return array; \
+    }
+
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(byte, uint8_t)
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(int, godot_int)
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(real, godot_real)
 
 godot_pool_string_array hgdn_new_string_array_with_len(const char **buffer, godot_int len) {
     godot_pool_string_array array;
@@ -553,8 +573,11 @@ godot_pool_string_array hgdn_new_string_array_with_len(const char **buffer, godo
     return array;
 }
 
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(vector2, godot_vector2)
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(vector3, godot_vector3)
+HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC(color, godot_color)
+
 #undef HGDN_DECLARE_NEW_POOL_ARRAY_WITH_LEN_FUNC
-#undef HGDN_DECLARE_NEW_POOL_ARRAY_FUNC
 
 // Basic variants
 godot_variant hgdn_new_nil_variant() {
