@@ -206,6 +206,18 @@ HGDN_DECL godot_real *hgdn_real_array_dup(const godot_pool_real_array *array, si
 /// Returned pointer must be freed with `hgdn_free_string_array`.
 /// If `out_size` is not NULL, it will be filled with the array size.
 HGDN_DECL char **hgdn_string_array_dup(const godot_pool_string_array *array, size_t *out_size);
+/// Allocates a new Vector2 array and copy `array` contents.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector2 *hgdn_vector2_array_dup(const godot_pool_vector2_array *array, size_t *out_size);
+/// Allocates a new Vector3 array and copy `array` contents.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_vector3 *hgdn_vector3_array_dup(const godot_pool_vector3_array *array, size_t *out_size);
+/// Allocates a new Color array and copy `array` contents.
+/// Returned pointer must be freed with `hgdn_free`.
+/// If `out_size` is not NULL, it will be filled with the array size.
+HGDN_DECL godot_color *hgdn_color_array_dup(const godot_pool_color_array *array, size_t *out_size);
 
 /// Allocates a new NULL terminated char string and copy `var` string content.
 /// Returned pointer must be freed with `hgdn_free`.
@@ -646,6 +658,10 @@ char **hgdn_string_array_dup(const godot_pool_string_array *array, size_t *out_s
     }
     return new_array;
 }
+
+HGDN_DECLARE_POOL_ARRAY_DUP(vector2, godot_vector2)
+HGDN_DECLARE_POOL_ARRAY_DUP(vector3, godot_vector3)
+HGDN_DECLARE_POOL_ARRAY_DUP(color, godot_color)
 
 #undef HGDN_DECLARE_POOL_ARRAY_DUP
 
