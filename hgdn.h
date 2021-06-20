@@ -54,6 +54,7 @@ extern const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
 extern const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
+extern const godot_object *hgdn_library;
 
 /// Prints the message `msg` as error
 #define HGDN_LOG_ERROR(msg) \
@@ -74,8 +75,7 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
     HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments")
 
-/// Initialize globals. Call this on your own `godot_gdnative_init`
-/// before any other HGDN functions.
+/// Initialize globals. Call this on your own `godot_gdnative_init` before any other HGDN functions.
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
@@ -263,9 +263,11 @@ const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
 const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
+const godot_object *hgdn_library;
 
 // Init and terminate
 void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
+    hgdn_library = options->gd_native_library;
     hgdn_core_api = options->api_struct;
     for (const godot_gdnative_api_struct *ext = hgdn_core_api->next; ext; ext = ext->next) {
         if (ext->version.major == 1 && ext->version.minor == 1) {
