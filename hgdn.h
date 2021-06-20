@@ -31,53 +31,100 @@
 extern "C" {
 #endif
 
-typedef union {
-    struct { float x, y; };
-
-    struct { float r, g; };
-    
-    struct { float u, v; };
-    
-    struct { float s, t; };
-    
-    struct { float width, height; };
-    
+/// Custom Vector2 definition
+typedef union hgdn_vector2 {
     float elements[2];
-} godot_vector2;
+    // xy
+    struct { float x, y; };
+    // rg
+    struct { float r, g; };
+    // st
+    struct { float s, t; };
+    // uv
+    struct { float u, v; };
+    // Size: width/height
+    struct { float width, height; };
+} hgdn_vector2;
+
+#ifndef GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
+typedef hgdn_vector2 godot_vector2;
 #define GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
+#endif
 
-typedef union {
-    struct { float x, y, z; };
-    struct { godot_vector2 xy; float _0; };
-    struct { float _1; godot_vector2 yz; };
-
-    struct { float r, g, b; };
-    struct { godot_vector2 rg; float _2; };
-    struct { float _3; godot_vector2 gb; };
-
-    struct { float u, v, w; };
-    struct { godot_vector2 uv; float _4; };
-    struct { float _5; godot_vector2 vw; };
-
-    struct { float s, t, p; };
-    struct { godot_vector2 st; float _6; };
-    struct { float _7; godot_vector2 tp; };
-
-    struct { float width, height, depth; };
-
+/// Custom Vector3 definition
+typedef union hgdn_vector3 {
     float elements[3];
-} godot_vector3;
+    // xyz
+    struct { float x, y, z; };
+    struct { hgdn_vector2 xy; float _0; };
+    struct { float _1; hgdn_vector2 yz; };
+    // rgb
+    struct { float r, g, b; };
+    struct { hgdn_vector2 rg; float _2; };
+    struct { float _3; hgdn_vector2 gb; };
+    // stp
+    struct { float s, t, p; };
+    struct { hgdn_vector2 st; float _6; };
+    struct { float _7; hgdn_vector2 tp; };
+    // uv
+    struct { float u, v, _4; };
+    struct { hgdn_vector2 uv; float _5; };
+    // 3D Size: width/height/depth
+    struct { float width, height, depth; };
+} hgdn_vector3;
+
+#ifndef GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
+typedef hgdn_vector3 godot_vector3;
 #define GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
+#endif
 
-typedef union {
-    struct { float r, g, b, a; };
-    struct { godot_vector2 rg, ba; };
-    struct { godot_vector3 rgb; float _0; };
-    struct { float _1; godot_vector3 gba; };
-
+/// Custom Vector4 definition. May be used as Rect2, Plane, Quat and Color.
+typedef union hgdn_vector4 {
     float elements[4];
-} godot_color;
+    // xyzw
+    struct { float x, y, z, w; };
+    struct { hgdn_vector2 xy; hgdn_vector2 zw; };
+    struct { hgdn_vector3 xyz; float _0; };
+    struct { float _1; hgdn_vector3 yzw; };
+    // rgba
+    struct { float r, g, b, a; };
+    struct { hgdn_vector2 rg; hgdn_vector2 ba; };
+    struct { hgdn_vector3 rgb; float _2; };
+    struct { float _3; hgdn_vector3 gba; };
+    // stpq
+    struct { float s, t, p, q; };
+    struct { hgdn_vector2 st; hgdn_vector2 pq; };
+    struct { hgdn_vector3 stp; float _6; };
+    struct { float _7; hgdn_vector3 tpq; };
+    // uv
+    struct { float u, v; float _4[2]; };
+    struct { hgdn_vector2 uv; float _5[2]; };
+    // Rect2: position/size, position/width/height
+    struct { float _8[2]; float width, height; };
+    struct { hgdn_vector2 position; hgdn_vector2 size; };
+    // Plane: normal/d
+    struct { hgdn_vector3 normal; float d; };
+} hgdn_vector4;
+
+#ifndef GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
+typedef hgdn_vector4 godot_rect2;
+#define GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
+#endif
+
+#ifndef GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
+typedef hgdn_vector4 godot_plane;
+#define GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
+#endif
+
+#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
+typedef hgdn_vector4 godot_quat;
+#define GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
+#endif
+
+#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+typedef hgdn_vector4 godot_color;
 #define GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+#endif
 
 #include "gdnative_api_struct.gen.h"
 
