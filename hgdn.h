@@ -23,6 +23,8 @@
  *   If defined and HGDN_DECL is not defined, functions will be declared `static` instead of `extern`
  * - HGDN_DECL:
  *   Function declaration prefix (default: `extern` or `static` depending on HGDN_STATIC)
+ * - HGDN_PRINT_BUFFER_SIZE:
+ *   Size of the global char buffer used for `hgdn_print*` functions. Defaults to 1024
  */
 #ifndef __HGDN_H__
 #define __HGDN_H__
@@ -40,6 +42,9 @@ extern "C" {
     #endif
 #endif
 
+#ifndef HGDN_PRINT_BUFFER_SIZE
+    #define HGDN_PRINT_BUFFER_SIZE 1024
+#endif
 
 /// Custom Vector2 definition
 typedef union hgdn_vector2 {
@@ -189,6 +194,8 @@ HGDN_DECL void hgdn_free(void *ptr);
 /// Helper to free an array of strings created from @ref hgdn_string_array_dup.
 HGDN_DECL void hgdn_free_string_array(char **ptr, size_t size);
 
+/// Outputs a `printf` formatted message to standard output.
+HGDN_DECL void hgdn_print(const char *fmt, ...);
 
 // Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
@@ -298,6 +305,8 @@ HGDN_DECL godot_variant hgdn_new_string_array_variant(const char **buffer, const
 
 #ifdef HGDN_IMPLEMENTATION
 
+#include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 
 const godot_gdnative_core_api_struct *hgdn_core_api;
@@ -313,6 +322,8 @@ const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 const godot_object *hgdn_library;
+
+char hgdn__print_buffer[HGDN_PRINT_BUFFER_SIZE];
 
 // Init and terminate
 void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
@@ -397,6 +408,21 @@ void hgdn_free_string_array(char **ptr, size_t size) {
         hgdn_free(ptr[i]);
     }
     hgdn_free(ptr);
+}
+
+// Print functions
+void hgdn_print(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    godot_int size = vsnprintf(hgdn__print_buffer, HGDN_PRINT_BUFFER_SIZE, fmt, args);
+    if (size > HGDN_PRINT_BUFFER_SIZE) {
+        // buffer was not big enough =/
+        size = HGDN_PRINT_BUFFER_SIZE;
+    }
+    va_end(args);
+    godot_string str = hgdn_new_string_with_len(hgdn__print_buffer, size);
+    hgdn_core_api->godot_print(&str);
+    hgdn_core_api->godot_string_destroy(&str);
 }
 
 // String creation API
