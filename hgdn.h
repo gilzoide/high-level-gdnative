@@ -23,7 +23,7 @@
  *   If defined and HGDN_DECL is not defined, functions will be declared `static` instead of `extern`
  * - HGDN_DECL:
  *   Function declaration prefix (default: `extern` or `static` depending on HGDN_STATIC)
- * - HGDN_PRINT_BUFFER_SIZE:
+ * - HGDN_STRING_FORMAT_BUFFER_SIZE:
  *   Size of the global char buffer used for `hgdn_print*` functions. Defaults to 1024
  */
 #ifndef __HGDN_H__
@@ -42,8 +42,8 @@ extern "C" {
     #endif
 #endif
 
-#ifndef HGDN_PRINT_BUFFER_SIZE
-    #define HGDN_PRINT_BUFFER_SIZE 1024
+#ifndef HGDN_STRING_FORMAT_BUFFER_SIZE
+    #define HGDN_STRING_FORMAT_BUFFER_SIZE 1024
 #endif
 
 /// Custom Vector2 definition
@@ -161,23 +161,6 @@ extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 extern const godot_object *hgdn_library;
 
 
-/// Prints the message `msg` as error
-#define HGDN_LOG_ERROR(msg) \
-    hgdn_core_api->godot_print_error((msg), __PRETTY_FUNCTION__, __FILE__, __LINE__)
-/// If `cond` is false, print error message `msg` and return nil Variant
-#define HGDN_ASSERT_MSG(cond, msg) \
-    if (!(cond)) { HGDN_LOG_ERROR((msg)); return hgdn_new_nil_variant(); }
-/// If `cond` is false, print a generic error message and return nil Variant
-#define HGDN_ASSERT(cond) \
-    HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
-/// If `arr` doesn't have at least `min_size` elements, print error message and return nil Variant
-#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size) \
-    HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size)
-/// If `argc` isn't at least `min_size`, print error message and return nil Variant
-#define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
-    HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments")
-
-
 /// Initialize globals. Call this on your own `godot_gdnative_init` before any other HGDN functions.
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
 /// Terminate globals. Call this on your own `godot_gdnative_terminate`
@@ -196,6 +179,29 @@ HGDN_DECL void hgdn_free_string_array(char **ptr, size_t size);
 
 /// Outputs a `printf` formatted message to standard output.
 HGDN_DECL void hgdn_print(const char *fmt, ...);
+/// Outputs a `printf` formatted message as warning. Use HGDN_PRINT_WARNING to use inferred current function name, file name and line
+HGDN_DECL void hgdn_print_warning(const char *funcname, const char *filename, int line, const char *fmt, ...);
+/// Outputs a `printf` formatted message as error. Use HGDN_PRINT_ERROR to use inferred current function name, file name and line
+HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int line, const char *fmt, ...);
+/// Calls `hgdn_print_warning` with current function name, file name and line
+#define HGDN_PRINT_WARNING(fmt, ...) \
+    hgdn_print_warning(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+/// Calls `hgdn_print_error` with current function name, file name and line
+#define HGDN_PRINT_ERROR(fmt, ...) \
+    hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+
+/// If `cond` is false, print formatted error message and return nil Variant
+#define HGDN_ASSERT_MSG(cond, fmt, ...) \
+    if (!(cond)) { HGDN_PRINT_ERROR(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }
+/// If `cond` is false, print a generic error message and return nil Variant
+#define HGDN_ASSERT(cond) \
+    HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
+/// If `arr` doesn't have at least `min_size` elements, print error message and return nil Variant
+#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size) \
+    HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size ", got %d", hgdn_core_api->godot_array_size((arr)))
+/// If `argc` isn't at least `min_size`, print error message and return nil Variant
+#define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
+    HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
 
 // Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
@@ -323,7 +329,16 @@ const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 const godot_object *hgdn_library;
 
-char hgdn__print_buffer[HGDN_PRINT_BUFFER_SIZE];
+char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
+#define HGDN__FILL_FORMAT_BUFFER(fmt, ...) \
+    va_list args; \
+    va_start(args, fmt); \
+    godot_int size = vsnprintf(hgdn__format_string_buffer, HGDN_STRING_FORMAT_BUFFER_SIZE, fmt, args); \
+    if (size > HGDN_STRING_FORMAT_BUFFER_SIZE) { \
+        size = HGDN_STRING_FORMAT_BUFFER_SIZE; \
+    } \
+    va_end(args)
+
 
 // Init and terminate
 void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
@@ -412,17 +427,20 @@ void hgdn_free_string_array(char **ptr, size_t size) {
 
 // Print functions
 void hgdn_print(const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    godot_int size = vsnprintf(hgdn__print_buffer, HGDN_PRINT_BUFFER_SIZE, fmt, args);
-    if (size > HGDN_PRINT_BUFFER_SIZE) {
-        // buffer was not big enough =/
-        size = HGDN_PRINT_BUFFER_SIZE;
-    }
-    va_end(args);
-    godot_string str = hgdn_new_string_with_len(hgdn__print_buffer, size);
+    HGDN__FILL_FORMAT_BUFFER(fmt, ...);
+    godot_string str = hgdn_new_string_with_len(hgdn__format_string_buffer, size);
     hgdn_core_api->godot_print(&str);
     hgdn_core_api->godot_string_destroy(&str);
+}
+
+void hgdn_print_warning(const char *funcname, const char *filename, int line, const char *fmt, ...) {
+    HGDN__FILL_FORMAT_BUFFER(fmt, ...);
+    hgdn_core_api->godot_print_warning(hgdn__format_string_buffer, funcname, filename, line);
+}
+
+void hgdn_print_error(const char *funcname, const char *filename, int line, const char *fmt, ...) {
+    HGDN__FILL_FORMAT_BUFFER(fmt, ...);
+    hgdn_core_api->godot_print_error(hgdn__format_string_buffer, funcname, filename, line);
 }
 
 // String creation API
