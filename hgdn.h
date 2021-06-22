@@ -729,7 +729,7 @@ char *hgdn_args_get_string(const godot_variant **args, const godot_int index, si
 }
 
 #define HGDN_DECLARE_ARGS_GET_POOL_ARRAY(kind, ctype) \
-    ctype *hgdn_array_get_##kind##_array(const godot_variant **args, const godot_int index, size_t *out_size) { \
+    ctype *hgdn_args_get_##kind##_array(const godot_variant **args, const godot_int index, size_t *out_size) { \
         return hgdn_##kind##_array_from_variant(args[index], out_size); \
     }
 
