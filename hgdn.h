@@ -267,6 +267,8 @@ HGDN_DECL char **hgdn_args_get_string_array(const godot_variant **args, const go
 HGDN_DECL godot_string hgdn_new_string(const char *cstr);
 HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
 #define HGDN_NEW_STRING_LITERAL(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
+// `fmt` is a `printf` compatible format
+HGDN_DECL godot_string hgdn_new_formatted_string(const char *fmt, ...);
 
 
 // Helper functions to create Pool*Arrays from sized buffers
@@ -289,6 +291,8 @@ HGDN_DECL godot_variant hgdn_new_real_variant(const double f);
 HGDN_DECL godot_variant hgdn_new_string_variant(const char *cstr);
 HGDN_DECL godot_variant hgdn_new_string_variant_with_len(const char *cstr, const godot_int len);
 #define HGDN_NEW_STRING_LITERAL_VARIANT(literal_str) (hgdn_new_string_variant_with_len((literal_str), sizeof(literal_str)))
+// `fmt` is a `printf` compatible format
+HGDN_DECL godot_variant hgdn_new_formatted_string_variant(const char *fmt, ...);
 HGDN_DECL godot_variant hgdn_new_vector2_variant(const godot_vector2 v);
 HGDN_DECL godot_variant hgdn_new_vector3_variant(const godot_vector3 v);
 HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color v);
@@ -452,6 +456,11 @@ godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len) {
     return hgdn_core_api->godot_string_chars_to_utf8_with_len(cstr, len);
 }
 
+godot_string hgdn_new_formatted_string(const char *fmt, ...) {
+    HGDN__FILL_FORMAT_BUFFER(fmt, ...);
+    return hgdn_new_string_with_len(hgdn__format_string_buffer, size);
+}
+
 // Array creation API
 #define HGDN_DECLARE_NEW_POOL_ARRAY_FUNC(kind, ctype) \
     godot_pool_##kind##_array hgdn_new_##kind##_array(const ctype *buffer, const godot_int size) { \
@@ -526,6 +535,15 @@ godot_variant hgdn_new_string_variant(const char *cstr) {
 
 godot_variant hgdn_new_string_variant_with_len(const char *cstr, const godot_int len) {
     godot_string str = hgdn_core_api->godot_string_chars_to_utf8_with_len(cstr, len);
+    godot_variant var;
+    hgdn_core_api->godot_variant_new_string(&var, &str);
+    hgdn_core_api->godot_string_destroy(&str);
+    return var;
+}
+
+godot_variant hgdn_new_formatted_string_variant(const char *fmt, ...) {
+    HGDN__FILL_FORMAT_BUFFER(fmt, ...);
+    godot_string str = hgdn_core_api->godot_string_chars_to_utf8_with_len(hgdn__format_string_buffer, size);
     godot_variant var;
     hgdn_core_api->godot_variant_new_string(&var, &str);
     hgdn_core_api->godot_string_destroy(&str);
@@ -724,5 +742,7 @@ HGDN_DECLARE_ARGS_GET_POOL_ARRAY(vector3, godot_vector3)
 HGDN_DECLARE_ARGS_GET_POOL_ARRAY(color, godot_color)
 
 #undef HGDN_DECLARE_ARRAY_GET_POOL_ARRAY
+
+#undef HGDN__FILL_FORMAT_BUFFER
 
 #endif  // HGDN_IMPLEMENTATION
