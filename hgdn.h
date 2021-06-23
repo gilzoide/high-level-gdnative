@@ -207,24 +207,18 @@ HGDN_DECL void hgdn_print_warning(const char *funcname, const char *filename, in
 /// Outputs a `printf` formatted message as error. Use HGDN_PRINT_ERROR to use inferred current function name, file name and line
 HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int line, const char *fmt, ...);
 /// Calls `hgdn_print_warning` with current function name, file name and line
-#define HGDN_PRINT_WARNING(fmt, ...) \
-    hgdn_print_warning(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define HGDN_PRINT_WARNING(fmt, ...)  (hgdn_print_warning(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
 /// Calls `hgdn_print_error` with current function name, file name and line
-#define HGDN_PRINT_ERROR(fmt, ...) \
-    hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define HGDN_PRINT_ERROR(fmt, ...)  (hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
 
 /// If `cond` is false, print formatted error message and return nil Variant
-#define HGDN_ASSERT_MSG(cond, fmt, ...) \
-    if (!(cond)) { HGDN_PRINT_ERROR(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }
+#define HGDN_ASSERT_MSG(cond, fmt, ...)  if(!(cond)){ HGDN_PRINT_ERROR(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }
 /// If `cond` is false, print a generic error message and return nil Variant
-#define HGDN_ASSERT(cond) \
-    HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
+#define HGDN_ASSERT(cond)  HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
 /// If `arr` doesn't have at least `min_size` elements, print error message and return nil Variant
-#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size) \
-    HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size ", got %d", hgdn_core_api->godot_array_size((arr)))
+#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size)  HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size ", got %d", hgdn_core_api->godot_array_size((arr)))
 /// If `argc` isn't at least `min_size`, print error message and return nil Variant
-#define HGDN_ASSERT_ARGS_SIZE(argc, min_size) \
-    HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
+#define HGDN_ASSERT_ARGS_SIZE(argc, min_size)  HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
 
 // Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
@@ -259,6 +253,12 @@ HGDN_DECL godot_bool hgdn_array_get_bool(const godot_array *array, const godot_i
 HGDN_DECL uint64_t hgdn_array_get_uint(const godot_array *array, const godot_int index);
 HGDN_DECL int64_t hgdn_array_get_int(const godot_array *array, const godot_int index);
 HGDN_DECL double hgdn_array_get_real(const godot_array *array, const godot_int index);
+HGDN_DECL godot_vector2 hgdn_array_get_vector2(const godot_array *array, const godot_int index);
+HGDN_DECL godot_vector3 hgdn_array_get_vector3(const godot_array *array, const godot_int index);
+HGDN_DECL godot_rect2 hgdn_array_get_rect2(const godot_array *array, const godot_int index);
+HGDN_DECL godot_plane hgdn_array_get_plane(const godot_array *array, const godot_int index);
+HGDN_DECL godot_quat hgdn_array_get_quat(const godot_array *array, const godot_int index);
+HGDN_DECL godot_color hgdn_array_get_color(const godot_array *array, const godot_int index);
 // These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_array_get_string(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_array_get_byte_array(const godot_array *array, const godot_int index, size_t *out_size);
@@ -275,6 +275,12 @@ HGDN_DECL godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_
 HGDN_DECL uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index);
 HGDN_DECL int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index);
 HGDN_DECL double hgdn_args_get_real(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_vector2 hgdn_args_get_vector2(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_vector3 hgdn_args_get_vector3(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_rect2 hgdn_args_get_rect2(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_plane hgdn_args_get_plane(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_quat hgdn_args_get_quat(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_color hgdn_args_get_color(const godot_variant **args, const godot_int index);
 // These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_args_get_string(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_args_get_byte_array(const godot_variant **args, const godot_int index, size_t *out_size);
@@ -306,6 +312,7 @@ HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char *const *buffe
 HGDN_DECL godot_array hgdn_new_array(const godot_variant *const *buffer, const godot_int size);
 // Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Array
 HGDN_DECL godot_array hgdn_new_array_own(godot_variant *buffer, const godot_int size);
+
 
 // Helper variadic macros/templates to create Pool*Arrays/Arrays
 #if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
@@ -841,25 +848,26 @@ HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(color, godot_color)
 #undef HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT
 
 // Get values from array helpers
-godot_bool hgdn_array_get_bool(const godot_array *array, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_bool(hgdn_core_api->godot_array_operator_index_const(array, index));
-}
+#define HGDN_DECLARE_ARRAY_GET(kind, ctype) \
+    ctype hgdn_array_get_##kind(const godot_array *array, const godot_int index) { \
+        return hgdn_core_api->godot_variant_as_##kind(hgdn_core_api->godot_array_operator_index_const(array, index)); \
+    }
 
-uint64_t hgdn_array_get_uint(const godot_array *array, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_uint(hgdn_core_api->godot_array_operator_index_const(array, index));
-}
+HGDN_DECLARE_ARRAY_GET(bool, godot_bool)
+HGDN_DECLARE_ARRAY_GET(uint, uint64_t)
+HGDN_DECLARE_ARRAY_GET(int, int64_t)
+HGDN_DECLARE_ARRAY_GET(real, double)
+HGDN_DECLARE_ARRAY_GET(vector2, godot_vector2)
+HGDN_DECLARE_ARRAY_GET(vector3, godot_vector3)
+HGDN_DECLARE_ARRAY_GET(rect2, godot_rect2)
+HGDN_DECLARE_ARRAY_GET(plane, godot_plane)
+HGDN_DECLARE_ARRAY_GET(quat, godot_quat)
+HGDN_DECLARE_ARRAY_GET(color, godot_color)
 
-int64_t hgdn_array_get_int(const godot_array *array, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_int(hgdn_core_api->godot_array_operator_index_const(array, index));
-}
-
-double hgdn_array_get_real(const godot_array *array, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_real(hgdn_core_api->godot_array_operator_index_const(array, index));
-}
+#undef HGDN_DECLARE_ARRAY_GET
 
 char *hgdn_array_get_string(const godot_array *array, const godot_int index, size_t *out_size) {
     return hgdn_string_from_variant(hgdn_core_api->godot_array_operator_index_const(array, index), out_size);
-}
 }
 
 #define HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(kind, ctype) \
@@ -878,21 +886,23 @@ HGDN_DECLARE_ARRAY_GET_POOL_ARRAY(color, godot_color)
 #undef HGDN_DECLARE_ARRAY_GET_POOL_ARRAY
 
 // Get values from args helpers
-godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_bool(args[index]);
-}
+#define HGDN_DECLARE_ARGS_GET(kind, ctype) \
+    ctype hgdn_args_get_##kind(const godot_variant **args, const godot_int index) { \
+        return hgdn_core_api->godot_variant_as_##kind(args[index]); \
+    }
 
-uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_uint(args[index]);
-}
+HGDN_DECLARE_ARGS_GET(bool, godot_bool)
+HGDN_DECLARE_ARGS_GET(uint, uint64_t)
+HGDN_DECLARE_ARGS_GET(int, int64_t)
+HGDN_DECLARE_ARGS_GET(real, double)
+HGDN_DECLARE_ARGS_GET(vector2, godot_vector2)
+HGDN_DECLARE_ARGS_GET(vector3, godot_vector3)
+HGDN_DECLARE_ARGS_GET(rect2, godot_rect2)
+HGDN_DECLARE_ARGS_GET(plane, godot_plane)
+HGDN_DECLARE_ARGS_GET(quat, godot_quat)
+HGDN_DECLARE_ARGS_GET(color, godot_color)
 
-int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_int(args[index]);
-}
-
-double hgdn_args_get_real(const godot_variant **args, const godot_int index) {
-    return hgdn_core_api->godot_variant_as_real(args[index]);
-}
+#undef HGDN_DECLARE_ARGS_GET
 
 char *hgdn_args_get_string(const godot_variant **args, const godot_int index, size_t *out_size) {
     return hgdn_string_from_variant(args[index], out_size);
