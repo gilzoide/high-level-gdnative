@@ -88,10 +88,13 @@ GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *optio
 
 ```gdscript
 # example.gd
-var example = GDNative.new()
-example.library = preload("res://path_to_gdnativelibrary.tres")
-example.initialize()
-print(example.call_native("native", "MESSAGE", []))  # --> "Hello world!"
-print(example.call_native("native", "square", [5]))  # --> 25
-print(example.call_native("native", "sum_ints", [[1, 2.5, 3]]))  # --> 6
+extends Reference
+
+func _ready() -> void:
+    var example = GDNative.new()
+    example.library = preload("res://path_to_gdnativelibrary.gdnlib")
+    example.initialize()
+    print(example.call_native("native", "MESSAGE", []))  # --> "Hello world!"
+    print(example.call_native("native", "square", [5]))  # --> 25
+    print(example.call_native("native", "sum_ints", [[1, 2.5, 3]]))  # --> 6
 ```
