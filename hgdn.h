@@ -294,29 +294,70 @@ HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_in
 HGDN_DECL godot_string hgdn_new_formatted_string(const char *fmt, ...);
 
 
-// Helper functions to create Pool*Arrays from sized buffers
+// Helper functions to create Pool*Arrays/Arrays from sized buffers
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer, const godot_int size);
-#define HGDN_NEW_BYTE_ARRAY(...)  (hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_pool_int_array hgdn_new_int_array(const godot_int *buffer, const godot_int size);
-#define HGDN_NEW_INT_ARRAY(...)  (hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_pool_real_array hgdn_new_real_array(const godot_real *buffer, const godot_int size);
-#define HGDN_NEW_REAL_ARRAY(...)  (hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_pool_vector2_array hgdn_new_vector2_array(const godot_vector2 *buffer, const godot_int size);
-#define HGDN_NEW_VECTOR2_ARRAY(...)  (hgdn_new_vector2_array((const godot_vector2[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_pool_vector3_array hgdn_new_vector3_array(const godot_vector3 *buffer, const godot_int size);
-#define HGDN_NEW_VECTOR3_ARRAY(...)  (hgdn_new_vector3_array((const godot_vector3[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_pool_color_array hgdn_new_color_array(const godot_color *buffer, const godot_int size);
-#define HGDN_NEW_COLOR_ARRAY(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 // All strings must be NULL terminated.
 HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char *const *buffer, const godot_int size);
-#define HGDN_NEW_STRING_ARRAY(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-
-// Helper functions to create Arrays from Variants
 HGDN_DECL godot_array hgdn_new_array(const godot_variant *const *buffer, const godot_int size);
-#define HGDN_NEW_ARRAY(...)  (hgdn_new_array((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 // Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Array
 HGDN_DECL godot_array hgdn_new_array_own(godot_variant *buffer, const godot_int size);
-#define HGDN_NEW_ARRAY_OWN(...)  (hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+
+// Helper variadic macros/templates to create Pool*Arrays/Arrays
+#if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
+extern "C++" {
+    template<typename... Args> godot_pool_byte_array hgdn_new_byte_array_args(Args... args) {
+        uint8_t buffer[] = { args... };
+        return hgdn_new_byte_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_int_array hgdn_new_int_array_args(Args... args) {
+        godot_int buffer[] = { args... };
+        return hgdn_new_int_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_real_array hgdn_new_real_array_args(Args... args) {
+        godot_real buffer[] = { args... };
+        return hgdn_new_real_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_vector2_array hgdn_new_vector2_array_args(Args... args) {
+        godot_vector2 buffer[] = { args... };
+        return hgdn_new_vector2_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_vector3_array hgdn_new_vector3_array_args(Args... args) {
+        godot_vector3 buffer[] = { args... };
+        return hgdn_new_vector3_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_color_array hgdn_new_color_array_args(Args... args) {
+        godot_color buffer[] = { args... };
+        return hgdn_new_color_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_pool_string_array hgdn_new_string_array_args(Args... args) {
+        const char *const buffer[] = { args... };
+        return hgdn_new_string_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_array hgdn_new_array_args(Args... args) {
+        godot_variant *const buffer[] = { args... };
+        return hgdn_new_array(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_array hgdn_new_array_own_args(Args... args) {
+        godot_variant buffer[] = { args... };
+        return hgdn_new_array_own(buffer, sizeof...(args));
+    }
+}
+#else
+#define hgdn_new_byte_array_args(...)  (hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_int_array_args(...)  (hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_real_array_args(...)  (hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_vector2_array_args(...)  (hgdn_new_vector2_array((const godot_vector2[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_vector3_array_args(...)  (hgdn_new_vector3_array((const godot_vector3[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_color_array_args(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_string_array_args(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_array_args(...)  (hgdn_new_array((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_array_own_args(...)  (hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#endif
 
 
 // Helper functions to create Variant values
@@ -334,24 +375,67 @@ HGDN_DECL godot_variant hgdn_new_vector2_variant(const godot_vector2 v);
 HGDN_DECL godot_variant hgdn_new_vector3_variant(const godot_vector3 v);
 HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color v);
 HGDN_DECL godot_variant hgdn_new_byte_array_variant(const uint8_t *buffer, const godot_int size);
-#define HGDN_NEW_BYTE_ARRAY_VARIANT(...)  (hgdn_new_byte_array_variant((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_int_array_variant(const godot_int *buffer, const godot_int size);
-#define HGDN_NEW_INT_ARRAY_VARIANT(...)  (hgdn_new_int_array_variant((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_real_array_variant(const godot_real *buffer, const godot_int size);
-#define HGDN_NEW_REAL_ARRAY_VARIANT(...)  (hgdn_new_real_array_variant((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_vector2_array_variant(const godot_vector2 *buffer, const godot_int size);
-#define HGDN_NEW_VECTOR2_ARRAY_VARIANT(...)  (hgdn_new_vector2_array_variant((const godot_vector2[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_vector3_array_variant(const godot_vector3 *buffer, const godot_int size);
-#define HGDN_NEW_VECTOR3_ARRAY_VARIANT(...)  (hgdn_new_vector3_array_variant((const godot_vector3[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_color_array_variant(const godot_color *buffer, const godot_int size);
-#define HGDN_NEW_COLOR_ARRAY_VARIANT(...)  (hgdn_new_color_array_variant((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 // All strings must be NULL terminated.
 HGDN_DECL godot_variant hgdn_new_string_array_variant(const char *const *buffer, const godot_int size);
-#define HGDN_NEW_STRING_ARRAY_VARIANT(...)  (hgdn_new_string_array_variant((const char * const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_array_variant(const godot_variant *const *buffer, const godot_int size);
-#define HGDN_NEW_ARRAY_VARIANT(...)  (hgdn_new_array_variant((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 HGDN_DECL godot_variant hgdn_new_array_own_variant(godot_variant *buffer, const godot_int size);
-#define HGDN_NEW_ARRAY_OWN_VARIANT(...)  (hgdn_new_array_own_variant((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+
+// Helper variadic macros/templates to create Pool*Array/Array Variants
+#if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
+extern "C++" {
+    template<typename... Args> godot_variant hgdn_new_byte_array_variant_args(Args... args) {
+        uint8_t buffer[] = { args... };
+        return hgdn_new_byte_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_int_array_variant_args(Args... args) {
+        godot_int buffer[] = { args... };
+        return hgdn_new_int_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_real_array_variant_args(Args... args) {
+        godot_real buffer[] = { args... };
+        return hgdn_new_real_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_vector2_array_variant_args(Args... args) {
+        godot_vector2 buffer[] = { args... };
+        return hgdn_new_vector2_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_vector3_array_variant_args(Args... args) {
+        godot_vector3 buffer[] = { args... };
+        return hgdn_new_vector3_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_color_array_variant_args(Args... args) {
+        godot_color buffer[] = { args... };
+        return hgdn_new_color_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_string_array_variant_args(Args... args) {
+        const char *const buffer[] = { args... };
+        return hgdn_new_string_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_array_variant_args(Args... args) {
+        godot_variant *const buffer[] = { args... };
+        return hgdn_new_array_variant(buffer, sizeof...(args));
+    }
+    template<typename... Args> godot_variant hgdn_new_array_own_variant_args(Args... args) {
+        godot_variant buffer[] = { args... };
+        return hgdn_new_array_own_variant(buffer, sizeof...(args));
+    }
+}
+#else
+#define hgdn_new_byte_array_variant_args(...)  (hgdn_new_byte_array_variant((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_int_array_variant_args(...)  (hgdn_new_int_array_variant((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_real_array_variant_args(...)  (hgdn_new_real_array_variant((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_vector2_array_variant_args(...)  (hgdn_new_vector2_array_variant((const godot_vector2[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_vector3_array_variant_args(...)  (hgdn_new_vector3_array_variant((const godot_vector3[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_color_array_variant_args(...)  (hgdn_new_color_array_variant((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_string_array_variant_args(...)  (hgdn_new_string_array_variant((const char * const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_array_variant_args(...)  (hgdn_new_array_variant((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_array_own_variant_args(...)  (hgdn_new_array_own_variant((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#endif
 
 #ifdef __cplusplus
 }
