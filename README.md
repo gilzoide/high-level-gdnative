@@ -47,6 +47,8 @@ GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
 
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
+        // `hgdn_new_variant` is type-dependant using C11 _Generic/C++ overloads
+        // In this case, it calls `hgdn_new_string_variant_own`
         return hgdn_new_variant(hgdn_new_string(MESSAGE));
     }
     else if (symbol == &square) {
@@ -54,6 +56,7 @@ godot_variant native_callback(void *symbol, godot_array *array) {
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
         godot_real arg0 = hgdn_array_get_real(array, 0);
         godot_real result = square(arg0);
+        // Overloaded to `hgdn_new_real_variant(result)`
         return hgdn_new_variant(result);
     }
     else if (symbol == &sum_ints) {
@@ -62,8 +65,10 @@ godot_variant native_callback(void *symbol, godot_array *array) {
         godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
         int res = sum_ints(buffer, size);
         hgdn_free(buffer);
+        // Overloaded to `hgdn_new_int_variant(result)`
         return hgdn_new_variant(res);
     }
+    // Overloaded to `hgdn_new_object_variant(NULL)`, which returns a nil Variant
     return hgdn_new_variant(NULL);
 }
 
@@ -72,6 +77,8 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
     // as it populates the global API pointers from options
     hgdn_gdnative_init(options);
     hgdn_core_api->godot_register_native_call_type("native", &native_callback);
+    // `hgdn_print` uses `printf` formatted values
+    hgdn_print("GDNative initialized%s", options->in_editor ? " in editor" : "");
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
