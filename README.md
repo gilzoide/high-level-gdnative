@@ -8,8 +8,7 @@ high level API for C/C++.
   so GDNative libraries can be built with a single compiler invocation.
   No need to generate Godot API bindings if you only use core GDNative stuff.
 - `hgdn_gdnative_init` fetches all current GDNative APIs.
-- Useful definitions for Vector2, Vector3 and a Vector4 type that serves as
-  Rect2, Plane, Quat and Color.
+- Useful definitions for all math types, including Vector2, Vector3 and Color.
 - Functions to get buffers from strings and pool arrays.
 - Functions to get values from method arguments or native calls
   argument arrays.
@@ -48,14 +47,14 @@ GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
 
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
-        return hgdn_new_string_variant(MESSAGE);
+        return hgdn_new_variant(hgdn_new_string(MESSAGE));
     }
     else if (symbol == &square) {
         // returns null and prints an error if array size < 1
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
         godot_real arg0 = hgdn_array_get_real(array, 0);
         godot_real result = square(arg0);
-        return hgdn_new_real_variant(result);
+        return hgdn_new_variant(result);
     }
     else if (symbol == &sum_ints) {
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
@@ -63,9 +62,9 @@ godot_variant native_callback(void *symbol, godot_array *array) {
         godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
         int res = sum_ints(buffer, size);
         hgdn_free(buffer);
-        return hgdn_new_int_variant(res);
+        return hgdn_new_variant(res);
     }
-    return hgdn_new_nil_variant();
+    return hgdn_new_variant(NULL);
 }
 
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
