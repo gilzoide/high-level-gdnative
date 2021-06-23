@@ -258,7 +258,16 @@ HGDN_DECL godot_vector3 hgdn_array_get_vector3(const godot_array *array, const g
 HGDN_DECL godot_rect2 hgdn_array_get_rect2(const godot_array *array, const godot_int index);
 HGDN_DECL godot_plane hgdn_array_get_plane(const godot_array *array, const godot_int index);
 HGDN_DECL godot_quat hgdn_array_get_quat(const godot_array *array, const godot_int index);
+HGDN_DECL godot_aabb hgdn_array_get_aabb(const godot_array *array, const godot_int index);
+HGDN_DECL godot_basis hgdn_array_get_basis(const godot_array *array, const godot_int index);
+HGDN_DECL godot_transform2d hgdn_array_get_transform2d(const godot_array *array, const godot_int index);
+HGDN_DECL godot_transform hgdn_array_get_transform(const godot_array *array, const godot_int index);
 HGDN_DECL godot_color hgdn_array_get_color(const godot_array *array, const godot_int index);
+HGDN_DECL godot_node_path hgdn_array_get_node_path(const godot_array *array, const godot_int index);
+HGDN_DECL godot_rid hgdn_array_get_rid(const godot_array *array, const godot_int index);
+HGDN_DECL godot_object *hgdn_array_get_object(const godot_array *array, const godot_int index);
+HGDN_DECL godot_dictionary hgdn_array_get_dictionary(const godot_array *array, const godot_int index);
+HGDN_DECL godot_array hgdn_array_get_array(const godot_array *array, const godot_int index);
 // These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_array_get_string(const godot_array *array, const godot_int index, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_array_get_byte_array(const godot_array *array, const godot_int index, size_t *out_size);
@@ -280,7 +289,16 @@ HGDN_DECL godot_vector3 hgdn_args_get_vector3(const godot_variant **args, const 
 HGDN_DECL godot_rect2 hgdn_args_get_rect2(const godot_variant **args, const godot_int index);
 HGDN_DECL godot_plane hgdn_args_get_plane(const godot_variant **args, const godot_int index);
 HGDN_DECL godot_quat hgdn_args_get_quat(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_aabb hgdn_args_get_aabb(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_basis hgdn_args_get_basis(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_transform2d hgdn_args_get_transform2d(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_transform hgdn_args_get_transform(const godot_variant **args, const godot_int index);
 HGDN_DECL godot_color hgdn_args_get_color(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_node_path hgdn_args_get_node_path(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_rid hgdn_args_get_rid(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_object *hgdn_args_get_object(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_dictionary hgdn_args_get_dictionary(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_array hgdn_args_get_array(const godot_variant **args, const godot_int index);
 // These use the `*_dup` functions and follow the same caveats
 HGDN_DECL char *hgdn_args_get_string(const godot_variant **args, const godot_int index, size_t *out_size);
 HGDN_DECL uint8_t *hgdn_args_get_byte_array(const godot_variant **args, const godot_int index, size_t *out_size);
@@ -862,7 +880,16 @@ HGDN_DECLARE_ARRAY_GET(vector3, godot_vector3)
 HGDN_DECLARE_ARRAY_GET(rect2, godot_rect2)
 HGDN_DECLARE_ARRAY_GET(plane, godot_plane)
 HGDN_DECLARE_ARRAY_GET(quat, godot_quat)
+HGDN_DECLARE_ARRAY_GET(aabb, godot_aabb)
+HGDN_DECLARE_ARRAY_GET(basis, godot_basis)
+HGDN_DECLARE_ARRAY_GET(transform2d, godot_transform2d)
+HGDN_DECLARE_ARRAY_GET(transform, godot_transform)
 HGDN_DECLARE_ARRAY_GET(color, godot_color)
+HGDN_DECLARE_ARRAY_GET(node_path, godot_node_path)
+HGDN_DECLARE_ARRAY_GET(rid, godot_rid)
+HGDN_DECLARE_ARRAY_GET(object, godot_object *)
+HGDN_DECLARE_ARRAY_GET(dictionary, godot_dictionary)
+HGDN_DECLARE_ARRAY_GET(array, godot_array)
 
 #undef HGDN_DECLARE_ARRAY_GET
 
@@ -900,7 +927,16 @@ HGDN_DECLARE_ARGS_GET(vector3, godot_vector3)
 HGDN_DECLARE_ARGS_GET(rect2, godot_rect2)
 HGDN_DECLARE_ARGS_GET(plane, godot_plane)
 HGDN_DECLARE_ARGS_GET(quat, godot_quat)
+HGDN_DECLARE_ARGS_GET(aabb, godot_aabb)
+HGDN_DECLARE_ARGS_GET(basis, godot_basis)
+HGDN_DECLARE_ARGS_GET(transform2d, godot_transform2d)
+HGDN_DECLARE_ARGS_GET(transform, godot_transform)
 HGDN_DECLARE_ARGS_GET(color, godot_color)
+HGDN_DECLARE_ARGS_GET(node_path, godot_node_path)
+HGDN_DECLARE_ARGS_GET(rid, godot_rid)
+HGDN_DECLARE_ARGS_GET(object, godot_object *)
+HGDN_DECLARE_ARGS_GET(dictionary, godot_dictionary)
+HGDN_DECLARE_ARGS_GET(array, godot_array)
 
 #undef HGDN_DECLARE_ARGS_GET
 
