@@ -46,7 +46,6 @@ extern "C" {
     #define HGDN_STRING_FORMAT_BUFFER_SIZE 1024
 #endif
 
-/// Custom Vector2 definition
 typedef union hgdn_vector2 {
     float elements[2];
     // xy
@@ -66,7 +65,6 @@ typedef hgdn_vector2 godot_vector2;
 #define GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED
 #endif
 
-/// Custom Vector3 definition
 typedef union hgdn_vector3 {
     float elements[3];
     // xyz
@@ -93,7 +91,7 @@ typedef hgdn_vector3 godot_vector3;
 #define GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
 #endif
 
-/// Custom Vector4 definition. May be used as Rect2, Plane, Quat and Color.
+// May be used as Rect2, Plane, Quat and Color.
 typedef union hgdn_vector4 {
     float elements[4];
     // xyzw
@@ -139,6 +137,46 @@ typedef hgdn_vector4 godot_quat;
 #ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
 typedef hgdn_vector4 godot_color;
 #define GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+#endif
+
+typedef struct hgdn_basis {
+    hgdn_vector3 elements[3];
+} hgdn_basis;
+#define HGDN_BASIS_IDENTITY ((hgdn_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}})
+
+#ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
+typedef hgdn_basis godot_basis;
+#define GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
+#endif
+
+typedef struct hgdn_aabb {
+    hgdn_vector3 position, size;
+} hgdn_aabb;
+
+#ifndef GODOT_CORE_API_GODOT_AABB_TYPE_DEFINED
+typedef hgdn_aabb godot_aabb;
+#define GODOT_CORE_API_GODOT_AABB_TYPE_DEFINED
+#endif
+
+typedef struct hgdn_transform2d {
+    hgdn_vector2 elements[3];
+} hgdn_transform2d;
+#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0}, {0, 1}, {0, 0} })
+
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+typedef hgdn_transform2d godot_transform2d;
+#define GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
+#endif
+
+typedef struct hgdn_transform3d {
+    hgdn_basis basis;
+    hgdn_vector3 origin;
+} hgdn_transform3d;
+#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform3d){ HGDN_BASIS_IDENTITY, {} })
+
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM3D_TYPE_DEFINED
+typedef hgdn_transform3d godot_transform3d;
+#define GODOT_CORE_API_GODOT_TRANSFORM3D_TYPE_DEFINED
 #endif
 
 #include "gdnative_api_struct.gen.h"
@@ -387,10 +425,23 @@ extern "C++" {
 
 // Helper functions to create Variant values
 HGDN_DECL godot_variant hgdn_new_nil_variant();
-HGDN_DECL godot_variant hgdn_new_bool_variant(const godot_bool b);
-HGDN_DECL godot_variant hgdn_new_uint_variant(const uint64_t u);
-HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t i);
-HGDN_DECL godot_variant hgdn_new_real_variant(const double f);
+HGDN_DECL godot_variant hgdn_new_bool_variant(const godot_bool value);
+HGDN_DECL godot_variant hgdn_new_uint_variant(const uint64_t value);
+HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t value);
+HGDN_DECL godot_variant hgdn_new_real_variant(const double value);
+HGDN_DECL godot_variant hgdn_new_vector2_variant(const godot_vector2 value);
+HGDN_DECL godot_variant hgdn_new_vector3_variant(const godot_vector3 value);
+HGDN_DECL godot_variant hgdn_new_rect2_variant(const godot_rect2 value);
+HGDN_DECL godot_variant hgdn_new_plane_variant(const godot_plane value);
+HGDN_DECL godot_variant hgdn_new_quat_variant(const godot_quat value);
+HGDN_DECL godot_variant hgdn_new_aabb_variant(const godot_aabb value);
+HGDN_DECL godot_variant hgdn_new_basis_variant(const godot_basis value);
+HGDN_DECL godot_variant hgdn_new_transform2d_variant(const godot_transform2d value);
+HGDN_DECL godot_variant hgdn_new_transform_variant(const godot_transform value);
+HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color value);
+HGDN_DECL godot_variant hgdn_new_node_path_variant(const godot_node_path value);
+HGDN_DECL godot_variant hgdn_new_rid_variant(const godot_rid value);
+HGDN_DECL godot_variant hgdn_new_object_variant(const godot_object *value);
 HGDN_DECL godot_variant hgdn_new_string_variant(const char *cstr);
 HGDN_DECL godot_variant hgdn_new_string_variant_with_len(const char *cstr, const godot_int len);
 #define HGDN_NEW_STRING_LITERAL_VARIANT(literal_str) (hgdn_new_string_variant_with_len((literal_str), sizeof(literal_str)))
@@ -680,29 +731,42 @@ godot_variant hgdn_new_nil_variant() {
     return var;
 }
 
-godot_variant hgdn_new_bool_variant(const godot_bool b) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_bool(&var, b);
-    return var;
-}
+#define HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(kind, ctype) \
+    godot_variant hgdn_new_##kind##_variant(const ctype value) { \
+        godot_variant var; \
+        hgdn_core_api->godot_variant_new_##kind(&var, value); \
+        return var; \
+    }
 
-godot_variant hgdn_new_uint_variant(const uint64_t u) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_uint(&var, u);
-    return var;
-}
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(bool, godot_bool)
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(uint, uint64_t)
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(int, int64_t)
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(real, double)
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(object, godot_object *)
 
-godot_variant hgdn_new_int_variant(const int64_t i) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_int(&var, i);
-    return var;
-}
+#undef HGDN_DECLARE_NEW_PRIMITIVE_VARIANT
 
-godot_variant hgdn_new_real_variant(const double f) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_real(&var, f);
-    return var;
-}
+#define HGDN_DECLARE_NEW_COMPOUND_VARIANT(kind, ctype) \
+    godot_variant hgdn_new_##kind##_variant(const ctype value) { \
+        godot_variant var; \
+        hgdn_core_api->godot_variant_new_##kind(&var, &value); \
+        return var; \
+    }
+
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(vector2, godot_vector2)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(vector3, godot_vector3)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(rect2, godot_rect2)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(plane, godot_plane)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(quat, godot_quat)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(aabb, godot_aabb)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(basis, godot_basis)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(transform2d, godot_transform2d)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(transform, godot_transform)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(color, godot_color)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(node_path, godot_node_path)
+HGDN_DECLARE_NEW_COMPOUND_VARIANT(rid, godot_rid)
+
+#undef HGDN_DECLARE_NEW_COMPOUND_VARIANT
 
 godot_variant hgdn_new_string_variant(const char *cstr) {
     godot_string str = hgdn_core_api->godot_string_chars_to_utf8(cstr);
@@ -726,24 +790,6 @@ godot_variant hgdn_new_formatted_string_variant(const char *fmt, ...) {
     godot_variant var;
     hgdn_core_api->godot_variant_new_string(&var, &str);
     hgdn_core_api->godot_string_destroy(&str);
-    return var;
-}
-
-godot_variant hgdn_new_vector2_variant(const godot_vector2 v) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_vector2(&var, &v);
-    return var;
-}
-
-godot_variant hgdn_new_vector3_variant(const godot_vector3 v) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_vector3(&var, &v);
-    return var;
-}
-
-godot_variant hgdn_new_color_variant(const godot_color c) {
-    godot_variant var;
-    hgdn_core_api->godot_variant_new_color(&var, &c);
     return var;
 }
 
@@ -815,6 +861,9 @@ char *hgdn_string_dup(const godot_string *str, size_t *out_size) {
 HGDN_DECLARE_POOL_ARRAY_DUP(byte, uint8_t)
 HGDN_DECLARE_POOL_ARRAY_DUP(int, godot_int)
 HGDN_DECLARE_POOL_ARRAY_DUP(real, godot_real)
+HGDN_DECLARE_POOL_ARRAY_DUP(vector2, godot_vector2)
+HGDN_DECLARE_POOL_ARRAY_DUP(vector3, godot_vector3)
+HGDN_DECLARE_POOL_ARRAY_DUP(color, godot_color)
 
 char **hgdn_string_array_dup(const godot_pool_string_array *array, size_t *out_size) {
     size_t size = hgdn_core_api->godot_pool_string_array_size(array);
@@ -832,10 +881,6 @@ char **hgdn_string_array_dup(const godot_pool_string_array *array, size_t *out_s
     }
     return new_array;
 }
-
-HGDN_DECLARE_POOL_ARRAY_DUP(vector2, godot_vector2)
-HGDN_DECLARE_POOL_ARRAY_DUP(vector3, godot_vector3)
-HGDN_DECLARE_POOL_ARRAY_DUP(color, godot_color)
 
 #undef HGDN_DECLARE_POOL_ARRAY_DUP
 
