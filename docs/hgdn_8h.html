@@ -63,7 +63,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -77,35 +79,180 @@ $(function() {
 </div>
 <p><a href="hgdn_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__vector2.html">hgdn_vector2</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__vector3.html">hgdn_vector3</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__vector4.html">hgdn_vector4</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__rect2.html">hgdn_rect2</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__plane.html">hgdn_plane</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionhgdn__quat.html">hgdn_quat</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgdn__basis.html">hgdn_basis</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgdn__aabb.html">hgdn_aabb</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgdn__transform2d.html">hgdn_transform2d</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhgdn__transform.html">hgdn_transform</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a6ac63f52cc9729dc51b216f94f96ca0a"><td class="memItemLeft" align="right" valign="top"><a id="a6ac63f52cc9729dc51b216f94f96ca0a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_DECL</b>&#160;&#160;&#160;extern</td></tr>
 <tr class="separator:a6ac63f52cc9729dc51b216f94f96ca0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb7d0f2d38af4b21505179f41ac014d1"><td class="memItemLeft" align="right" valign="top"><a id="abb7d0f2d38af4b21505179f41ac014d1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#abb7d0f2d38af4b21505179f41ac014d1">HGDN_LOG_ERROR</a>(msg)&#160;&#160;&#160;    hgdn_core_api-&gt;godot_print_error((msg), __PRETTY_FUNCTION__, __FILE__, __LINE__)</td></tr>
-<tr class="memdesc:abb7d0f2d38af4b21505179f41ac014d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the message <code>msg</code> as error. <br /></td></tr>
-<tr class="separator:abb7d0f2d38af4b21505179f41ac014d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f63352f9c0df4a045dea47fa3de7f86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">HGDN_ASSERT_MSG</a>(cond,  msg)</td></tr>
-<tr class="memdesc:a2f63352f9c0df4a045dea47fa3de7f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>cond</code> is false, print error message <code>msg</code> and return nil Variant.  <a href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">More...</a><br /></td></tr>
-<tr class="separator:a2f63352f9c0df4a045dea47fa3de7f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77959724467196879fa8aed85511d868"><td class="memItemLeft" align="right" valign="top"><a id="a77959724467196879fa8aed85511d868"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_STRING_FORMAT_BUFFER_SIZE</b>&#160;&#160;&#160;1024</td></tr>
+<tr class="separator:a77959724467196879fa8aed85511d868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7524ee04457b155724b046a46766ed47"><td class="memItemLeft" align="right" valign="top"><a id="a7524ee04457b155724b046a46766ed47"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_VECTOR2_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a7524ee04457b155724b046a46766ed47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69e6c408f80be856e0a75aac8ec50f1d"><td class="memItemLeft" align="right" valign="top"><a id="a69e6c408f80be856e0a75aac8ec50f1d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a69e6c408f80be856e0a75aac8ec50f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c669f21b7b8d8cc15cf529a6948cdce"><td class="memItemLeft" align="right" valign="top"><a id="a7c669f21b7b8d8cc15cf529a6948cdce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a7c669f21b7b8d8cc15cf529a6948cdce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632a23fe5e5fb16c586f7f381bdd6519"><td class="memItemLeft" align="right" valign="top"><a id="a632a23fe5e5fb16c586f7f381bdd6519"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a632a23fe5e5fb16c586f7f381bdd6519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c9e0975b5829919f8495894956dd4dc"><td class="memItemLeft" align="right" valign="top"><a id="a4c9e0975b5829919f8495894956dd4dc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a4c9e0975b5829919f8495894956dd4dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06331ad0caad45c82a785484658f4cf5"><td class="memItemLeft" align="right" valign="top"><a id="a06331ad0caad45c82a785484658f4cf5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a06331ad0caad45c82a785484658f4cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c487a8009b5126a335a6b31d985035e"><td class="memItemLeft" align="right" valign="top"><a id="a8c487a8009b5126a335a6b31d985035e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_BASIS_IDENTITY</b>&#160;&#160;&#160;((<a class="el" href="structhgdn__basis.html">hgdn_basis</a>){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}})</td></tr>
+<tr class="separator:a8c487a8009b5126a335a6b31d985035e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50b87cd81ca38e03f77ac0d75f0104fe"><td class="memItemLeft" align="right" valign="top"><a id="a50b87cd81ca38e03f77ac0d75f0104fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a50b87cd81ca38e03f77ac0d75f0104fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98d670455f7c3b3f8365dae97b285e74"><td class="memItemLeft" align="right" valign="top"><a id="a98d670455f7c3b3f8365dae97b285e74"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_AABB_TYPE_DEFINED</b></td></tr>
+<tr class="separator:a98d670455f7c3b3f8365dae97b285e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a408daacf150d5af5741bcf0b502ec0c0"><td class="memItemLeft" align="right" valign="top"><a id="a408daacf150d5af5741bcf0b502ec0c0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_TRANSFORM2D_IDENTITY</b>&#160;&#160;&#160;((<a class="el" href="structhgdn__transform2d.html">hgdn_transform2d</a>){ {1, 0}, {0, 1}, {0, 0} })</td></tr>
+<tr class="separator:a408daacf150d5af5741bcf0b502ec0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcee0cac50c878ce6c21e107e0debef7"><td class="memItemLeft" align="right" valign="top"><a id="afcee0cac50c878ce6c21e107e0debef7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED</b></td></tr>
+<tr class="separator:afcee0cac50c878ce6c21e107e0debef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40d6f2c662131b4ef321f4a949612784"><td class="memItemLeft" align="right" valign="top"><a id="a40d6f2c662131b4ef321f4a949612784"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_TRANSFORM3D_IDENTITY</b>&#160;&#160;&#160;((hgdn_transform3d){ HGDN_BASIS_IDENTITY, {} })</td></tr>
+<tr class="separator:a40d6f2c662131b4ef321f4a949612784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad80b7332f37e5871feef8004fc3c90f"><td class="memItemLeft" align="right" valign="top"><a id="aad80b7332f37e5871feef8004fc3c90f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED</b></td></tr>
+<tr class="separator:aad80b7332f37e5871feef8004fc3c90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4e174c9efebb644d0d75ce1b241e1ad"><td class="memItemLeft" align="right" valign="top"><a id="aa4e174c9efebb644d0d75ce1b241e1ad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_NARG</b>(...)&#160;&#160;&#160;         HGDN_NARG_(__VA_ARGS__, HGDN_RSEQ_N())</td></tr>
+<tr class="separator:aa4e174c9efebb644d0d75ce1b241e1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34dbd843a01255dd2408b9f99d396ac4"><td class="memItemLeft" align="right" valign="top"><a id="a34dbd843a01255dd2408b9f99d396ac4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_NARG_</b>(...)&#160;&#160;&#160;         HGDN_ARG_N(__VA_ARGS__)</td></tr>
+<tr class="separator:a34dbd843a01255dd2408b9f99d396ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb9f0eb08cd08616de706225a73537a4"><td class="memItemLeft" align="right" valign="top"><a id="adb9f0eb08cd08616de706225a73537a4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_ARG_N</b>(_1,  _2,  _3,  _4,  _5,  _6,  _7,  _8,  _9,  _10,  _11,  _12,  _13,  _14,  _15,  _16,  _17,  _18,  _19,  _20,  _21,  _22,  _23,  _24,  _25,  _26,  _27,  _28,  _29,  _30,  _31,  _32,  _33,  _34,  _35,  _36,  _37,  _38,  _39,  _40,  _41,  _42,  _43,  _44,  _45,  _46,  _47,  _48,  _49,  _50,  _51,  _52,  _53,  _54,  _55,  _56,  _57,  _58,  _59,  _60,  _61,  _62,  _63,  N, ...)&#160;&#160;&#160;N</td></tr>
+<tr class="separator:adb9f0eb08cd08616de706225a73537a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b5457be24f4977e26ddb4a84ccdf255"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_RSEQ_N</b>()</td></tr>
+<tr class="separator:a4b5457be24f4977e26ddb4a84ccdf255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5cba99db584ed5928076b19c2dd7bd3"><td class="memItemLeft" align="right" valign="top"><a id="ae5cba99db584ed5928076b19c2dd7bd3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ae5cba99db584ed5928076b19c2dd7bd3">HGDN_PRINT_WARNING</a>(fmt, ...)&#160;&#160;&#160;(<a class="el" href="hgdn_8h.html#a4b032652ac8c38d28962582cf1b3513b">hgdn_print_warning</a>(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))</td></tr>
+<tr class="memdesc:ae5cba99db584ed5928076b19c2dd7bd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <code>hgdn_print_warning</code> with current function name, file name and line. <br /></td></tr>
+<tr class="separator:ae5cba99db584ed5928076b19c2dd7bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942c2d27e885e98e7fb490c2d00be40b"><td class="memItemLeft" align="right" valign="top"><a id="a942c2d27e885e98e7fb490c2d00be40b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a942c2d27e885e98e7fb490c2d00be40b">HGDN_PRINT_ERROR</a>(fmt, ...)&#160;&#160;&#160;(<a class="el" href="hgdn_8h.html#a0a4b41395e4bac8eb5c359db515aab6b">hgdn_print_error</a>(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))</td></tr>
+<tr class="memdesc:a942c2d27e885e98e7fb490c2d00be40b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <code>hgdn_print_error</code> with current function name, file name and line. <br /></td></tr>
+<tr class="separator:a942c2d27e885e98e7fb490c2d00be40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8d19fd5f3783c990eee0ada4fed045c"><td class="memItemLeft" align="right" valign="top"><a id="af8d19fd5f3783c990eee0ada4fed045c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#af8d19fd5f3783c990eee0ada4fed045c">HGDN_ASSERT_MSG</a>(cond,  fmt, ...)&#160;&#160;&#160;if(!(cond)){ <a class="el" href="hgdn_8h.html#a942c2d27e885e98e7fb490c2d00be40b">HGDN_PRINT_ERROR</a>(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }</td></tr>
+<tr class="memdesc:af8d19fd5f3783c990eee0ada4fed045c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>cond</code> is false, print formatted error message and return nil Variant. <br /></td></tr>
+<tr class="separator:af8d19fd5f3783c990eee0ada4fed045c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5391b06fc9c9ae6d990bdc5989dec941"><td class="memItemLeft" align="right" valign="top"><a id="a5391b06fc9c9ae6d990bdc5989dec941"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5391b06fc9c9ae6d990bdc5989dec941">HGDN_ASSERT</a>(cond)&#160;&#160;&#160;    <a class="el" href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">HGDN_ASSERT_MSG</a>((cond), &quot;Assertion error: !(&quot; #cond &quot;)&quot;)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5391b06fc9c9ae6d990bdc5989dec941">HGDN_ASSERT</a>(cond)&#160;&#160;&#160;<a class="el" href="hgdn_8h.html#af8d19fd5f3783c990eee0ada4fed045c">HGDN_ASSERT_MSG</a>((cond), &quot;Assertion error: !(&quot; #cond &quot;)&quot;)</td></tr>
 <tr class="memdesc:a5391b06fc9c9ae6d990bdc5989dec941"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>cond</code> is false, print a generic error message and return nil Variant. <br /></td></tr>
 <tr class="separator:a5391b06fc9c9ae6d990bdc5989dec941"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec051db348354455eed5bd452771f1de"><td class="memItemLeft" align="right" valign="top"><a id="aec051db348354455eed5bd452771f1de"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a>(arr,  min_size)&#160;&#160;&#160;    <a class="el" href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">HGDN_ASSERT_MSG</a>(hgdn_core_api-&gt;godot_array_size((arr)) &gt;= (min_size), &quot;Error: array should have size of at least &quot; #min_size)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a>(arr,  min_size)&#160;&#160;&#160;<a class="el" href="hgdn_8h.html#af8d19fd5f3783c990eee0ada4fed045c">HGDN_ASSERT_MSG</a>(hgdn_core_api-&gt;godot_array_size((arr)) &gt;= (min_size), &quot;Error: array should have size of at least &quot; #min_size &quot;, got %d&quot;, hgdn_core_api-&gt;godot_array_size((arr)))</td></tr>
 <tr class="memdesc:aec051db348354455eed5bd452771f1de"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>arr</code> doesn't have at least <code>min_size</code> elements, print error message and return nil Variant. <br /></td></tr>
 <tr class="separator:aec051db348354455eed5bd452771f1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0623ba6a5c81ae0dd7e2ea691c8acaea"><td class="memItemLeft" align="right" valign="top"><a id="a0623ba6a5c81ae0dd7e2ea691c8acaea"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a0623ba6a5c81ae0dd7e2ea691c8acaea">HGDN_ASSERT_ARGS_SIZE</a>(argc,  min_size)&#160;&#160;&#160;    <a class="el" href="hgdn_8h.html#a2f63352f9c0df4a045dea47fa3de7f86">HGDN_ASSERT_MSG</a>((argc) &gt;= (min_size), &quot;Error: expected at least &quot; #min_size &quot; arguments&quot;)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a0623ba6a5c81ae0dd7e2ea691c8acaea">HGDN_ASSERT_ARGS_SIZE</a>(argc,  min_size)&#160;&#160;&#160;<a class="el" href="hgdn_8h.html#af8d19fd5f3783c990eee0ada4fed045c">HGDN_ASSERT_MSG</a>((argc) &gt;= (min_size), &quot;Error: expected at least &quot; #min_size &quot; arguments, got %d&quot;, argc)</td></tr>
 <tr class="memdesc:a0623ba6a5c81ae0dd7e2ea691c8acaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>argc</code> isn't at least <code>min_size</code>, print error message and return nil Variant. <br /></td></tr>
 <tr class="separator:a0623ba6a5c81ae0dd7e2ea691c8acaea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88decdce22a7f6e1e00e081c38bfcaa4"><td class="memItemLeft" align="right" valign="top"><a id="a88decdce22a7f6e1e00e081c38bfcaa4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HGDN_NEW_STRING_LITERAL</b>(literal_str)&#160;&#160;&#160;(hgdn_new_string_with_len((literal_str), sizeof(literal_str)))</td></tr>
+<tr class="separator:a88decdce22a7f6e1e00e081c38bfcaa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11a7d37f5141591e91792ef2258fd0c4"><td class="memItemLeft" align="right" valign="top"><a id="a11a7d37f5141591e91792ef2258fd0c4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_byte_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a11a7d37f5141591e91792ef2258fd0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0425524e056ea48f5f1313d2f986991"><td class="memItemLeft" align="right" valign="top"><a id="ad0425524e056ea48f5f1313d2f986991"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_int_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:ad0425524e056ea48f5f1313d2f986991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0b08d1897d2b11d46d6661acc5e9c0"><td class="memItemLeft" align="right" valign="top"><a id="a7f0b08d1897d2b11d46d6661acc5e9c0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_real_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a7f0b08d1897d2b11d46d6661acc5e9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7808146e3534116906a7f4fe6ce6a659"><td class="memItemLeft" align="right" valign="top"><a id="a7808146e3534116906a7f4fe6ce6a659"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector2_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_vector2_array((const <a class="el" href="unionhgdn__vector2.html">godot_vector2</a>[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a7808146e3534116906a7f4fe6ce6a659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae85e93e42687a323cf9df447337523c5"><td class="memItemLeft" align="right" valign="top"><a id="ae85e93e42687a323cf9df447337523c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector3_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_vector3_array((const <a class="el" href="unionhgdn__vector3.html">godot_vector3</a>[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:ae85e93e42687a323cf9df447337523c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af50aa289050796ffce860e137ab43949"><td class="memItemLeft" align="right" valign="top"><a id="af50aa289050796ffce860e137ab43949"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_color_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_color_array((const <a class="el" href="unionhgdn__vector4.html">godot_color</a>[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:af50aa289050796ffce860e137ab43949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a520effdd724d63d85774c766e85ef6e3"><td class="memItemLeft" align="right" valign="top"><a id="a520effdd724d63d85774c766e85ef6e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a520effdd724d63d85774c766e85ef6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc83138b3d853fb396421ccdc69916d"><td class="memItemLeft" align="right" valign="top"><a id="a1dc83138b3d853fb396421ccdc69916d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array_args</b>(...)&#160;&#160;&#160;(hgdn_new_array((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a1dc83138b3d853fb396421ccdc69916d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6734d48e49177b95e60397a8c04df109"><td class="memItemLeft" align="right" valign="top"><a id="a6734d48e49177b95e60397a8c04df109"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array_own_args</b>(...)&#160;&#160;&#160;(hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))</td></tr>
+<tr class="separator:a6734d48e49177b95e60397a8c04df109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:af8384c06d40103c74e7a90da88824faa"><td class="memItemLeft" align="right" valign="top"><a id="af8384c06d40103c74e7a90da88824faa"></a>
+typedef <a class="el" href="unionhgdn__vector2.html">hgdn_vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_vector2</b></td></tr>
+<tr class="separator:af8384c06d40103c74e7a90da88824faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0432bd8b39183d9a261c8b31748d36c"><td class="memItemLeft" align="right" valign="top"><a id="af0432bd8b39183d9a261c8b31748d36c"></a>
+typedef <a class="el" href="unionhgdn__vector3.html">hgdn_vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_vector3</b></td></tr>
+<tr class="separator:af0432bd8b39183d9a261c8b31748d36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a028f8ab410afa774fb532ed0eddc8c8b"><td class="memItemLeft" align="right" valign="top"><a id="a028f8ab410afa774fb532ed0eddc8c8b"></a>
+typedef <a class="el" href="unionhgdn__vector4.html">hgdn_vector4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_color</b></td></tr>
+<tr class="separator:a028f8ab410afa774fb532ed0eddc8c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8a7ab23261ee8c5935e9c659eca40b4"><td class="memItemLeft" align="right" valign="top"><a id="af8a7ab23261ee8c5935e9c659eca40b4"></a>
+typedef <a class="el" href="unionhgdn__rect2.html">hgdn_rect2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_rect2</b></td></tr>
+<tr class="separator:af8a7ab23261ee8c5935e9c659eca40b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff924c8e130c7c199c458be14d9b67d"><td class="memItemLeft" align="right" valign="top"><a id="a9ff924c8e130c7c199c458be14d9b67d"></a>
+typedef <a class="el" href="unionhgdn__plane.html">hgdn_plane</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_plane</b></td></tr>
+<tr class="separator:a9ff924c8e130c7c199c458be14d9b67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb85b9f979c03cc53eb31aec7eeca077"><td class="memItemLeft" align="right" valign="top"><a id="aeb85b9f979c03cc53eb31aec7eeca077"></a>
+typedef <a class="el" href="unionhgdn__quat.html">hgdn_quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_quat</b></td></tr>
+<tr class="separator:aeb85b9f979c03cc53eb31aec7eeca077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6562b1b6ab0675bd2bdcbbcfc4987e8b"><td class="memItemLeft" align="right" valign="top"><a id="a6562b1b6ab0675bd2bdcbbcfc4987e8b"></a>
+typedef <a class="el" href="structhgdn__basis.html">hgdn_basis</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_basis</b></td></tr>
+<tr class="separator:a6562b1b6ab0675bd2bdcbbcfc4987e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e640b7b828e311b1c276a914990869"><td class="memItemLeft" align="right" valign="top"><a id="a01e640b7b828e311b1c276a914990869"></a>
+typedef <a class="el" href="structhgdn__aabb.html">hgdn_aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_aabb</b></td></tr>
+<tr class="separator:a01e640b7b828e311b1c276a914990869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad151b45ae2179da71283b30ad6daf3f4"><td class="memItemLeft" align="right" valign="top"><a id="ad151b45ae2179da71283b30ad6daf3f4"></a>
+typedef <a class="el" href="structhgdn__transform2d.html">hgdn_transform2d</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_transform2d</b></td></tr>
+<tr class="separator:ad151b45ae2179da71283b30ad6daf3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceb6ebd6b4d3e9afa6e800b63a26cfaf"><td class="memItemLeft" align="right" valign="top"><a id="aceb6ebd6b4d3e9afa6e800b63a26cfaf"></a>
+typedef <a class="el" href="structhgdn__transform.html">hgdn_transform</a>&#160;</td><td class="memItemRight" valign="bottom"><b>godot_transform</b></td></tr>
+<tr class="separator:aceb6ebd6b4d3e9afa6e800b63a26cfaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5e754da4d2c0ea1aea26e7d999e67b05"><td class="memItemLeft" align="right" valign="top">HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a> (const godot_gdnative_init_options *options)</td></tr>
-<tr class="memdesc:a5e754da4d2c0ea1aea26e7d999e67b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize globals.  <a href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">More...</a><br /></td></tr>
+<tr class="memitem:a5e754da4d2c0ea1aea26e7d999e67b05"><td class="memItemLeft" align="right" valign="top"><a id="a5e754da4d2c0ea1aea26e7d999e67b05"></a>
+HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a> (const godot_gdnative_init_options *options)</td></tr>
+<tr class="memdesc:a5e754da4d2c0ea1aea26e7d999e67b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize globals. Call this on your own <code>godot_gdnative_init</code> before any other HGDN functions. <br /></td></tr>
 <tr class="separator:a5e754da4d2c0ea1aea26e7d999e67b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b33afc16cb7739aafa2945cb1b335d5"><td class="memItemLeft" align="right" valign="top"><a id="a6b33afc16cb7739aafa2945cb1b335d5"></a>
 HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a6b33afc16cb7739aafa2945cb1b335d5">hgdn_gdnative_terminate</a> (const godot_gdnative_terminate_options *options)</td></tr>
@@ -124,193 +271,380 @@ HGDN_DECL void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <tr class="separator:a83bb732677e50a2fd59d6f5af9b1041f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27ebf3ff19cbd47f121710fcc223e6ec"><td class="memItemLeft" align="right" valign="top"><a id="a27ebf3ff19cbd47f121710fcc223e6ec"></a>
 HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a27ebf3ff19cbd47f121710fcc223e6ec">hgdn_free_string_array</a> (char **ptr, size_t size)</td></tr>
-<tr class="memdesc:a27ebf3ff19cbd47f121710fcc223e6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to free an array of strings. <br /></td></tr>
+<tr class="memdesc:a27ebf3ff19cbd47f121710fcc223e6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to free an array of strings created from hgdn_string_array_dup. <br /></td></tr>
 <tr class="separator:a27ebf3ff19cbd47f121710fcc223e6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4238533f99cb8ea2ca2fea5013da15fe"><td class="memItemLeft" align="right" valign="top"><a id="a4238533f99cb8ea2ca2fea5013da15fe"></a>
-HGDN_DECL godot_pool_byte_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a4238533f99cb8ea2ca2fea5013da15fe">hgdn_new_byte_array</a> (const uint8_t *buffer)</td></tr>
-<tr class="memdesc:a4238533f99cb8ea2ca2fea5013da15fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolByteArray from NULL terminated buffer. <br /></td></tr>
-<tr class="separator:a4238533f99cb8ea2ca2fea5013da15fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7268fe534c11fad2e512961a6817222"><td class="memItemLeft" align="right" valign="top"><a id="ac7268fe534c11fad2e512961a6817222"></a>
-HGDN_DECL godot_pool_byte_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ac7268fe534c11fad2e512961a6817222">hgdn_new_byte_array_with_len</a> (const uint8_t *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:ac7268fe534c11fad2e512961a6817222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolByteArray from sized buffer. <br /></td></tr>
-<tr class="separator:ac7268fe534c11fad2e512961a6817222"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82970038de2dfef952c29921b0d31cfd"><td class="memItemLeft" align="right" valign="top"><a id="a82970038de2dfef952c29921b0d31cfd"></a>
-HGDN_DECL godot_pool_int_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a82970038de2dfef952c29921b0d31cfd">hgdn_new_int_array</a> (const godot_int *buffer)</td></tr>
-<tr class="memdesc:a82970038de2dfef952c29921b0d31cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolIntArray from NULL terminated int buffer. <br /></td></tr>
-<tr class="separator:a82970038de2dfef952c29921b0d31cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca3e2a238f877538453cc90f32520ab7"><td class="memItemLeft" align="right" valign="top"><a id="aca3e2a238f877538453cc90f32520ab7"></a>
-HGDN_DECL godot_pool_int_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#aca3e2a238f877538453cc90f32520ab7">hgdn_new_int_array_with_len</a> (const godot_int *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:aca3e2a238f877538453cc90f32520ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolIntArray from sized int buffer. <br /></td></tr>
-<tr class="separator:aca3e2a238f877538453cc90f32520ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66647ad135fea9d678be945266a9a229"><td class="memItemLeft" align="right" valign="top"><a id="a66647ad135fea9d678be945266a9a229"></a>
-HGDN_DECL godot_pool_real_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a66647ad135fea9d678be945266a9a229">hgdn_new_real_array</a> (const godot_real *buffer)</td></tr>
-<tr class="memdesc:a66647ad135fea9d678be945266a9a229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolRealArray from NULL terminated real buffer. <br /></td></tr>
-<tr class="separator:a66647ad135fea9d678be945266a9a229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac535b85fb9fcb896645fd9401dce32d2"><td class="memItemLeft" align="right" valign="top"><a id="ac535b85fb9fcb896645fd9401dce32d2"></a>
-HGDN_DECL godot_pool_real_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ac535b85fb9fcb896645fd9401dce32d2">hgdn_new_real_array_with_len</a> (const godot_real *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:ac535b85fb9fcb896645fd9401dce32d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolRealArray from sized real buffer. <br /></td></tr>
-<tr class="separator:ac535b85fb9fcb896645fd9401dce32d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11ab1474f9df30124f6547f3878c98ed"><td class="memItemLeft" align="right" valign="top"><a id="a11ab1474f9df30124f6547f3878c98ed"></a>
-HGDN_DECL godot_pool_string_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a11ab1474f9df30124f6547f3878c98ed">hgdn_new_string_array</a> (const char **buffer)</td></tr>
-<tr class="memdesc:a11ab1474f9df30124f6547f3878c98ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolStringArray from NULL terminated buffer of NULL terminated strings. <br /></td></tr>
-<tr class="separator:a11ab1474f9df30124f6547f3878c98ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a060ee5d98423f998ebec1abe3e395e8f"><td class="memItemLeft" align="right" valign="top"><a id="a060ee5d98423f998ebec1abe3e395e8f"></a>
-HGDN_DECL godot_pool_string_array&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a060ee5d98423f998ebec1abe3e395e8f">hgdn_new_string_array_with_len</a> (const char **buffer, const godot_int len)</td></tr>
-<tr class="memdesc:a060ee5d98423f998ebec1abe3e395e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolStringArray from sized buffer of NULL terminated strings. <br /></td></tr>
-<tr class="separator:a060ee5d98423f998ebec1abe3e395e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43150114af1389944dc6e1a645c1930c"><td class="memItemLeft" align="right" valign="top"><a id="a43150114af1389944dc6e1a645c1930c"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a43150114af1389944dc6e1a645c1930c">hgdn_new_nil_variant</a> ()</td></tr>
-<tr class="memdesc:a43150114af1389944dc6e1a645c1930c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a nil Variant. <br /></td></tr>
-<tr class="separator:a43150114af1389944dc6e1a645c1930c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9310775afac773db6fcaebff2c6171e1"><td class="memItemLeft" align="right" valign="top"><a id="a9310775afac773db6fcaebff2c6171e1"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a9310775afac773db6fcaebff2c6171e1">hgdn_new_bool_variant</a> (const godot_bool b)</td></tr>
-<tr class="memdesc:a9310775afac773db6fcaebff2c6171e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a bool Variant. <br /></td></tr>
-<tr class="separator:a9310775afac773db6fcaebff2c6171e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13732ee12afe775f908c126c30588d1a"><td class="memItemLeft" align="right" valign="top"><a id="a13732ee12afe775f908c126c30588d1a"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a13732ee12afe775f908c126c30588d1a">hgdn_new_uint_variant</a> (const uint64_t u)</td></tr>
-<tr class="memdesc:a13732ee12afe775f908c126c30588d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an unsigned Variant. <br /></td></tr>
-<tr class="separator:a13732ee12afe775f908c126c30588d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10c979ad73eeef916f78a8a50901884e"><td class="memItemLeft" align="right" valign="top"><a id="a10c979ad73eeef916f78a8a50901884e"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a10c979ad73eeef916f78a8a50901884e">hgdn_new_int_variant</a> (const int64_t i)</td></tr>
-<tr class="memdesc:a10c979ad73eeef916f78a8a50901884e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an integral Variant. <br /></td></tr>
-<tr class="separator:a10c979ad73eeef916f78a8a50901884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a342a6f8cf7e07f5ff7a8e58501402f80"><td class="memItemLeft" align="right" valign="top"><a id="a342a6f8cf7e07f5ff7a8e58501402f80"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a342a6f8cf7e07f5ff7a8e58501402f80">hgdn_new_real_variant</a> (const double f)</td></tr>
-<tr class="memdesc:a342a6f8cf7e07f5ff7a8e58501402f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a real Variant. <br /></td></tr>
-<tr class="separator:a342a6f8cf7e07f5ff7a8e58501402f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8c02624005d6ab45c7a65c6e2c469d4"><td class="memItemLeft" align="right" valign="top"><a id="ae8c02624005d6ab45c7a65c6e2c469d4"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ae8c02624005d6ab45c7a65c6e2c469d4">hgdn_new_string_variant</a> (const char *cstr)</td></tr>
-<tr class="memdesc:ae8c02624005d6ab45c7a65c6e2c469d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a string Variant from NULL terminated char string. <br /></td></tr>
-<tr class="separator:ae8c02624005d6ab45c7a65c6e2c469d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f98aa426f83533a5f5a9e7fa0c57f73"><td class="memItemLeft" align="right" valign="top"><a id="a9f98aa426f83533a5f5a9e7fa0c57f73"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a9f98aa426f83533a5f5a9e7fa0c57f73">hgdn_new_string_variant_with_len</a> (const char *cstr, const godot_int len)</td></tr>
-<tr class="memdesc:a9f98aa426f83533a5f5a9e7fa0c57f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a string Variant from sized char string. <br /></td></tr>
-<tr class="separator:a9f98aa426f83533a5f5a9e7fa0c57f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9196f8b2e54e857392f2978697b396bb"><td class="memItemLeft" align="right" valign="top"><a id="a9196f8b2e54e857392f2978697b396bb"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a9196f8b2e54e857392f2978697b396bb">hgdn_new_byte_array_variant</a> (const uint8_t *buffer)</td></tr>
-<tr class="memdesc:a9196f8b2e54e857392f2978697b396bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolByteArray Variant from NULL terminated byte string. <br /></td></tr>
-<tr class="separator:a9196f8b2e54e857392f2978697b396bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d1d46f1fc22f319a78de4fda52d6921"><td class="memItemLeft" align="right" valign="top"><a id="a2d1d46f1fc22f319a78de4fda52d6921"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a2d1d46f1fc22f319a78de4fda52d6921">hgdn_new_byte_array_variant_with_len</a> (const uint8_t *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:a2d1d46f1fc22f319a78de4fda52d6921"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolByteArray Variant from sized byte string. <br /></td></tr>
-<tr class="separator:a2d1d46f1fc22f319a78de4fda52d6921"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9598daf114d209f0e3f95e2a4c9150d"><td class="memItemLeft" align="right" valign="top"><a id="ae9598daf114d209f0e3f95e2a4c9150d"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ae9598daf114d209f0e3f95e2a4c9150d">hgdn_new_int_array_variant</a> (const godot_int *buffer)</td></tr>
-<tr class="memdesc:ae9598daf114d209f0e3f95e2a4c9150d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolIntArray Variant from NULL terminated int string. <br /></td></tr>
-<tr class="separator:ae9598daf114d209f0e3f95e2a4c9150d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0284d47baea1302ffb630c72046b20b2"><td class="memItemLeft" align="right" valign="top"><a id="a0284d47baea1302ffb630c72046b20b2"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a0284d47baea1302ffb630c72046b20b2">hgdn_new_int_array_variant_with_len</a> (const godot_int *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:a0284d47baea1302ffb630c72046b20b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolIntArray Variant from sized int string. <br /></td></tr>
-<tr class="separator:a0284d47baea1302ffb630c72046b20b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0aeb5bcb175bb9db6abfd072a258e14f"><td class="memItemLeft" align="right" valign="top"><a id="a0aeb5bcb175bb9db6abfd072a258e14f"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a0aeb5bcb175bb9db6abfd072a258e14f">hgdn_new_real_array_variant</a> (const godot_real *buffer)</td></tr>
-<tr class="memdesc:a0aeb5bcb175bb9db6abfd072a258e14f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolRealArray Variant from NULL terminated real string. <br /></td></tr>
-<tr class="separator:a0aeb5bcb175bb9db6abfd072a258e14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a907f8aec20d1616860c083b82533f4fe"><td class="memItemLeft" align="right" valign="top"><a id="a907f8aec20d1616860c083b82533f4fe"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a907f8aec20d1616860c083b82533f4fe">hgdn_new_real_array_variant_with_len</a> (const godot_real *buffer, const godot_int len)</td></tr>
-<tr class="memdesc:a907f8aec20d1616860c083b82533f4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolRealArray Variant from sized real string. <br /></td></tr>
-<tr class="separator:a907f8aec20d1616860c083b82533f4fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02fa19f8a769107d31eb8031703f38d4"><td class="memItemLeft" align="right" valign="top"><a id="a02fa19f8a769107d31eb8031703f38d4"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a02fa19f8a769107d31eb8031703f38d4">hgdn_new_string_array_variant</a> (const char **buffer)</td></tr>
-<tr class="memdesc:a02fa19f8a769107d31eb8031703f38d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolStringArray Variant from NULL terminated buffer of NULL terminated strings. <br /></td></tr>
-<tr class="separator:a02fa19f8a769107d31eb8031703f38d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6795e93be0722522a2ffa0b7ebf94bab"><td class="memItemLeft" align="right" valign="top"><a id="a6795e93be0722522a2ffa0b7ebf94bab"></a>
-HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a6795e93be0722522a2ffa0b7ebf94bab">hgdn_new_string_array_variant_with_len</a> (const char **buffer, const godot_int len)</td></tr>
-<tr class="memdesc:a6795e93be0722522a2ffa0b7ebf94bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a PoolStringArray Variant from sized buffer of NULL terminated strings. <br /></td></tr>
-<tr class="separator:a6795e93be0722522a2ffa0b7ebf94bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a404911647774c21e7ce2521e06adeb7c"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a404911647774c21e7ce2521e06adeb7c">hgdn_string_dup</a> (const godot_string *str, size_t *out_len)</td></tr>
-<tr class="memdesc:a404911647774c21e7ce2521e06adeb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new NULL terminated char string and copy <code>str</code> contents.  <a href="hgdn_8h.html#a404911647774c21e7ce2521e06adeb7c">More...</a><br /></td></tr>
-<tr class="separator:a404911647774c21e7ce2521e06adeb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b495e870e020a60ec56335d65581e6a"><td class="memItemLeft" align="right" valign="top">HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a1b495e870e020a60ec56335d65581e6a">hgdn_byte_array_dup</a> (const godot_pool_byte_array *array, size_t *out_size)</td></tr>
-<tr class="memdesc:a1b495e870e020a60ec56335d65581e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new byte array and copy <code>array</code> contents.  <a href="hgdn_8h.html#a1b495e870e020a60ec56335d65581e6a">More...</a><br /></td></tr>
+<tr class="memitem:acf1fba45abd6265766c922f9153c6410"><td class="memItemLeft" align="right" valign="top"><a id="acf1fba45abd6265766c922f9153c6410"></a>
+HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#acf1fba45abd6265766c922f9153c6410">hgdn_print</a> (const char *fmt,...)</td></tr>
+<tr class="memdesc:acf1fba45abd6265766c922f9153c6410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs a <code>printf</code> formatted message to standard output. <br /></td></tr>
+<tr class="separator:acf1fba45abd6265766c922f9153c6410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b032652ac8c38d28962582cf1b3513b"><td class="memItemLeft" align="right" valign="top"><a id="a4b032652ac8c38d28962582cf1b3513b"></a>
+HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a4b032652ac8c38d28962582cf1b3513b">hgdn_print_warning</a> (const char *funcname, const char *filename, int line, const char *fmt,...)</td></tr>
+<tr class="memdesc:a4b032652ac8c38d28962582cf1b3513b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs a <code>printf</code> formatted message as warning. Use HGDN_PRINT_WARNING to use inferred current function name, file name and line. <br /></td></tr>
+<tr class="separator:a4b032652ac8c38d28962582cf1b3513b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a4b41395e4bac8eb5c359db515aab6b"><td class="memItemLeft" align="right" valign="top"><a id="a0a4b41395e4bac8eb5c359db515aab6b"></a>
+HGDN_DECL void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a0a4b41395e4bac8eb5c359db515aab6b">hgdn_print_error</a> (const char *funcname, const char *filename, int line, const char *fmt,...)</td></tr>
+<tr class="memdesc:a0a4b41395e4bac8eb5c359db515aab6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs a <code>printf</code> formatted message as error. Use HGDN_PRINT_ERROR to use inferred current function name, file name and line. <br /></td></tr>
+<tr class="separator:a0a4b41395e4bac8eb5c359db515aab6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f500d6edaa1944991e8227083eed8ff"><td class="memItemLeft" align="right" valign="top"><a id="a9f500d6edaa1944991e8227083eed8ff"></a>
+HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_string_dup</b> (const godot_string *str, size_t *out_size)</td></tr>
+<tr class="separator:a9f500d6edaa1944991e8227083eed8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b495e870e020a60ec56335d65581e6a"><td class="memItemLeft" align="right" valign="top"><a id="a1b495e870e020a60ec56335d65581e6a"></a>
+HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_byte_array_dup</b> (const godot_pool_byte_array *array, size_t *out_size)</td></tr>
 <tr class="separator:a1b495e870e020a60ec56335d65581e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d1be9153e34abe40fb799c8cc39e790"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5d1be9153e34abe40fb799c8cc39e790">hgdn_int_array_dup</a> (const godot_pool_int_array *array, size_t *out_size)</td></tr>
-<tr class="memdesc:a5d1be9153e34abe40fb799c8cc39e790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new int array and copy <code>array</code> contents.  <a href="hgdn_8h.html#a5d1be9153e34abe40fb799c8cc39e790">More...</a><br /></td></tr>
+<tr class="memitem:a5d1be9153e34abe40fb799c8cc39e790"><td class="memItemLeft" align="right" valign="top"><a id="a5d1be9153e34abe40fb799c8cc39e790"></a>
+HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_int_array_dup</b> (const godot_pool_int_array *array, size_t *out_size)</td></tr>
 <tr class="separator:a5d1be9153e34abe40fb799c8cc39e790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8d1be0423663eb56bfebf4f1d7bc457"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#aa8d1be0423663eb56bfebf4f1d7bc457">hgdn_real_array_dup</a> (const godot_pool_real_array *array, size_t *out_size)</td></tr>
-<tr class="memdesc:aa8d1be0423663eb56bfebf4f1d7bc457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new real array and copy <code>array</code> contents.  <a href="hgdn_8h.html#aa8d1be0423663eb56bfebf4f1d7bc457">More...</a><br /></td></tr>
+<tr class="memitem:aa8d1be0423663eb56bfebf4f1d7bc457"><td class="memItemLeft" align="right" valign="top"><a id="aa8d1be0423663eb56bfebf4f1d7bc457"></a>
+HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_real_array_dup</b> (const godot_pool_real_array *array, size_t *out_size)</td></tr>
 <tr class="separator:aa8d1be0423663eb56bfebf4f1d7bc457"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a0d3504f43fc044d847ab84954ad4b8"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a2a0d3504f43fc044d847ab84954ad4b8">hgdn_string_array_dup</a> (const godot_pool_string_array *array, size_t *out_size)</td></tr>
-<tr class="memdesc:a2a0d3504f43fc044d847ab84954ad4b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new string array and copy <code>array</code> contents.  <a href="hgdn_8h.html#a2a0d3504f43fc044d847ab84954ad4b8">More...</a><br /></td></tr>
+<tr class="memitem:ad24a39f8eaebb3a5909e65398a1b6e6d"><td class="memItemLeft" align="right" valign="top"><a id="ad24a39f8eaebb3a5909e65398a1b6e6d"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_vector2_array_dup</b> (const godot_pool_vector2_array *array, size_t *out_size)</td></tr>
+<tr class="separator:ad24a39f8eaebb3a5909e65398a1b6e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48168a0edeb7fd97d15e4f6c679ee99a"><td class="memItemLeft" align="right" valign="top"><a id="a48168a0edeb7fd97d15e4f6c679ee99a"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_vector3_array_dup</b> (const godot_pool_vector3_array *array, size_t *out_size)</td></tr>
+<tr class="separator:a48168a0edeb7fd97d15e4f6c679ee99a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89e32041ac474fe7708574dd44bcf020"><td class="memItemLeft" align="right" valign="top"><a id="a89e32041ac474fe7708574dd44bcf020"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_color_array_dup</b> (const godot_pool_color_array *array, size_t *out_size)</td></tr>
+<tr class="separator:a89e32041ac474fe7708574dd44bcf020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0d3504f43fc044d847ab84954ad4b8"><td class="memItemLeft" align="right" valign="top"><a id="a2a0d3504f43fc044d847ab84954ad4b8"></a>
+HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_string_array_dup</b> (const godot_pool_string_array *array, size_t *out_size)</td></tr>
 <tr class="separator:a2a0d3504f43fc044d847ab84954ad4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ce79d1db176f088d1e20bb2cda7b37f"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a2ce79d1db176f088d1e20bb2cda7b37f">hgdn_string_from_variant</a> (const godot_variant *var, size_t *out_len)</td></tr>
-<tr class="memdesc:a2ce79d1db176f088d1e20bb2cda7b37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new NULL terminated char string and copy <code>var</code> string content.  <a href="hgdn_8h.html#a2ce79d1db176f088d1e20bb2cda7b37f">More...</a><br /></td></tr>
-<tr class="separator:a2ce79d1db176f088d1e20bb2cda7b37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac98bbc9b0893f33c96b87ff910513e3f"><td class="memItemLeft" align="right" valign="top">HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ac98bbc9b0893f33c96b87ff910513e3f">hgdn_byte_array_from_variant</a> (const godot_variant *var, size_t *out_size)</td></tr>
-<tr class="memdesc:ac98bbc9b0893f33c96b87ff910513e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new byte array and copy <code>var</code> byte array content.  <a href="hgdn_8h.html#ac98bbc9b0893f33c96b87ff910513e3f">More...</a><br /></td></tr>
+<tr class="memitem:a426d6495971c6e1c63f62b464d56687e"><td class="memItemLeft" align="right" valign="top"><a id="a426d6495971c6e1c63f62b464d56687e"></a>
+HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_string_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
+<tr class="separator:a426d6495971c6e1c63f62b464d56687e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac98bbc9b0893f33c96b87ff910513e3f"><td class="memItemLeft" align="right" valign="top"><a id="ac98bbc9b0893f33c96b87ff910513e3f"></a>
+HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_byte_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
 <tr class="separator:ac98bbc9b0893f33c96b87ff910513e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67fd36c775ed065b0fe490f9b6924cfc"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a67fd36c775ed065b0fe490f9b6924cfc">hgdn_int_array_from_variant</a> (const godot_variant *var, size_t *out_size)</td></tr>
-<tr class="memdesc:a67fd36c775ed065b0fe490f9b6924cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new int array and copy <code>var</code> int array content.  <a href="hgdn_8h.html#a67fd36c775ed065b0fe490f9b6924cfc">More...</a><br /></td></tr>
+<tr class="memitem:a67fd36c775ed065b0fe490f9b6924cfc"><td class="memItemLeft" align="right" valign="top"><a id="a67fd36c775ed065b0fe490f9b6924cfc"></a>
+HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_int_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
 <tr class="separator:a67fd36c775ed065b0fe490f9b6924cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b319ba9a5d5fcdcc9c69673ff74c0f1"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a6b319ba9a5d5fcdcc9c69673ff74c0f1">hgdn_real_array_from_variant</a> (const godot_variant *var, size_t *out_size)</td></tr>
-<tr class="memdesc:a6b319ba9a5d5fcdcc9c69673ff74c0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new real array and copy <code>var</code> real array content.  <a href="hgdn_8h.html#a6b319ba9a5d5fcdcc9c69673ff74c0f1">More...</a><br /></td></tr>
+<tr class="memitem:a6b319ba9a5d5fcdcc9c69673ff74c0f1"><td class="memItemLeft" align="right" valign="top"><a id="a6b319ba9a5d5fcdcc9c69673ff74c0f1"></a>
+HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_real_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
 <tr class="separator:a6b319ba9a5d5fcdcc9c69673ff74c0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a076ccf68ccff58a55b707069ab2fa56f"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a076ccf68ccff58a55b707069ab2fa56f">hgdn_string_array_from_variant</a> (const godot_variant *var, size_t *out_size)</td></tr>
-<tr class="memdesc:a076ccf68ccff58a55b707069ab2fa56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new string array and copy <code>var</code> string array content.  <a href="hgdn_8h.html#a076ccf68ccff58a55b707069ab2fa56f">More...</a><br /></td></tr>
+<tr class="memitem:ac4d01b1149a1d3d4380cc5eea080900f"><td class="memItemLeft" align="right" valign="top"><a id="ac4d01b1149a1d3d4380cc5eea080900f"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_vector2_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
+<tr class="separator:ac4d01b1149a1d3d4380cc5eea080900f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87724af3dd9c926eca34b566c82ffd8d"><td class="memItemLeft" align="right" valign="top"><a id="a87724af3dd9c926eca34b566c82ffd8d"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_vector3_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
+<tr class="separator:a87724af3dd9c926eca34b566c82ffd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a176700463b3308ca775fd57b7b3ba917"><td class="memItemLeft" align="right" valign="top"><a id="a176700463b3308ca775fd57b7b3ba917"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_color_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
+<tr class="separator:a176700463b3308ca775fd57b7b3ba917"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a076ccf68ccff58a55b707069ab2fa56f"><td class="memItemLeft" align="right" valign="top"><a id="a076ccf68ccff58a55b707069ab2fa56f"></a>
+HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_string_array_from_variant</b> (const godot_variant *var, size_t *out_size)</td></tr>
 <tr class="separator:a076ccf68ccff58a55b707069ab2fa56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a83681c7d04526aabc9e5beeefa4557"><td class="memItemLeft" align="right" valign="top"><a id="a6a83681c7d04526aabc9e5beeefa4557"></a>
-HGDN_DECL godot_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a6a83681c7d04526aabc9e5beeefa4557">hgdn_array_get_bool</a> (const godot_array *array, const godot_int index)</td></tr>
-<tr class="memdesc:a6a83681c7d04526aabc9e5beeefa4557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a bool value from godot_array. <br /></td></tr>
+HGDN_DECL godot_bool&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_bool</b> (const godot_array *array, const godot_int index)</td></tr>
 <tr class="separator:a6a83681c7d04526aabc9e5beeefa4557"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf6c64d3aa2b094fd6cf119bbfd43b55"><td class="memItemLeft" align="right" valign="top"><a id="aaf6c64d3aa2b094fd6cf119bbfd43b55"></a>
-HGDN_DECL uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#aaf6c64d3aa2b094fd6cf119bbfd43b55">hgdn_array_get_uint</a> (const godot_array *array, const godot_int index)</td></tr>
-<tr class="memdesc:aaf6c64d3aa2b094fd6cf119bbfd43b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a uint value from godot_array. <br /></td></tr>
+HGDN_DECL uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_uint</b> (const godot_array *array, const godot_int index)</td></tr>
 <tr class="separator:aaf6c64d3aa2b094fd6cf119bbfd43b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12aac13b47c012af94b8ce2c3d595f40"><td class="memItemLeft" align="right" valign="top"><a id="a12aac13b47c012af94b8ce2c3d595f40"></a>
-HGDN_DECL int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a12aac13b47c012af94b8ce2c3d595f40">hgdn_array_get_int</a> (const godot_array *array, const godot_int index)</td></tr>
-<tr class="memdesc:a12aac13b47c012af94b8ce2c3d595f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a int value from godot_array. <br /></td></tr>
+HGDN_DECL int64_t&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_int</b> (const godot_array *array, const godot_int index)</td></tr>
 <tr class="separator:a12aac13b47c012af94b8ce2c3d595f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a991d73dab149ec0b9079edeab37b87"><td class="memItemLeft" align="right" valign="top"><a id="a5a991d73dab149ec0b9079edeab37b87"></a>
-HGDN_DECL double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a5a991d73dab149ec0b9079edeab37b87">hgdn_array_get_real</a> (const godot_array *array, const godot_int index)</td></tr>
-<tr class="memdesc:a5a991d73dab149ec0b9079edeab37b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a real value from godot_array. <br /></td></tr>
+HGDN_DECL double&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_real</b> (const godot_array *array, const godot_int index)</td></tr>
 <tr class="separator:a5a991d73dab149ec0b9079edeab37b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35c793266c4aac19733a7034c4f0c26a"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a35c793266c4aac19733a7034c4f0c26a">hgdn_array_get_string</a> (const godot_array *array, const godot_int index, size_t *out_len)</td></tr>
-<tr class="memdesc:a35c793266c4aac19733a7034c4f0c26a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a string value from godot_array.  <a href="hgdn_8h.html#a35c793266c4aac19733a7034c4f0c26a">More...</a><br /></td></tr>
-<tr class="separator:a35c793266c4aac19733a7034c4f0c26a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83154f3c03c5ee089c02f8df3bd2463f"><td class="memItemLeft" align="right" valign="top">HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a83154f3c03c5ee089c02f8df3bd2463f">hgdn_array_get_byte_array</a> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a83154f3c03c5ee089c02f8df3bd2463f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a byte array from godot_array.  <a href="hgdn_8h.html#a83154f3c03c5ee089c02f8df3bd2463f">More...</a><br /></td></tr>
+<tr class="memitem:a258f7147de749ee9ef8d21816b9b9bfa"><td class="memItemLeft" align="right" valign="top"><a id="a258f7147de749ee9ef8d21816b9b9bfa"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_vector2</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a258f7147de749ee9ef8d21816b9b9bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8228b60553139f1b62181f0b7b1ceddd"><td class="memItemLeft" align="right" valign="top"><a id="a8228b60553139f1b62181f0b7b1ceddd"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_vector3</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a8228b60553139f1b62181f0b7b1ceddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a762d5b5fbacfa4b4b87ea2109aaba08d"><td class="memItemLeft" align="right" valign="top"><a id="a762d5b5fbacfa4b4b87ea2109aaba08d"></a>
+HGDN_DECL <a class="el" href="unionhgdn__rect2.html">godot_rect2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_rect2</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a762d5b5fbacfa4b4b87ea2109aaba08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ecb08b459c6ece58be6c14bd88c5fa1"><td class="memItemLeft" align="right" valign="top"><a id="a7ecb08b459c6ece58be6c14bd88c5fa1"></a>
+HGDN_DECL <a class="el" href="unionhgdn__plane.html">godot_plane</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_plane</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a7ecb08b459c6ece58be6c14bd88c5fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba3c1235c74f6bd570009e98a2d89299"><td class="memItemLeft" align="right" valign="top"><a id="aba3c1235c74f6bd570009e98a2d89299"></a>
+HGDN_DECL <a class="el" href="unionhgdn__quat.html">godot_quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_quat</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:aba3c1235c74f6bd570009e98a2d89299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f68017a3cf9ac59b6282445699554bd"><td class="memItemLeft" align="right" valign="top"><a id="a2f68017a3cf9ac59b6282445699554bd"></a>
+HGDN_DECL <a class="el" href="structhgdn__aabb.html">godot_aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_aabb</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a2f68017a3cf9ac59b6282445699554bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c9be4cdcac7e4efbc760bc3df79ffc"><td class="memItemLeft" align="right" valign="top"><a id="ad4c9be4cdcac7e4efbc760bc3df79ffc"></a>
+HGDN_DECL <a class="el" href="structhgdn__basis.html">godot_basis</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_basis</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:ad4c9be4cdcac7e4efbc760bc3df79ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e17a8ee0ba4c086d098b9dd2eba0bf4"><td class="memItemLeft" align="right" valign="top"><a id="a6e17a8ee0ba4c086d098b9dd2eba0bf4"></a>
+HGDN_DECL <a class="el" href="structhgdn__transform2d.html">godot_transform2d</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_transform2d</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a6e17a8ee0ba4c086d098b9dd2eba0bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062dba36344ae35dfc3f596080cd5e41"><td class="memItemLeft" align="right" valign="top"><a id="a062dba36344ae35dfc3f596080cd5e41"></a>
+HGDN_DECL <a class="el" href="structhgdn__transform.html">godot_transform</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_transform</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a062dba36344ae35dfc3f596080cd5e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab015dcdb2a6edf5d9534c296bf7473ee"><td class="memItemLeft" align="right" valign="top"><a id="ab015dcdb2a6edf5d9534c296bf7473ee"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_color</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:ab015dcdb2a6edf5d9534c296bf7473ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a598f00fbb615fb4b2f15e740a39a79be"><td class="memItemLeft" align="right" valign="top"><a id="a598f00fbb615fb4b2f15e740a39a79be"></a>
+HGDN_DECL godot_node_path&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_node_path</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a598f00fbb615fb4b2f15e740a39a79be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab16ef043c5d2bc68eb111fcc51153a64"><td class="memItemLeft" align="right" valign="top"><a id="ab16ef043c5d2bc68eb111fcc51153a64"></a>
+HGDN_DECL godot_rid&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_rid</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:ab16ef043c5d2bc68eb111fcc51153a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeda07ac340a2cda9d5342d4e72558b00"><td class="memItemLeft" align="right" valign="top"><a id="aeda07ac340a2cda9d5342d4e72558b00"></a>
+HGDN_DECL godot_object *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_object</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:aeda07ac340a2cda9d5342d4e72558b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1239876054278760f3ad7f991b6dacc1"><td class="memItemLeft" align="right" valign="top"><a id="a1239876054278760f3ad7f991b6dacc1"></a>
+HGDN_DECL godot_dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_dictionary</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a1239876054278760f3ad7f991b6dacc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2497e6b6035fb6353227e9b2ba00e1b1"><td class="memItemLeft" align="right" valign="top"><a id="a2497e6b6035fb6353227e9b2ba00e1b1"></a>
+HGDN_DECL godot_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_array</b> (const godot_array *array, const godot_int index)</td></tr>
+<tr class="separator:a2497e6b6035fb6353227e9b2ba00e1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb5a639541704eb0bc0976ddfc06533"><td class="memItemLeft" align="right" valign="top"><a id="afdb5a639541704eb0bc0976ddfc06533"></a>
+HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_string</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:afdb5a639541704eb0bc0976ddfc06533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83154f3c03c5ee089c02f8df3bd2463f"><td class="memItemLeft" align="right" valign="top"><a id="a83154f3c03c5ee089c02f8df3bd2463f"></a>
+HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_byte_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a83154f3c03c5ee089c02f8df3bd2463f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59db993b401c6597201b23b692999141"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a59db993b401c6597201b23b692999141">hgdn_array_get_int_array</a> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a59db993b401c6597201b23b692999141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting an int array from godot_array.  <a href="hgdn_8h.html#a59db993b401c6597201b23b692999141">More...</a><br /></td></tr>
+<tr class="memitem:a59db993b401c6597201b23b692999141"><td class="memItemLeft" align="right" valign="top"><a id="a59db993b401c6597201b23b692999141"></a>
+HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_int_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a59db993b401c6597201b23b692999141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840500010ab09cc1e282443334e7b951"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a840500010ab09cc1e282443334e7b951">hgdn_array_get_real_array</a> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a840500010ab09cc1e282443334e7b951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a real array from godot_array.  <a href="hgdn_8h.html#a840500010ab09cc1e282443334e7b951">More...</a><br /></td></tr>
+<tr class="memitem:a840500010ab09cc1e282443334e7b951"><td class="memItemLeft" align="right" valign="top"><a id="a840500010ab09cc1e282443334e7b951"></a>
+HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_real_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a840500010ab09cc1e282443334e7b951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b27c66981d42c7eff2e04f2a67b3cd0"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a3b27c66981d42c7eff2e04f2a67b3cd0">hgdn_array_get_string_array</a> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a3b27c66981d42c7eff2e04f2a67b3cd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a string array from godot_array.  <a href="hgdn_8h.html#a3b27c66981d42c7eff2e04f2a67b3cd0">More...</a><br /></td></tr>
+<tr class="memitem:a01d57ddfd15477f1a7b454478e4f79ae"><td class="memItemLeft" align="right" valign="top"><a id="a01d57ddfd15477f1a7b454478e4f79ae"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_vector2_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a01d57ddfd15477f1a7b454478e4f79ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20100523648d25c318c488d162f8d50"><td class="memItemLeft" align="right" valign="top"><a id="af20100523648d25c318c488d162f8d50"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_vector3_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:af20100523648d25c318c488d162f8d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8733558d68b53b36021458bd720afd15"><td class="memItemLeft" align="right" valign="top"><a id="a8733558d68b53b36021458bd720afd15"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_color_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a8733558d68b53b36021458bd720afd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b27c66981d42c7eff2e04f2a67b3cd0"><td class="memItemLeft" align="right" valign="top"><a id="a3b27c66981d42c7eff2e04f2a67b3cd0"></a>
+HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_array_get_string_array</b> (const godot_array *array, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a3b27c66981d42c7eff2e04f2a67b3cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79364bc5c0e629050cbc3eade83617da"><td class="memItemLeft" align="right" valign="top"><a id="a79364bc5c0e629050cbc3eade83617da"></a>
-HGDN_DECL godot_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a79364bc5c0e629050cbc3eade83617da">hgdn_args_get_bool</a> (const godot_variant **args, const godot_int index)</td></tr>
-<tr class="memdesc:a79364bc5c0e629050cbc3eade83617da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a bool value from method arguments. <br /></td></tr>
+HGDN_DECL godot_bool&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_bool</b> (const godot_variant **args, const godot_int index)</td></tr>
 <tr class="separator:a79364bc5c0e629050cbc3eade83617da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8408853855668bfa3a1490646bbaef6"><td class="memItemLeft" align="right" valign="top"><a id="ab8408853855668bfa3a1490646bbaef6"></a>
-HGDN_DECL uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ab8408853855668bfa3a1490646bbaef6">hgdn_args_get_uint</a> (const godot_variant **args, const godot_int index)</td></tr>
-<tr class="memdesc:ab8408853855668bfa3a1490646bbaef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a uint value from method arguments. <br /></td></tr>
+HGDN_DECL uint64_t&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_uint</b> (const godot_variant **args, const godot_int index)</td></tr>
 <tr class="separator:ab8408853855668bfa3a1490646bbaef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63635268c9184fbc6b706603b24edc94"><td class="memItemLeft" align="right" valign="top"><a id="a63635268c9184fbc6b706603b24edc94"></a>
-HGDN_DECL int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a63635268c9184fbc6b706603b24edc94">hgdn_args_get_int</a> (const godot_variant **args, const godot_int index)</td></tr>
-<tr class="memdesc:a63635268c9184fbc6b706603b24edc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a int value from method arguments. <br /></td></tr>
+HGDN_DECL int64_t&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_int</b> (const godot_variant **args, const godot_int index)</td></tr>
 <tr class="separator:a63635268c9184fbc6b706603b24edc94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9910c34efb1e68d67e77988c42bfade"><td class="memItemLeft" align="right" valign="top"><a id="ad9910c34efb1e68d67e77988c42bfade"></a>
-HGDN_DECL double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#ad9910c34efb1e68d67e77988c42bfade">hgdn_args_get_real</a> (const godot_variant **args, const godot_int index)</td></tr>
-<tr class="memdesc:ad9910c34efb1e68d67e77988c42bfade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a real value from method arguments. <br /></td></tr>
+HGDN_DECL double&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_real</b> (const godot_variant **args, const godot_int index)</td></tr>
 <tr class="separator:ad9910c34efb1e68d67e77988c42bfade"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdf24919a23843d2ba5a6ef8300181eb"><td class="memItemLeft" align="right" valign="top"><a id="abdf24919a23843d2ba5a6ef8300181eb"></a>
-HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#abdf24919a23843d2ba5a6ef8300181eb">hgdn_args_get_string</a> (const godot_variant **args, const godot_int index, size_t *out_len)</td></tr>
-<tr class="memdesc:abdf24919a23843d2ba5a6ef8300181eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a string value from method arguments. <br /></td></tr>
-<tr class="separator:abdf24919a23843d2ba5a6ef8300181eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afef4ae0d74624385e55b027a515cdf3b"><td class="memItemLeft" align="right" valign="top">HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#afef4ae0d74624385e55b027a515cdf3b">hgdn_args_get_byte_array</a> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:afef4ae0d74624385e55b027a515cdf3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a byte array from method arguments.  <a href="hgdn_8h.html#afef4ae0d74624385e55b027a515cdf3b">More...</a><br /></td></tr>
+<tr class="memitem:aa7f4e659d307e03bfaec10ccddc55b97"><td class="memItemLeft" align="right" valign="top"><a id="aa7f4e659d307e03bfaec10ccddc55b97"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_vector2</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:aa7f4e659d307e03bfaec10ccddc55b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59a1c561f7be9d334e80ee126be7e14"><td class="memItemLeft" align="right" valign="top"><a id="af59a1c561f7be9d334e80ee126be7e14"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_vector3</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:af59a1c561f7be9d334e80ee126be7e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba2ab24c374da881d10d4b2e9350c06d"><td class="memItemLeft" align="right" valign="top"><a id="aba2ab24c374da881d10d4b2e9350c06d"></a>
+HGDN_DECL <a class="el" href="unionhgdn__rect2.html">godot_rect2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_rect2</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:aba2ab24c374da881d10d4b2e9350c06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1028cec566e24afee3f6e0f37e4da6c"><td class="memItemLeft" align="right" valign="top"><a id="ad1028cec566e24afee3f6e0f37e4da6c"></a>
+HGDN_DECL <a class="el" href="unionhgdn__plane.html">godot_plane</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_plane</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:ad1028cec566e24afee3f6e0f37e4da6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a317dd11510fd2d8d9c214447bb0e3014"><td class="memItemLeft" align="right" valign="top"><a id="a317dd11510fd2d8d9c214447bb0e3014"></a>
+HGDN_DECL <a class="el" href="unionhgdn__quat.html">godot_quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_quat</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a317dd11510fd2d8d9c214447bb0e3014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294825119003db425143678b527a140a"><td class="memItemLeft" align="right" valign="top"><a id="a294825119003db425143678b527a140a"></a>
+HGDN_DECL <a class="el" href="structhgdn__aabb.html">godot_aabb</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_aabb</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a294825119003db425143678b527a140a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff46c57ac54bee49ea50e01ba4fba244"><td class="memItemLeft" align="right" valign="top"><a id="aff46c57ac54bee49ea50e01ba4fba244"></a>
+HGDN_DECL <a class="el" href="structhgdn__basis.html">godot_basis</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_basis</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:aff46c57ac54bee49ea50e01ba4fba244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e462aca864230a0500e0c8557d986d"><td class="memItemLeft" align="right" valign="top"><a id="a12e462aca864230a0500e0c8557d986d"></a>
+HGDN_DECL <a class="el" href="structhgdn__transform2d.html">godot_transform2d</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_transform2d</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a12e462aca864230a0500e0c8557d986d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a088f7e3ac969241ffb3e93d764050a"><td class="memItemLeft" align="right" valign="top"><a id="a2a088f7e3ac969241ffb3e93d764050a"></a>
+HGDN_DECL <a class="el" href="structhgdn__transform.html">godot_transform</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_transform</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a2a088f7e3ac969241ffb3e93d764050a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd12548cce332508177ebf96330158f"><td class="memItemLeft" align="right" valign="top"><a id="a1fd12548cce332508177ebf96330158f"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_color</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a1fd12548cce332508177ebf96330158f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a965487d20bca2fbef2be7c1354a245e6"><td class="memItemLeft" align="right" valign="top"><a id="a965487d20bca2fbef2be7c1354a245e6"></a>
+HGDN_DECL godot_node_path&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_node_path</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a965487d20bca2fbef2be7c1354a245e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb4b60436e6c998552904fc794c5ea63"><td class="memItemLeft" align="right" valign="top"><a id="adb4b60436e6c998552904fc794c5ea63"></a>
+HGDN_DECL godot_rid&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_rid</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:adb4b60436e6c998552904fc794c5ea63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80c57d4a28d7859f2a61b6c6753b870b"><td class="memItemLeft" align="right" valign="top"><a id="a80c57d4a28d7859f2a61b6c6753b870b"></a>
+HGDN_DECL godot_object *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_object</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a80c57d4a28d7859f2a61b6c6753b870b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07e6eb8378cafb3255b1882d7a43b90f"><td class="memItemLeft" align="right" valign="top"><a id="a07e6eb8378cafb3255b1882d7a43b90f"></a>
+HGDN_DECL godot_dictionary&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_dictionary</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a07e6eb8378cafb3255b1882d7a43b90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fcc437f8c857d685c7a47249a57cda1"><td class="memItemLeft" align="right" valign="top"><a id="a0fcc437f8c857d685c7a47249a57cda1"></a>
+HGDN_DECL godot_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_array</b> (const godot_variant **args, const godot_int index)</td></tr>
+<tr class="separator:a0fcc437f8c857d685c7a47249a57cda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72eb8266cf1a85fdf6bd576ff186c90c"><td class="memItemLeft" align="right" valign="top"><a id="a72eb8266cf1a85fdf6bd576ff186c90c"></a>
+HGDN_DECL char *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_string</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a72eb8266cf1a85fdf6bd576ff186c90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afef4ae0d74624385e55b027a515cdf3b"><td class="memItemLeft" align="right" valign="top"><a id="afef4ae0d74624385e55b027a515cdf3b"></a>
+HGDN_DECL uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_byte_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:afef4ae0d74624385e55b027a515cdf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af27ba51e2de085855d5277732d8c01ce"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#af27ba51e2de085855d5277732d8c01ce">hgdn_args_get_int_array</a> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:af27ba51e2de085855d5277732d8c01ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting an int array from method arguments.  <a href="hgdn_8h.html#af27ba51e2de085855d5277732d8c01ce">More...</a><br /></td></tr>
+<tr class="memitem:af27ba51e2de085855d5277732d8c01ce"><td class="memItemLeft" align="right" valign="top"><a id="af27ba51e2de085855d5277732d8c01ce"></a>
+HGDN_DECL godot_int *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_int_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:af27ba51e2de085855d5277732d8c01ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b1187b06fe4ad3f344f33d0bf3d1eeb"><td class="memItemLeft" align="right" valign="top">HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a9b1187b06fe4ad3f344f33d0bf3d1eeb">hgdn_args_get_real_array</a> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a9b1187b06fe4ad3f344f33d0bf3d1eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a real array from method arguments.  <a href="hgdn_8h.html#a9b1187b06fe4ad3f344f33d0bf3d1eeb">More...</a><br /></td></tr>
+<tr class="memitem:a9b1187b06fe4ad3f344f33d0bf3d1eeb"><td class="memItemLeft" align="right" valign="top"><a id="a9b1187b06fe4ad3f344f33d0bf3d1eeb"></a>
+HGDN_DECL godot_real *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_real_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a9b1187b06fe4ad3f344f33d0bf3d1eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42f1dfa7f75b4a2972e674470a3c81cd"><td class="memItemLeft" align="right" valign="top">HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a42f1dfa7f75b4a2972e674470a3c81cd">hgdn_args_get_string_array</a> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
-<tr class="memdesc:a42f1dfa7f75b4a2972e674470a3c81cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper for getting a string array from method arguments.  <a href="hgdn_8h.html#a42f1dfa7f75b4a2972e674470a3c81cd">More...</a><br /></td></tr>
+<tr class="memitem:a40b39ccd8c31bff03ea023b31b4c8975"><td class="memItemLeft" align="right" valign="top"><a id="a40b39ccd8c31bff03ea023b31b4c8975"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_vector2_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a40b39ccd8c31bff03ea023b31b4c8975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1edf0fd921e1b6d1ddaf98542b688c38"><td class="memItemLeft" align="right" valign="top"><a id="a1edf0fd921e1b6d1ddaf98542b688c38"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_vector3_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a1edf0fd921e1b6d1ddaf98542b688c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a257d767d87605195731a4147a1f0488c"><td class="memItemLeft" align="right" valign="top"><a id="a257d767d87605195731a4147a1f0488c"></a>
+HGDN_DECL <a class="el" href="unionhgdn__vector4.html">godot_color</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_color_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
+<tr class="separator:a257d767d87605195731a4147a1f0488c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f1dfa7f75b4a2972e674470a3c81cd"><td class="memItemLeft" align="right" valign="top"><a id="a42f1dfa7f75b4a2972e674470a3c81cd"></a>
+HGDN_DECL char **&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_args_get_string_array</b> (const godot_variant **args, const godot_int index, size_t *out_size)</td></tr>
 <tr class="separator:a42f1dfa7f75b4a2972e674470a3c81cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b7045b5a5b5789ea7723e906031986"><td class="memItemLeft" align="right" valign="top"><a id="ad8b7045b5a5b5789ea7723e906031986"></a>
+HGDN_DECL godot_string&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string</b> (const char *cstr)</td></tr>
+<tr class="separator:ad8b7045b5a5b5789ea7723e906031986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87afeefec7203f1e4f8c61b299dc887e"><td class="memItemLeft" align="right" valign="top"><a id="a87afeefec7203f1e4f8c61b299dc887e"></a>
+HGDN_DECL godot_string&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string_with_len</b> (const char *cstr, const godot_int len)</td></tr>
+<tr class="separator:a87afeefec7203f1e4f8c61b299dc887e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade57f60c03d0508d14e43c59df25ad77"><td class="memItemLeft" align="right" valign="top"><a id="ade57f60c03d0508d14e43c59df25ad77"></a>
+HGDN_DECL godot_string&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_formatted_string</b> (const char *fmt,...)</td></tr>
+<tr class="separator:ade57f60c03d0508d14e43c59df25ad77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9d5c8cae50639386b78de61ca945072"><td class="memItemLeft" align="right" valign="top"><a id="ab9d5c8cae50639386b78de61ca945072"></a>
+HGDN_DECL godot_pool_byte_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_byte_array</b> (const uint8_t *buffer, const godot_int size)</td></tr>
+<tr class="separator:ab9d5c8cae50639386b78de61ca945072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeff24846fa4b336dd8ec74da5d7e2ea5"><td class="memItemLeft" align="right" valign="top"><a id="aeff24846fa4b336dd8ec74da5d7e2ea5"></a>
+HGDN_DECL godot_pool_int_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_int_array</b> (const godot_int *buffer, const godot_int size)</td></tr>
+<tr class="separator:aeff24846fa4b336dd8ec74da5d7e2ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1c2e3d9d0c708da675aea6b64415340"><td class="memItemLeft" align="right" valign="top"><a id="ae1c2e3d9d0c708da675aea6b64415340"></a>
+HGDN_DECL godot_pool_real_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_real_array</b> (const godot_real *buffer, const godot_int size)</td></tr>
+<tr class="separator:ae1c2e3d9d0c708da675aea6b64415340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dde6a988094f82a579e45b9125c02ba"><td class="memItemLeft" align="right" valign="top"><a id="a4dde6a988094f82a579e45b9125c02ba"></a>
+HGDN_DECL godot_pool_vector2_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector2_array</b> (const <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> *buffer, const godot_int size)</td></tr>
+<tr class="separator:a4dde6a988094f82a579e45b9125c02ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f01ec16cdb129d64cb2d2428411498e"><td class="memItemLeft" align="right" valign="top"><a id="a9f01ec16cdb129d64cb2d2428411498e"></a>
+HGDN_DECL godot_pool_vector3_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector3_array</b> (const <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> *buffer, const godot_int size)</td></tr>
+<tr class="separator:a9f01ec16cdb129d64cb2d2428411498e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecd98f70085b3bc8c53b65a8a74f8076"><td class="memItemLeft" align="right" valign="top"><a id="aecd98f70085b3bc8c53b65a8a74f8076"></a>
+HGDN_DECL godot_pool_color_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_color_array</b> (const <a class="el" href="unionhgdn__vector4.html">godot_color</a> *buffer, const godot_int size)</td></tr>
+<tr class="separator:aecd98f70085b3bc8c53b65a8a74f8076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8118c417eaa554c914e48d7f774715"><td class="memItemLeft" align="right" valign="top"><a id="a5b8118c417eaa554c914e48d7f774715"></a>
+HGDN_DECL godot_pool_string_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string_array</b> (const char *const *buffer, const godot_int size)</td></tr>
+<tr class="separator:a5b8118c417eaa554c914e48d7f774715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988569d50f741b428cad0c291a6e17b7"><td class="memItemLeft" align="right" valign="top"><a id="a988569d50f741b428cad0c291a6e17b7"></a>
+HGDN_DECL godot_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array</b> (const godot_variant *const *buffer, const godot_int size)</td></tr>
+<tr class="separator:a988569d50f741b428cad0c291a6e17b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d80e2e6832f970c25578a8325a776e7"><td class="memItemLeft" align="right" valign="top"><a id="a6d80e2e6832f970c25578a8325a776e7"></a>
+HGDN_DECL godot_array&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array_own</b> (godot_variant *buffer, const godot_int size)</td></tr>
+<tr class="separator:a6d80e2e6832f970c25578a8325a776e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43150114af1389944dc6e1a645c1930c"><td class="memItemLeft" align="right" valign="top"><a id="a43150114af1389944dc6e1a645c1930c"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_nil_variant</b> ()</td></tr>
+<tr class="separator:a43150114af1389944dc6e1a645c1930c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe36fc0fe6b864fe425ca5094e8b0133"><td class="memItemLeft" align="right" valign="top"><a id="abe36fc0fe6b864fe425ca5094e8b0133"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_bool_variant</b> (const godot_bool value)</td></tr>
+<tr class="separator:abe36fc0fe6b864fe425ca5094e8b0133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db93972ae82828b9436a70b32d6c2a1"><td class="memItemLeft" align="right" valign="top"><a id="a1db93972ae82828b9436a70b32d6c2a1"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_uint_variant</b> (const uint64_t value)</td></tr>
+<tr class="separator:a1db93972ae82828b9436a70b32d6c2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ab4c48b5c15ec2d4ce493d60a9e9f5"><td class="memItemLeft" align="right" valign="top"><a id="a46ab4c48b5c15ec2d4ce493d60a9e9f5"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_int_variant</b> (const int64_t value)</td></tr>
+<tr class="separator:a46ab4c48b5c15ec2d4ce493d60a9e9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d2e748704473c818d45bcf7c9deb821"><td class="memItemLeft" align="right" valign="top"><a id="a7d2e748704473c818d45bcf7c9deb821"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_real_variant</b> (const double value)</td></tr>
+<tr class="separator:a7d2e748704473c818d45bcf7c9deb821"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9145607db03810c7555ecd8fff937136"><td class="memItemLeft" align="right" valign="top"><a id="a9145607db03810c7555ecd8fff937136"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector2_variant</b> (const <a class="el" href="unionhgdn__vector2.html">godot_vector2</a> value)</td></tr>
+<tr class="separator:a9145607db03810c7555ecd8fff937136"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76de460c42882413e8456e26f58a34b6"><td class="memItemLeft" align="right" valign="top"><a id="a76de460c42882413e8456e26f58a34b6"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_vector3_variant</b> (const <a class="el" href="unionhgdn__vector3.html">godot_vector3</a> value)</td></tr>
+<tr class="separator:a76de460c42882413e8456e26f58a34b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e6d6266280028fdbfda4b893ae34c5"><td class="memItemLeft" align="right" valign="top"><a id="a36e6d6266280028fdbfda4b893ae34c5"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_rect2_variant</b> (const <a class="el" href="unionhgdn__rect2.html">godot_rect2</a> value)</td></tr>
+<tr class="separator:a36e6d6266280028fdbfda4b893ae34c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c71da9621546b71d126ebc5fe745675"><td class="memItemLeft" align="right" valign="top"><a id="a9c71da9621546b71d126ebc5fe745675"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_plane_variant</b> (const <a class="el" href="unionhgdn__plane.html">godot_plane</a> value)</td></tr>
+<tr class="separator:a9c71da9621546b71d126ebc5fe745675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d885794b4194e50bfb29c9934f26f9f"><td class="memItemLeft" align="right" valign="top"><a id="a1d885794b4194e50bfb29c9934f26f9f"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_quat_variant</b> (const <a class="el" href="unionhgdn__quat.html">godot_quat</a> value)</td></tr>
+<tr class="separator:a1d885794b4194e50bfb29c9934f26f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bba671c8e4ee71887a037da7004c8a7"><td class="memItemLeft" align="right" valign="top"><a id="a3bba671c8e4ee71887a037da7004c8a7"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_aabb_variant</b> (const <a class="el" href="structhgdn__aabb.html">godot_aabb</a> value)</td></tr>
+<tr class="separator:a3bba671c8e4ee71887a037da7004c8a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ad97eda44494ad5d28ff9c5780ac40"><td class="memItemLeft" align="right" valign="top"><a id="ac6ad97eda44494ad5d28ff9c5780ac40"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_basis_variant</b> (const <a class="el" href="structhgdn__basis.html">godot_basis</a> value)</td></tr>
+<tr class="separator:ac6ad97eda44494ad5d28ff9c5780ac40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9cc9d0e2354e163d28d50bf269ebd9a"><td class="memItemLeft" align="right" valign="top"><a id="ad9cc9d0e2354e163d28d50bf269ebd9a"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_transform2d_variant</b> (const <a class="el" href="structhgdn__transform2d.html">godot_transform2d</a> value)</td></tr>
+<tr class="separator:ad9cc9d0e2354e163d28d50bf269ebd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60a9d570a266e9912f93b5c068762b48"><td class="memItemLeft" align="right" valign="top"><a id="a60a9d570a266e9912f93b5c068762b48"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_transform_variant</b> (const <a class="el" href="structhgdn__transform.html">godot_transform</a> value)</td></tr>
+<tr class="separator:a60a9d570a266e9912f93b5c068762b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac692cfcdc640d84d56e639cda61d8b5a"><td class="memItemLeft" align="right" valign="top"><a id="ac692cfcdc640d84d56e639cda61d8b5a"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_color_variant</b> (const <a class="el" href="unionhgdn__vector4.html">godot_color</a> value)</td></tr>
+<tr class="separator:ac692cfcdc640d84d56e639cda61d8b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa21bb70ddfdb5eafda763586dca079d7"><td class="memItemLeft" align="right" valign="top"><a id="aa21bb70ddfdb5eafda763586dca079d7"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_node_path_variant</b> (const godot_node_path value)</td></tr>
+<tr class="separator:aa21bb70ddfdb5eafda763586dca079d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa198b412263aef1446f023691c1fbc96"><td class="memItemLeft" align="right" valign="top"><a id="aa198b412263aef1446f023691c1fbc96"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_rid_variant</b> (const godot_rid value)</td></tr>
+<tr class="separator:aa198b412263aef1446f023691c1fbc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e630c02af3251701093e8cc561c110"><td class="memItemLeft" align="right" valign="top"><a id="a56e630c02af3251701093e8cc561c110"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_object_variant</b> (const godot_object *value)</td></tr>
+<tr class="separator:a56e630c02af3251701093e8cc561c110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76158c60d03e0a2518392d7959cecfbf"><td class="memItemLeft" align="right" valign="top"><a id="a76158c60d03e0a2518392d7959cecfbf"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string_variant</b> (const godot_string *str)</td></tr>
+<tr class="separator:a76158c60d03e0a2518392d7959cecfbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff8a9fc1654bf0d75190030de10ddf4"><td class="memItemLeft" align="right" valign="top"><a id="a4ff8a9fc1654bf0d75190030de10ddf4"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_dictionary_variant</b> (const godot_dictionary *dict)</td></tr>
+<tr class="separator:a4ff8a9fc1654bf0d75190030de10ddf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039ee197fe6e05286c1441f250a41847"><td class="memItemLeft" align="right" valign="top"><a id="a039ee197fe6e05286c1441f250a41847"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array_variant</b> (const godot_array *array)</td></tr>
+<tr class="separator:a039ee197fe6e05286c1441f250a41847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c127a23ad04c36f4816330f379227e"><td class="memItemLeft" align="right" valign="top"><a id="a43c127a23ad04c36f4816330f379227e"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_byte_array_variant</b> (const godot_pool_byte_array *array)</td></tr>
+<tr class="separator:a43c127a23ad04c36f4816330f379227e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea10c74b8e15f0342f8ad58f00bb5e6"><td class="memItemLeft" align="right" valign="top"><a id="aeea10c74b8e15f0342f8ad58f00bb5e6"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_int_array_variant</b> (const godot_pool_int_array *array)</td></tr>
+<tr class="separator:aeea10c74b8e15f0342f8ad58f00bb5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe7938edb2ef8ce9e1575369853b331e"><td class="memItemLeft" align="right" valign="top"><a id="abe7938edb2ef8ce9e1575369853b331e"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_real_array_variant</b> (const godot_pool_real_array *array)</td></tr>
+<tr class="separator:abe7938edb2ef8ce9e1575369853b331e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc2f5b31833fe8aebdbde383d95aaee"><td class="memItemLeft" align="right" valign="top"><a id="a8dc2f5b31833fe8aebdbde383d95aaee"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_vector2_array_variant</b> (const godot_pool_vector2_array *array)</td></tr>
+<tr class="separator:a8dc2f5b31833fe8aebdbde383d95aaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2792ae6bf3fdfc2d7987801b486dc72a"><td class="memItemLeft" align="right" valign="top"><a id="a2792ae6bf3fdfc2d7987801b486dc72a"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_vector3_array_variant</b> (const godot_pool_vector3_array *array)</td></tr>
+<tr class="separator:a2792ae6bf3fdfc2d7987801b486dc72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20f9eed98a29965918eeaa14dc8519db"><td class="memItemLeft" align="right" valign="top"><a id="a20f9eed98a29965918eeaa14dc8519db"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_color_array_variant</b> (const godot_pool_color_array *array)</td></tr>
+<tr class="separator:a20f9eed98a29965918eeaa14dc8519db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f9af08266892e8ac03cb96fd5b4d73"><td class="memItemLeft" align="right" valign="top"><a id="a11f9af08266892e8ac03cb96fd5b4d73"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_string_array_variant</b> (const godot_pool_string_array *array)</td></tr>
+<tr class="separator:a11f9af08266892e8ac03cb96fd5b4d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac83935ace3383a5a3db44f0522ca136a"><td class="memItemLeft" align="right" valign="top"><a id="ac83935ace3383a5a3db44f0522ca136a"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_string_variant_own</b> (godot_string str)</td></tr>
+<tr class="separator:ac83935ace3383a5a3db44f0522ca136a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db2067bc4439430cd66d4c769f15be8"><td class="memItemLeft" align="right" valign="top"><a id="a5db2067bc4439430cd66d4c769f15be8"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_dictionary_variant_own</b> (godot_dictionary dict)</td></tr>
+<tr class="separator:a5db2067bc4439430cd66d4c769f15be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2749dc08269f74ac69c0e3e75beeac3e"><td class="memItemLeft" align="right" valign="top"><a id="a2749dc08269f74ac69c0e3e75beeac3e"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_array_variant_own</b> (godot_array array)</td></tr>
+<tr class="separator:a2749dc08269f74ac69c0e3e75beeac3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7795c6fbebfc31f6a585a68f03fcdda7"><td class="memItemLeft" align="right" valign="top"><a id="a7795c6fbebfc31f6a585a68f03fcdda7"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_byte_array_variant_own</b> (godot_pool_byte_array array)</td></tr>
+<tr class="separator:a7795c6fbebfc31f6a585a68f03fcdda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5312b1557cf3df3f1ef8a136e727d92f"><td class="memItemLeft" align="right" valign="top"><a id="a5312b1557cf3df3f1ef8a136e727d92f"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_int_array_variant_own</b> (godot_pool_int_array array)</td></tr>
+<tr class="separator:a5312b1557cf3df3f1ef8a136e727d92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8708655353db43831d729043b93c45be"><td class="memItemLeft" align="right" valign="top"><a id="a8708655353db43831d729043b93c45be"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_real_array_variant_own</b> (godot_pool_real_array array)</td></tr>
+<tr class="separator:a8708655353db43831d729043b93c45be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48812def538f20d9cf68f6f070b75cc"><td class="memItemLeft" align="right" valign="top"><a id="ac48812def538f20d9cf68f6f070b75cc"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_vector2_array_variant_own</b> (godot_pool_vector2_array array)</td></tr>
+<tr class="separator:ac48812def538f20d9cf68f6f070b75cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba1b66986008f148c31c011257b13af5"><td class="memItemLeft" align="right" valign="top"><a id="aba1b66986008f148c31c011257b13af5"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_vector3_array_variant_own</b> (godot_pool_vector3_array array)</td></tr>
+<tr class="separator:aba1b66986008f148c31c011257b13af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af95a621e211e49924bc50276d7b62ebd"><td class="memItemLeft" align="right" valign="top"><a id="af95a621e211e49924bc50276d7b62ebd"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_color_array_variant_own</b> (godot_pool_color_array array)</td></tr>
+<tr class="separator:af95a621e211e49924bc50276d7b62ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73102bd1f6d7eea91e15d801e72ee480"><td class="memItemLeft" align="right" valign="top"><a id="a73102bd1f6d7eea91e15d801e72ee480"></a>
+HGDN_DECL godot_variant&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_new_pool_string_array_variant_own</b> (godot_pool_string_array array)</td></tr>
+<tr class="separator:a73102bd1f6d7eea91e15d801e72ee480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -350,10 +684,14 @@ const godot_gdnative_ext_net_api_struct *&#160;</td><td class="memItemRight" val
 <tr class="memitem:a21074bc508f707d2dfdae30c3aa06b7f"><td class="memItemLeft" align="right" valign="top"><a id="a21074bc508f707d2dfdae30c3aa06b7f"></a>
 const godot_gdnative_ext_net_3_2_api_struct *&#160;</td><td class="memItemRight" valign="bottom"><b>hgdn_net_3_2_api</b></td></tr>
 <tr class="separator:a21074bc508f707d2dfdae30c3aa06b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a291e0f7d5af5414c18e0fc770a6ee2f9"><td class="memItemLeft" align="right" valign="top"><a id="a291e0f7d5af5414c18e0fc770a6ee2f9"></a>
+const godot_object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hgdn_8h.html#a291e0f7d5af5414c18e0fc770a6ee2f9">hgdn_library</a></td></tr>
+<tr class="memdesc:a291e0f7d5af5414c18e0fc770a6ee2f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">GDNativeLibrary object being initialized. <br /></td></tr>
+<tr class="separator:a291e0f7d5af5414c18e0fc770a6ee2f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="hgdn_8h.html" title="hgdn.h – High level GDNative C/C++ API">hgdn.h</a> &ndash; High level GDNative C/C++ API </p>
-<p>Project URL: TODO</p>
+<p>Project URL: <a href="https://github.com/gilzoide/high-level-gdnative">https://github.com/gilzoide/high-level-gdnative</a></p>
 <p>Do this: </p><div class="fragment"><div class="line"><span class="preprocessor">#define HGDN_IMPLEMENTATION</span></div>
 </div><!-- fragment --><p> before you include this file in <em>one</em> C or C++ file to create the implementation.</p>
 <p>i.e.: </p><div class="fragment"><div class="line"><span class="preprocessor">#include ...</span></div>
@@ -363,440 +701,35 @@ const godot_gdnative_ext_net_3_2_api_struct *&#160;</td><td class="memItemRight"
 </div><!-- fragment --><p>Optionally provide the following defines with your own implementations:</p>
 <ul>
 <li>HGDN_STATIC: If defined and HGDN_DECL is not defined, functions will be declared <code>static</code> instead of <code>extern</code></li>
-<li>HGDN_DECL: Function declaration prefix (default: <code>extern</code> or <code>static</code> depending on HGDN_STATIC) </li>
+<li>HGDN_DECL: Function declaration prefix (default: <code>extern</code> or <code>static</code> depending on HGDN_STATIC)</li>
+<li>HGDN_STRING_FORMAT_BUFFER_SIZE: Size of the global char buffer used for <code>hgdn_print*</code> functions. Defaults to 1024 </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a2f63352f9c0df4a045dea47fa3de7f86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f63352f9c0df4a045dea47fa3de7f86">&#9670;&nbsp;</a></span>HGDN_ASSERT_MSG</h2>
+<a id="a4b5457be24f4977e26ddb4a84ccdf255"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b5457be24f4977e26ddb4a84ccdf255">&#9670;&nbsp;</a></span>HGDN_RSEQ_N</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define HGDN_ASSERT_MSG</td>
+          <td class="memname">#define HGDN_RSEQ_N</td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">cond, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">msg&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (!(cond)) { \</div>
-<div class="line">        HGDN_LOG_ERROR((msg)); \</div>
-<div class="line">        return <a class="code" href="hgdn_8h.html#a43150114af1389944dc6e1a645c1930c">hgdn_new_nil_variant</a>(); \</div>
-<div class="line">    }</div>
-<div class="ttc" id="ahgdn_8h_html_a43150114af1389944dc6e1a645c1930c"><div class="ttname"><a href="hgdn_8h.html#a43150114af1389944dc6e1a645c1930c">hgdn_new_nil_variant</a></div><div class="ttdeci">HGDN_DECL godot_variant hgdn_new_nil_variant()</div><div class="ttdoc">Create a nil Variant.</div></div>
+<b>Value:</b><div class="fragment"><div class="line">         63,62,61,60,                   \</div>
+<div class="line">         59,58,57,56,55,54,53,52,51,50, \</div>
+<div class="line">         49,48,47,46,45,44,43,42,41,40, \</div>
+<div class="line">         39,38,37,36,35,34,33,32,31,30, \</div>
+<div class="line">         29,28,27,26,25,24,23,22,21,20, \</div>
+<div class="line">         19,18,17,16,15,14,13,12,11,10, \</div>
+<div class="line">         9,8,7,6,5,4,3,2,1,0</div>
 </div><!-- fragment -->
-<p>If <code>cond</code> is false, print error message <code>msg</code> and return nil Variant. </p>
-
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="afef4ae0d74624385e55b027a515cdf3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afef4ae0d74624385e55b027a515cdf3b">&#9670;&nbsp;</a></span>hgdn_args_get_byte_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL uint8_t* hgdn_args_get_byte_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant **&#160;</td>
-          <td class="paramname"><em>args</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a byte array from method arguments. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="af27ba51e2de085855d5277732d8c01ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af27ba51e2de085855d5277732d8c01ce">&#9670;&nbsp;</a></span>hgdn_args_get_int_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_int* hgdn_args_get_int_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant **&#160;</td>
-          <td class="paramname"><em>args</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting an int array from method arguments. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a9b1187b06fe4ad3f344f33d0bf3d1eeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b1187b06fe4ad3f344f33d0bf3d1eeb">&#9670;&nbsp;</a></span>hgdn_args_get_real_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_real* hgdn_args_get_real_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant **&#160;</td>
-          <td class="paramname"><em>args</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a real array from method arguments. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a42f1dfa7f75b4a2972e674470a3c81cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42f1dfa7f75b4a2972e674470a3c81cd">&#9670;&nbsp;</a></span>hgdn_args_get_string_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char** hgdn_args_get_string_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant **&#160;</td>
-          <td class="paramname"><em>args</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a string array from method arguments. </p>
-<p>Returned pointer must be freed with <code>hgdn_free_string_array</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a83154f3c03c5ee089c02f8df3bd2463f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83154f3c03c5ee089c02f8df3bd2463f">&#9670;&nbsp;</a></span>hgdn_array_get_byte_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL uint8_t* hgdn_array_get_byte_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a byte array from godot_array. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a59db993b401c6597201b23b692999141"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59db993b401c6597201b23b692999141">&#9670;&nbsp;</a></span>hgdn_array_get_int_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_int* hgdn_array_get_int_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting an int array from godot_array. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a840500010ab09cc1e282443334e7b951"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a840500010ab09cc1e282443334e7b951">&#9670;&nbsp;</a></span>hgdn_array_get_real_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_real* hgdn_array_get_real_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a real array from godot_array. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a35c793266c4aac19733a7034c4f0c26a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35c793266c4aac19733a7034c4f0c26a">&#9670;&nbsp;</a></span>hgdn_array_get_string()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char* hgdn_array_get_string </td>
-          <td>(</td>
-          <td class="paramtype">const godot_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a string value from godot_array. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_len</code> is not NULL, it will be filled with the string length. </p>
-
-</div>
-</div>
-<a id="a3b27c66981d42c7eff2e04f2a67b3cd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b27c66981d42c7eff2e04f2a67b3cd0">&#9670;&nbsp;</a></span>hgdn_array_get_string_array()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char** hgdn_array_get_string_array </td>
-          <td>(</td>
-          <td class="paramtype">const godot_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const godot_int&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper for getting a string array from godot_array. </p>
-<p>Returned pointer must be freed with <code>hgdn_free_string_array</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a1b495e870e020a60ec56335d65581e6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b495e870e020a60ec56335d65581e6a">&#9670;&nbsp;</a></span>hgdn_byte_array_dup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL uint8_t* hgdn_byte_array_dup </td>
-          <td>(</td>
-          <td class="paramtype">const godot_pool_byte_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new byte array and copy <code>array</code> contents. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="ac98bbc9b0893f33c96b87ff910513e3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac98bbc9b0893f33c96b87ff910513e3f">&#9670;&nbsp;</a></span>hgdn_byte_array_from_variant()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL uint8_t* hgdn_byte_array_from_variant </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant *&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new byte array and copy <code>var</code> byte array content. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
 <a id="a83bb732677e50a2fd59d6f5af9b1041f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a83bb732677e50a2fd59d6f5af9b1041f">&#9670;&nbsp;</a></span>hgdn_free()</h2>
 
@@ -815,275 +748,6 @@ const godot_gdnative_ext_net_3_2_api_struct *&#160;</td><td class="memItemRight"
 
 <p>Wrapper for <code>godot_free</code> compatible with <code>free</code>. </p>
 <p>It is safe to pass NULL without Godot triggering an error message. </p>
-
-</div>
-</div>
-<a id="a5e754da4d2c0ea1aea26e7d999e67b05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e754da4d2c0ea1aea26e7d999e67b05">&#9670;&nbsp;</a></span>hgdn_gdnative_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL void hgdn_gdnative_init </td>
-          <td>(</td>
-          <td class="paramtype">const godot_gdnative_init_options *&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize globals. </p>
-<p>Call this on your own <code>godot_gdnative_init</code> before any other HGDN functions. </p>
-
-</div>
-</div>
-<a id="a5d1be9153e34abe40fb799c8cc39e790"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d1be9153e34abe40fb799c8cc39e790">&#9670;&nbsp;</a></span>hgdn_int_array_dup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_int* hgdn_int_array_dup </td>
-          <td>(</td>
-          <td class="paramtype">const godot_pool_int_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new int array and copy <code>array</code> contents. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a67fd36c775ed065b0fe490f9b6924cfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67fd36c775ed065b0fe490f9b6924cfc">&#9670;&nbsp;</a></span>hgdn_int_array_from_variant()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_int* hgdn_int_array_from_variant </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant *&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new int array and copy <code>var</code> int array content. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="aa8d1be0423663eb56bfebf4f1d7bc457"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8d1be0423663eb56bfebf4f1d7bc457">&#9670;&nbsp;</a></span>hgdn_real_array_dup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_real* hgdn_real_array_dup </td>
-          <td>(</td>
-          <td class="paramtype">const godot_pool_real_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new real array and copy <code>array</code> contents. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a6b319ba9a5d5fcdcc9c69673ff74c0f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b319ba9a5d5fcdcc9c69673ff74c0f1">&#9670;&nbsp;</a></span>hgdn_real_array_from_variant()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL godot_real* hgdn_real_array_from_variant </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant *&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new real array and copy <code>var</code> real array content. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a2a0d3504f43fc044d847ab84954ad4b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a0d3504f43fc044d847ab84954ad4b8">&#9670;&nbsp;</a></span>hgdn_string_array_dup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char** hgdn_string_array_dup </td>
-          <td>(</td>
-          <td class="paramtype">const godot_pool_string_array *&#160;</td>
-          <td class="paramname"><em>array</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new string array and copy <code>array</code> contents. </p>
-<p>Returned pointer must be freed with <code>hgdn_free_string_array</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a076ccf68ccff58a55b707069ab2fa56f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a076ccf68ccff58a55b707069ab2fa56f">&#9670;&nbsp;</a></span>hgdn_string_array_from_variant()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char** hgdn_string_array_from_variant </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant *&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new string array and copy <code>var</code> string array content. </p>
-<p>Returned pointer must be freed with <code>hgdn_free_string_array</code>. If <code>out_size</code> is not NULL, it will be filled with the array size. </p>
-
-</div>
-</div>
-<a id="a404911647774c21e7ce2521e06adeb7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a404911647774c21e7ce2521e06adeb7c">&#9670;&nbsp;</a></span>hgdn_string_dup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char* hgdn_string_dup </td>
-          <td>(</td>
-          <td class="paramtype">const godot_string *&#160;</td>
-          <td class="paramname"><em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new NULL terminated char string and copy <code>str</code> contents. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_len</code> is not NULL, it will be filled with the string length. </p>
-
-</div>
-</div>
-<a id="a2ce79d1db176f088d1e20bb2cda7b37f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ce79d1db176f088d1e20bb2cda7b37f">&#9670;&nbsp;</a></span>hgdn_string_from_variant()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">HGDN_DECL char* hgdn_string_from_variant </td>
-          <td>(</td>
-          <td class="paramtype">const godot_variant *&#160;</td>
-          <td class="paramname"><em>var</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>out_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allocates a new NULL terminated char string and copy <code>var</code> string content. </p>
-<p>Returned pointer must be freed with <code>hgdn_free</code>. If <code>out_len</code> is not NULL, it will be filled with the string length. </p>
 
 </div>
 </div>

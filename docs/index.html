@@ -69,10 +69,14 @@ $(function() {
 <div class="textblock"><p><a class="anchor" id="md_README"></a>Single header <a href="https://docs.godotengine.org/en/stable/tutorials/plugins/gdnative/gdnative-c-example.html">GDNative</a> high level API for C/C++.</p>
 <ul>
 <li>Single header: just copy <code><a class="el" href="hgdn_8h.html" title="hgdn.h – High level GDNative C/C++ API">hgdn.h</a></code> to your project, put <code>#define HGDN_IMPLEMENTATION</code> in a single C/C++ source file before <code>#include</code>ing it and compile.</li>
-<li>Depends only on <a href="https://github.com/godotengine/godot-headers">godot-headers</a>, so GDNative libraries can be built with one liner compiler invocations. No need to generate Godot API bindings if you only use core GDNative stuff.</li>
+<li>Depends only on <a href="https://github.com/godotengine/godot-headers">godot-headers</a>, so GDNative libraries can be built with a single compiler invocation. No need to generate Godot API bindings if you only use core GDNative stuff.</li>
 <li><code>hgdn_gdnative_init</code> fetches all current GDNative APIs.</li>
-<li>Functions to create Variants and Pool Arrays in single calls. TODO: functions create Arrays and Dictionaries.</li>
-<li>Functions and structs to get data from Variants, including abstractions for handling strings (<code>const char *</code>), generic memory buffers (<code>void *</code>) and other arrays.</li>
+<li>Useful definitions for all math types, including Vector2, Vector3 and Color.</li>
+<li>Functions to get buffers from strings and pool arrays.</li>
+<li>Functions to get values from method arguments or native calls argument arrays.</li>
+<li>Functions to create Variants, Strings, Arrays, Pool Arrays and Dictionaries in single calls.</li>
+<li>Overloaded macro/functions to create Variants, available in C11 and C++.</li>
+<li>Macros to assert arguments preconditions, like expected argument count and (TODO) expected argument types.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Documentation</h1>
@@ -100,24 +104,29 @@ Usage example</h1>
 <div class="line"> </div>
 <div class="line">godot_variant native_callback(<span class="keywordtype">void</span> *symbol, godot_array *array) {</div>
 <div class="line">    <span class="keywordflow">if</span> (symbol == &amp;MESSAGE) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="hgdn_8h.html#ae8c02624005d6ab45c7a65c6e2c469d4">hgdn_new_string_variant</a>(MESSAGE);</div>
+<div class="line">        <span class="comment">// `hgdn_new_variant` is type-dependant using C11 _Generic/C++ overloads</span></div>
+<div class="line">        <span class="comment">// In this case, it calls `hgdn_new_string_variant_own`</span></div>
+<div class="line">        <span class="keywordflow">return</span> hgdn_new_variant(hgdn_new_string(MESSAGE));</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (symbol == &amp;square) {</div>
 <div class="line">        <span class="comment">// returns null and prints an error if array size &lt; 1</span></div>
 <div class="line">        <a class="code" href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a>(array, 1);</div>
-<div class="line">        godot_real arg0 = <a class="code" href="hgdn_8h.html#a5a991d73dab149ec0b9079edeab37b87">hgdn_array_get_real</a>(array, 0);</div>
+<div class="line">        godot_real arg0 = hgdn_array_get_real(array, 0);</div>
 <div class="line">        godot_real result = square(arg0);</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="hgdn_8h.html#a342a6f8cf7e07f5ff7a8e58501402f80">hgdn_new_real_variant</a>(result);</div>
+<div class="line">        <span class="comment">// Overloaded to `hgdn_new_real_variant(result)`</span></div>
+<div class="line">        <span class="keywordflow">return</span> hgdn_new_variant(result);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (symbol == &amp;sum_ints) {</div>
 <div class="line">        <a class="code" href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a>(array, 1);</div>
 <div class="line">        <span class="keywordtype">size_t</span> size;</div>
-<div class="line">        godot_int *buffer = <a class="code" href="hgdn_8h.html#a59db993b401c6597201b23b692999141">hgdn_array_get_int_array</a>(array, 0, &amp;size);</div>
+<div class="line">        godot_int *buffer = hgdn_array_get_int_array(array, 0, &amp;size);</div>
 <div class="line">        <span class="keywordtype">int</span> res = sum_ints(buffer, size);</div>
 <div class="line">        <a class="code" href="hgdn_8h.html#a83bb732677e50a2fd59d6f5af9b1041f">hgdn_free</a>(buffer);</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="hgdn_8h.html#a10c979ad73eeef916f78a8a50901884e">hgdn_new_int_variant</a>(res);</div>
+<div class="line">        <span class="comment">// Overloaded to `hgdn_new_int_variant(result)`</span></div>
+<div class="line">        <span class="keywordflow">return</span> hgdn_new_variant(res);</div>
 <div class="line">    }</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="hgdn_8h.html#a43150114af1389944dc6e1a645c1930c">hgdn_new_nil_variant</a>();</div>
+<div class="line">    <span class="comment">// Overloaded to `hgdn_new_object_variant(NULL)`, which returns a nil Variant</span></div>
+<div class="line">    <span class="keywordflow">return</span> hgdn_new_variant(NULL);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">GDN_EXPORT <span class="keywordtype">void</span> godot_gdnative_init(godot_gdnative_init_options *options) {</div>
@@ -125,22 +134,19 @@ Usage example</h1>
 <div class="line">    <span class="comment">// as it populates the global API pointers from options</span></div>
 <div class="line">    <a class="code" href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a>(options);</div>
 <div class="line">    hgdn_core_api-&gt;godot_register_native_call_type(<span class="stringliteral">&quot;native&quot;</span>, &amp;native_callback);</div>
+<div class="line">    <span class="comment">// `hgdn_print` uses `printf` formatted values</span></div>
+<div class="line">    <a class="code" href="hgdn_8h.html#acf1fba45abd6265766c922f9153c6410">hgdn_print</a>(<span class="stringliteral">&quot;GDNative initialized%s&quot;</span>, options-&gt;in_editor ? <span class="stringliteral">&quot; in editor&quot;</span> : <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line">GDN_EXPORT <span class="keywordtype">void</span> godot_gdnative_terminate(godot_gdnative_terminate_options *options) {</div>
 <div class="line">    <a class="code" href="hgdn_8h.html#a6b33afc16cb7739aafa2945cb1b335d5">hgdn_gdnative_terminate</a>(options);</div>
 <div class="line">}</div>
 <div class="ttc" id="ahgdn_8h_html"><div class="ttname"><a href="hgdn_8h.html">hgdn.h</a></div><div class="ttdoc">hgdn.h – High level GDNative C/C++ API</div></div>
-<div class="ttc" id="ahgdn_8h_html_a10c979ad73eeef916f78a8a50901884e"><div class="ttname"><a href="hgdn_8h.html#a10c979ad73eeef916f78a8a50901884e">hgdn_new_int_variant</a></div><div class="ttdeci">HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t i)</div><div class="ttdoc">Create an integral Variant.</div></div>
-<div class="ttc" id="ahgdn_8h_html_a342a6f8cf7e07f5ff7a8e58501402f80"><div class="ttname"><a href="hgdn_8h.html#a342a6f8cf7e07f5ff7a8e58501402f80">hgdn_new_real_variant</a></div><div class="ttdeci">HGDN_DECL godot_variant hgdn_new_real_variant(const double f)</div><div class="ttdoc">Create a real Variant.</div></div>
-<div class="ttc" id="ahgdn_8h_html_a43150114af1389944dc6e1a645c1930c"><div class="ttname"><a href="hgdn_8h.html#a43150114af1389944dc6e1a645c1930c">hgdn_new_nil_variant</a></div><div class="ttdeci">HGDN_DECL godot_variant hgdn_new_nil_variant()</div><div class="ttdoc">Create a nil Variant.</div></div>
-<div class="ttc" id="ahgdn_8h_html_a59db993b401c6597201b23b692999141"><div class="ttname"><a href="hgdn_8h.html#a59db993b401c6597201b23b692999141">hgdn_array_get_int_array</a></div><div class="ttdeci">HGDN_DECL godot_int * hgdn_array_get_int_array(const godot_array *array, const godot_int index, size_t *out_size)</div><div class="ttdoc">Helper for getting an int array from godot_array.</div></div>
-<div class="ttc" id="ahgdn_8h_html_a5a991d73dab149ec0b9079edeab37b87"><div class="ttname"><a href="hgdn_8h.html#a5a991d73dab149ec0b9079edeab37b87">hgdn_array_get_real</a></div><div class="ttdeci">HGDN_DECL double hgdn_array_get_real(const godot_array *array, const godot_int index)</div><div class="ttdoc">Helper for getting a real value from godot_array.</div></div>
-<div class="ttc" id="ahgdn_8h_html_a5e754da4d2c0ea1aea26e7d999e67b05"><div class="ttname"><a href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a></div><div class="ttdeci">HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options)</div><div class="ttdoc">Initialize globals.</div></div>
+<div class="ttc" id="ahgdn_8h_html_a5e754da4d2c0ea1aea26e7d999e67b05"><div class="ttname"><a href="hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05">hgdn_gdnative_init</a></div><div class="ttdeci">HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options)</div><div class="ttdoc">Initialize globals. Call this on your own godot_gdnative_init before any other HGDN functions.</div></div>
 <div class="ttc" id="ahgdn_8h_html_a6b33afc16cb7739aafa2945cb1b335d5"><div class="ttname"><a href="hgdn_8h.html#a6b33afc16cb7739aafa2945cb1b335d5">hgdn_gdnative_terminate</a></div><div class="ttdeci">HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options)</div><div class="ttdoc">Terminate globals. Call this on your own godot_gdnative_terminate</div></div>
 <div class="ttc" id="ahgdn_8h_html_a83bb732677e50a2fd59d6f5af9b1041f"><div class="ttname"><a href="hgdn_8h.html#a83bb732677e50a2fd59d6f5af9b1041f">hgdn_free</a></div><div class="ttdeci">HGDN_DECL void hgdn_free(void *ptr)</div><div class="ttdoc">Wrapper for godot_free compatible with free.</div></div>
-<div class="ttc" id="ahgdn_8h_html_ae8c02624005d6ab45c7a65c6e2c469d4"><div class="ttname"><a href="hgdn_8h.html#ae8c02624005d6ab45c7a65c6e2c469d4">hgdn_new_string_variant</a></div><div class="ttdeci">HGDN_DECL godot_variant hgdn_new_string_variant(const char *cstr)</div><div class="ttdoc">Create a string Variant from NULL terminated char string.</div></div>
-<div class="ttc" id="ahgdn_8h_html_aec051db348354455eed5bd452771f1de"><div class="ttname"><a href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a></div><div class="ttdeci">#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size)</div><div class="ttdoc">If arr doesn't have at least min_size elements, print error message and return nil Variant.</div><div class="ttdef"><b>Definition:</b> hgdn.h:71</div></div>
+<div class="ttc" id="ahgdn_8h_html_acf1fba45abd6265766c922f9153c6410"><div class="ttname"><a href="hgdn_8h.html#acf1fba45abd6265766c922f9153c6410">hgdn_print</a></div><div class="ttdeci">HGDN_DECL void hgdn_print(const char *fmt,...)</div><div class="ttdoc">Outputs a printf formatted message to standard output.</div></div>
+<div class="ttc" id="ahgdn_8h_html_aec051db348354455eed5bd452771f1de"><div class="ttname"><a href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a></div><div class="ttdeci">#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size)</div><div class="ttdoc">If arr doesn't have at least min_size elements, print error message and return nil Variant.</div><div class="ttdef"><b>Definition:</b> hgdn.h:271</div></div>
 </div><!-- fragment --><div class="fragment"><div class="line"># example.gd</div>
 <div class="line">var example = GDNative.new()</div>
 <div class="line">example.library = preload(&quot;res://path_to_gdnativelibrary.tres&quot;)</div>
