@@ -424,7 +424,7 @@ extern "C++" {
         return hgdn_new_array_own(buffer, sizeof...(args));
     }
 }
-#else
+#else  // C++11
 #define hgdn_new_byte_array_args(...)  (hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_int_array_args(...)  (hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_real_array_args(...)  (hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
@@ -460,13 +460,13 @@ HGDN_DECL godot_variant hgdn_new_object_variant(const godot_object *value);
 HGDN_DECL godot_variant hgdn_new_string_variant(godot_string str);
 HGDN_DECL godot_variant hgdn_new_dictionary_variant(godot_dictionary dict);
 HGDN_DECL godot_variant hgdn_new_array_variant(godot_array array);
-HGDN_DECL godot_variant hgdn_new_byte_array_variant(godot_pool_byte_array array);
-HGDN_DECL godot_variant hgdn_new_int_array_variant(godot_pool_int_array array);
-HGDN_DECL godot_variant hgdn_new_real_array_variant(godot_pool_real_array array);
-HGDN_DECL godot_variant hgdn_new_vector2_array_variant(godot_pool_vector2_array array);
-HGDN_DECL godot_variant hgdn_new_vector3_array_variant(godot_pool_vector3_array array);
-HGDN_DECL godot_variant hgdn_new_color_array_variant(godot_pool_color_array array);
-HGDN_DECL godot_variant hgdn_new_string_array_variant(godot_pool_string_array array);
+HGDN_DECL godot_variant hgdn_new_pool_byte_array_variant(godot_pool_byte_array array);
+HGDN_DECL godot_variant hgdn_new_pool_int_array_variant(godot_pool_int_array array);
+HGDN_DECL godot_variant hgdn_new_pool_real_array_variant(godot_pool_real_array array);
+HGDN_DECL godot_variant hgdn_new_pool_vector2_array_variant(godot_pool_vector2_array array);
+HGDN_DECL godot_variant hgdn_new_pool_vector3_array_variant(godot_pool_vector3_array array);
+HGDN_DECL godot_variant hgdn_new_pool_color_array_variant(godot_pool_color_array array);
+HGDN_DECL godot_variant hgdn_new_pool_string_array_variant(godot_pool_string_array array);
 
 #ifdef __cplusplus
 }
@@ -909,24 +909,24 @@ HGDN_DECLARE_NEW_COMPOUND_VARIANT(rid, godot_rid)
 
 #undef HGDN_DECLARE_NEW_COMPOUND_VARIANT
 
-#define HGDN_DECLARE_NEW_OWNED_VARIANT(kind, godot_kind, ctype) \
+#define HGDN_DECLARE_NEW_OWNED_VARIANT(kind, ctype) \
     godot_variant hgdn_new_##kind##_variant(ctype value) { \
         godot_variant var; \
-        hgdn_core_api->godot_variant_new_##godot_kind(&var, &value); \
+        hgdn_core_api->godot_variant_new_##kind(&var, &value); \
         hgdn_core_api->ctype##_destroy(&value); \
         return var; \
     }
 
-HGDN_DECLARE_NEW_OWNED_VARIANT(string, string, godot_string)
-HGDN_DECLARE_NEW_OWNED_VARIANT(dictionary, dictionary, godot_dictionary)
-HGDN_DECLARE_NEW_OWNED_VARIANT(array, array, godot_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(byte_array, pool_byte_array, godot_pool_byte_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(int_array, pool_int_array, godot_pool_int_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(real_array, pool_real_array, godot_pool_real_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(vector2_array, pool_vector2_array, godot_pool_vector2_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(vector3_array, pool_vector3_array, godot_pool_vector3_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(color_array, pool_color_array, godot_pool_color_array)
-HGDN_DECLARE_NEW_OWNED_VARIANT(string_array, pool_string_array, godot_pool_string_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(string, godot_string)
+HGDN_DECLARE_NEW_OWNED_VARIANT(dictionary, godot_dictionary)
+HGDN_DECLARE_NEW_OWNED_VARIANT(array, godot_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_byte_array, godot_pool_byte_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_int_array, godot_pool_int_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_real_array, godot_pool_real_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_vector2_array, godot_pool_vector2_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_vector3_array, godot_pool_vector3_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_color_array, godot_pool_color_array)
+HGDN_DECLARE_NEW_OWNED_VARIANT(pool_string_array, godot_pool_string_array)
 
 #undef HGDN_DECLARE_NEW_OWNED_VARIANT
 
