@@ -873,9 +873,19 @@ HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(bool, godot_bool)
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(uint, uint64_t)
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(int, int64_t)
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(real, double)
-HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(object, godot_object *)
 
 #undef HGDN_DECLARE_NEW_PRIMITIVE_VARIANT
+
+godot_variant hgdn_new_object_variant(const godot_object *value) {
+    godot_variant var;
+    if (value) {
+        hgdn_core_api->godot_variant_new_object(&var, value);
+    }
+    else {
+        hgdn_core_api->godot_variant_new_nil(&var);
+    }
+    return var;
+}
 
 #define HGDN_DECLARE_NEW_COMPOUND_VARIANT(kind, ctype) \
     godot_variant hgdn_new_##kind##_variant(const ctype value) { \
