@@ -91,7 +91,6 @@ typedef hgdn_vector3 godot_vector3;
 #define GODOT_CORE_API_GODOT_VECTOR3_TYPE_DEFINED
 #endif
 
-// May be used as Rect2, Plane, Quat and Color.
 typedef union hgdn_vector4 {
     float elements[4];
     // xyzw
@@ -112,31 +111,46 @@ typedef union hgdn_vector4 {
     // uv
     struct { float u, v; float _4[2]; };
     struct { hgdn_vector2 uv; float _5[2]; };
-    // Rect2: position/size, position/width/height
-    struct { float _8[2]; float width, height; };
-    struct { hgdn_vector2 position; hgdn_vector2 size; };
-    // Plane: normal/d
-    struct { hgdn_vector3 normal; float d; };
 } hgdn_vector4;
 
+#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+// Color is present on Pool Arrays and as MultiMesh isntance data, so it's convenient having a full vector4 definition for it
+typedef hgdn_vector4 godot_color;
+#define GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+#endif
+
+typedef union hgdn_rect2 {
+    float elements[4];
+    struct { float x, y, width, height; };
+    struct { hgdn_vector2 position; hgdn_vector2 size; };
+} hgdn_rect2;
+
 #ifndef GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
-typedef hgdn_vector4 godot_rect2;
+typedef hgdn_rect2 godot_rect2;
 #define GODOT_CORE_API_GODOT_RECT2_TYPE_DEFINED
 #endif
 
+typedef union hgdn_plane {
+    float elements[4];
+    struct { hgdn_vector3 normal; float d; };
+} hgdn_plane;
+
 #ifndef GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
-typedef hgdn_vector4 godot_plane;
+typedef hgdn_plane godot_plane;
 #define GODOT_CORE_API_GODOT_PLANE_TYPE_DEFINED
 #endif
 
-#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
-typedef hgdn_vector4 godot_quat;
-#define GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
-#endif
+typedef union hgdn_quat {
+    float elements[4];
+    struct { float x, y, z, w; };
+    struct { hgdn_vector2 xy; hgdn_vector2 zw; };
+    struct { hgdn_vector3 xyz; float _0; };
+    struct { float _1; hgdn_vector3 yzw; };
+} hgdn_quat;
 
-#ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
-typedef hgdn_vector4 godot_color;
-#define GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
+#ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
+typedef hgdn_quat godot_quat;
+#define GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
 #endif
 
 typedef struct hgdn_basis {
