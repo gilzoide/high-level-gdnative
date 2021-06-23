@@ -5,14 +5,18 @@ high level API for C/C++.
 - Single header: just copy `hgdn.h` to your project, put `#define HGDN_IMPLEMENTATION`
   in a single C/C++ source file before `#include`ing it and compile.
 - Depends only on [godot-headers](https://github.com/godotengine/godot-headers),
-  so GDNative libraries can be built with one liner compiler invocations.
+  so GDNative libraries can be built with a single compiler invocation.
   No need to generate Godot API bindings if you only use core GDNative stuff.
 - `hgdn_gdnative_init` fetches all current GDNative APIs.
-- Functions to create Variants and Pool Arrays in single calls.
-  TODO: functions create Arrays and Dictionaries.
-- Functions and structs to get data from Variants, including abstractions for
-  handling strings (`const char *`), generic memory buffers (`void *`) and
-  other arrays.
+- Useful definitions for all math types, including Vector2, Vector3 and Color.
+- Functions to get buffers from strings and pool arrays.
+- Functions to get values from method arguments or native calls
+  argument arrays.
+- Functions to create Variants, Strings, Arrays, Pool Arrays and Dictionaries
+  in single calls.
+- Overloaded macro/functions to create Variants, available in C11 and C++.
+- Macros to assert arguments preconditions, like expected argument count and
+  (TODO) expected argument types.
 
 
 ## Documentation
@@ -43,14 +47,17 @@ GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
 
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
-        return hgdn_new_string_variant(MESSAGE);
+        // `hgdn_new_variant` is type-dependant using C11 _Generic/C++ overloads
+        // In this case, it calls `hgdn_new_string_variant_own`
+        return hgdn_new_variant(hgdn_new_string(MESSAGE));
     }
     else if (symbol == &square) {
         // returns null and prints an error if array size < 1
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
         godot_real arg0 = hgdn_array_get_real(array, 0);
         godot_real result = square(arg0);
-        return hgdn_new_real_variant(result);
+        // Overloaded to `hgdn_new_real_variant(result)`
+        return hgdn_new_variant(result);
     }
     else if (symbol == &sum_ints) {
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
@@ -58,9 +65,11 @@ godot_variant native_callback(void *symbol, godot_array *array) {
         godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
         int res = sum_ints(buffer, size);
         hgdn_free(buffer);
-        return hgdn_new_int_variant(res);
+        // Overloaded to `hgdn_new_int_variant(result)`
+        return hgdn_new_variant(res);
     }
-    return hgdn_new_nil_variant();
+    // Overloaded to `hgdn_new_object_variant(NULL)`, which returns a nil Variant
+    return hgdn_new_variant(NULL);
 }
 
 GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
@@ -68,6 +77,8 @@ GDN_EXPORT void godot_gdnative_init(godot_gdnative_init_options *options) {
     // as it populates the global API pointers from options
     hgdn_gdnative_init(options);
     hgdn_core_api->godot_register_native_call_type("native", &native_callback);
+    // `hgdn_print` uses `printf` formatted values
+    hgdn_print("GDNative initialized%s", options->in_editor ? " in editor" : "");
 }
 
 GDN_EXPORT void godot_gdnative_terminate(godot_gdnative_terminate_options *options) {
