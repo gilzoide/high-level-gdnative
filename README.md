@@ -13,8 +13,9 @@ high level API for C/C++.
 - Functions to get buffers from strings and pool arrays.
 - Functions to get values from method arguments or native calls
   argument arrays.
-- Functions to create Variants and Pool Arrays in single calls.
-  TODO: functions create Arrays and Dictionaries.
+- Functions to create Variants, Strings, Arrays, Pool Arrays and Dictionaries
+  in single calls.
+- Overloaded macro/functions to create Variants, available in C11 and C++.
 - Macros to assert arguments preconditions, like expected argument count and
   (TODO) expected argument types.
 
