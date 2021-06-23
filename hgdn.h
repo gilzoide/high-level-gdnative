@@ -182,15 +182,15 @@ typedef hgdn_transform2d godot_transform2d;
 #define GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 #endif
 
-typedef struct hgdn_transform3d {
+typedef struct hgdn_transform {
     hgdn_basis basis;
     hgdn_vector3 origin;
-} hgdn_transform3d;
+} hgdn_transform;
 #define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform3d){ HGDN_BASIS_IDENTITY, {} })
 
-#ifndef GODOT_CORE_API_GODOT_TRANSFORM3D_TYPE_DEFINED
-typedef hgdn_transform3d godot_transform3d;
-#define GODOT_CORE_API_GODOT_TRANSFORM3D_TYPE_DEFINED
+#ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
+typedef hgdn_transform godot_transform;
+#define GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
 #endif
 
 #include "gdnative_api_struct.gen.h"
