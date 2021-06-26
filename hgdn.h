@@ -272,6 +272,15 @@ HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int 
 /// If `argc` isn't at least `min_size`, print error message and return nil Variant
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size)  HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
 
+// String helpers
+typedef struct hgdn_string {
+    godot_char_string gd_char_string;
+    const char *ptr;
+    godot_int length;
+} hgdn_string;
+HGDN_DECL hgdn_string hgdn_string_get(const godot_string *str);
+HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
+
 // Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
 // If `out_size` is not NULL, it will be filled with the string/array size.
@@ -888,6 +897,21 @@ godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own
         hgdn_core_api->godot_variant_destroy(&buffer[i].value);
     }
     return dict;
+}
+
+// String wrapper
+hgdn_string hgdn_string_get(const godot_string *str) {
+    godot_char_string char_string = hgdn_core_api->godot_string_utf8(str);
+    hgdn_string wrapper = {
+        char_string,
+        hgdn_core_api->godot_char_string_get_data(&char_string),
+        hgdn_core_api->godot_char_string_length(&char_string),
+    };
+    return wrapper;
+}
+
+void hgdn_string_destroy(hgdn_string *str) {
+    hgdn_core_api->godot_char_string_destroy(&str->gd_char_string);
 }
 
 // Allocate arrays from Godot data types
