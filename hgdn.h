@@ -437,6 +437,45 @@ extern "C++" {
 #endif
 
 
+// Helper functions to create Dictionaries
+typedef struct hgdn_dictionary_entry {
+    godot_variant *key, *value;
+} hgdn_dictionary_entry;
+typedef struct hgdn_dictionary_entry_own {
+    godot_variant key, value;
+} hgdn_dictionary_entry_own;
+typedef struct hgdn_dictionary_entry_string {
+    const char *key;
+    godot_variant *value;
+} hgdn_dictionary_entry_string;
+typedef struct hgdn_dictionary_entry_string_own {
+    const char *key;
+    godot_variant value;
+} hgdn_dictionary_entry_string_own;
+typedef struct hgdn_dictionary_entry_string_string {
+    const char *key, *value;
+} hgdn_dictionary_entry_string_string;
+typedef struct hgdn_dictionary_entry_string_int {
+    const char *key;
+    godot_int value;
+} hgdn_dictionary_entry_string_int;
+HGDN_DECL godot_dictionary hgdn_new_dictionary(const hgdn_dictionary_entry *buffer, const godot_int size);
+HGDN_DECL godot_dictionary hgdn_new_dictionary_string(const hgdn_dictionary_entry_string *buffer, const godot_int size);
+HGDN_DECL godot_dictionary hgdn_new_dictionary_string_int(const hgdn_dictionary_entry_string_int *buffer, const godot_int size);
+HGDN_DECL godot_dictionary hgdn_new_dictionary_string_string(const hgdn_dictionary_entry_string_string *buffer, const godot_int size);
+// Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Dictionary
+HGDN_DECL godot_dictionary hgdn_new_dictionary_own(hgdn_dictionary_entry_own *buffer, const godot_int size);
+HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own *buffer, const godot_int size);
+
+// Helper variadic macros/templates to create Dictionaries
+#define hgdn_new_dictionary_args(...)  (hgdn_new_dictionary((const hgdn_dictionary_entry[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_args(...)  (hgdn_new_dictionary_string((const hgdn_dictionary_entry_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_int_args(...)  (hgdn_new_dictionary_string_int((const hgdn_dictionary_entry_string_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_string_args(...)  (hgdn_new_dictionary_string_string((const hgdn_dictionary_entry_string_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_own_args(...)  (hgdn_new_dictionary_own((hgdn_dictionary_entry_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_own_args(...)  (hgdn_new_dictionary_string_own((hgdn_dictionary_entry_string_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+
+
 // Helper functions to create Variant values
 HGDN_DECL godot_variant hgdn_new_nil_variant();
 HGDN_DECL godot_variant hgdn_new_bool_variant(const godot_bool value);
@@ -774,6 +813,76 @@ godot_array hgdn_new_array_own(godot_variant *buffer, const godot_int size) {
         hgdn_core_api->godot_variant_destroy(var);
     }
     return array;
+}
+
+// Dictionary creation API
+godot_dictionary hgdn_new_dictionary(const hgdn_dictionary_entry *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        hgdn_core_api->godot_dictionary_set(&dict, buffer[i].key, buffer[i].value);
+    }
+    return dict;
+}
+
+godot_dictionary hgdn_new_dictionary_string(const hgdn_dictionary_entry_string *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        godot_variant key = hgdn_new_string_variant_own(hgdn_new_string(buffer[i].key));
+        hgdn_core_api->godot_dictionary_set(&dict, &key, buffer[i].value);
+        hgdn_core_api->godot_variant_destroy(&key);
+    }
+    return dict;
+}
+
+godot_dictionary hgdn_new_dictionary_string_int(const hgdn_dictionary_entry_string_int *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        godot_variant key = hgdn_new_string_variant_own(hgdn_new_string(buffer[i].key));
+        godot_variant value = hgdn_new_int_variant(buffer[i].value);
+        hgdn_core_api->godot_dictionary_set(&dict, &key, &value);
+        hgdn_core_api->godot_variant_destroy(&key);
+        hgdn_core_api->godot_variant_destroy(&value);
+    }
+    return dict;
+}
+
+godot_dictionary hgdn_new_dictionary_string_string(const hgdn_dictionary_entry_string_string *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        godot_variant key = hgdn_new_string_variant_own(hgdn_new_string(buffer[i].key));
+        godot_variant value = hgdn_new_string_variant_own(hgdn_new_string(buffer[i].value));
+        hgdn_core_api->godot_dictionary_set(&dict, &key, &value);
+        hgdn_core_api->godot_variant_destroy(&key);
+        hgdn_core_api->godot_variant_destroy(&value);
+    }
+    return dict;
+}
+
+godot_dictionary hgdn_new_dictionary_own(hgdn_dictionary_entry_own *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        hgdn_core_api->godot_dictionary_set(&dict, &buffer[i].key, &buffer[i].value);
+        hgdn_core_api->godot_variant_destroy(&buffer[i].key);
+        hgdn_core_api->godot_variant_destroy(&buffer[i].value);
+    }
+    return dict;
+}
+
+godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own *buffer, const godot_int size) {
+    godot_dictionary dict;
+    hgdn_core_api->godot_dictionary_new(&dict);
+    for (godot_int i = 0; i < size; i++) {
+        godot_variant key = hgdn_new_string_variant_own(hgdn_new_string(buffer[i].key));
+        hgdn_core_api->godot_dictionary_set(&dict, &key, &buffer[i].value);
+        hgdn_core_api->godot_variant_destroy(&key);
+        hgdn_core_api->godot_variant_destroy(&buffer[i].value);
+    }
+    return dict;
 }
 
 // Allocate arrays from Godot data types
