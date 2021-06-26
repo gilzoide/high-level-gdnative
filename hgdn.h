@@ -521,7 +521,9 @@ HGDN_DECL godot_variant hgdn_new_pool_string_array_variant_own(godot_pool_string
 #ifdef __cplusplus
 extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const godot_bool value);
+    HGDN_DECL godot_variant hgdn_new_variant(const unsigned int value);
     HGDN_DECL godot_variant hgdn_new_variant(const uint64_t value);
+    HGDN_DECL godot_variant hgdn_new_variant(const int value);
     HGDN_DECL godot_variant hgdn_new_variant(const int64_t value);
     HGDN_DECL godot_variant hgdn_new_variant(const double value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_vector2 value);
@@ -1148,7 +1150,9 @@ HGDN_DECLARE_NEW_OWNED_VARIANT(pool_string_array, godot_pool_string_array)
 
 #ifdef __cplusplus
 godot_variant hgdn_new_variant(const godot_bool value) { return hgdn_new_bool_variant(value); }
+godot_variant hgdn_new_variant(const unsigned int value) { return hgdn_new_uint_variant(value); }
 godot_variant hgdn_new_variant(const uint64_t value) { return hgdn_new_uint_variant(value); }
+godot_variant hgdn_new_variant(const int value) { return hgdn_new_int_variant(value); }
 godot_variant hgdn_new_variant(const int64_t value) { return hgdn_new_int_variant(value); }
 godot_variant hgdn_new_variant(const double value) { return hgdn_new_real_variant(value); }
 godot_variant hgdn_new_variant(const godot_vector2 value) { return hgdn_new_vector2_variant(value); }
