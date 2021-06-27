@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20functions_64',['Memory functions',['../group__memory.html',1,'']]]
+  ['dictionary_20creation_1',['Dictionary creation',['../group__dictionary.html',1,'']]]
 ];

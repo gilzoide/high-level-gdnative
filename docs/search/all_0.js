@@ -1,31 +1,4 @@
 var searchData=
 [
-  ['hgdn_2eh_0',['hgdn.h',['../hgdn_8h.html',1,'']]],
-  ['hgdn_5faabb_1',['hgdn_aabb',['../structhgdn__aabb.html',1,'']]],
-  ['hgdn_5falloc_2',['hgdn_alloc',['../hgdn_8h.html#a365c97724dfcc6e946a9be4d8c694976',1,'hgdn.h']]],
-  ['hgdn_5fassert_3',['HGDN_ASSERT',['../hgdn_8h.html#a5391b06fc9c9ae6d990bdc5989dec941',1,'hgdn.h']]],
-  ['hgdn_5fassert_5fargs_5fsize_4',['HGDN_ASSERT_ARGS_SIZE',['../hgdn_8h.html#a0623ba6a5c81ae0dd7e2ea691c8acaea',1,'hgdn.h']]],
-  ['hgdn_5fassert_5farray_5fsize_5',['HGDN_ASSERT_ARRAY_SIZE',['../hgdn_8h.html#aec051db348354455eed5bd452771f1de',1,'hgdn.h']]],
-  ['hgdn_5fassert_5fmsg_6',['HGDN_ASSERT_MSG',['../hgdn_8h.html#af8d19fd5f3783c990eee0ada4fed045c',1,'hgdn.h']]],
-  ['hgdn_5fbasis_7',['hgdn_basis',['../structhgdn__basis.html',1,'']]],
-  ['hgdn_5ffree_8',['hgdn_free',['../hgdn_8h.html#a83bb732677e50a2fd59d6f5af9b1041f',1,'hgdn.h']]],
-  ['hgdn_5ffree_5fstring_5farray_9',['hgdn_free_string_array',['../hgdn_8h.html#a27ebf3ff19cbd47f121710fcc223e6ec',1,'hgdn.h']]],
-  ['hgdn_5fgdnative_5finit_10',['hgdn_gdnative_init',['../hgdn_8h.html#a5e754da4d2c0ea1aea26e7d999e67b05',1,'hgdn.h']]],
-  ['hgdn_5fgdnative_5fterminate_11',['hgdn_gdnative_terminate',['../hgdn_8h.html#a6b33afc16cb7739aafa2945cb1b335d5',1,'hgdn.h']]],
-  ['hgdn_5flibrary_12',['hgdn_library',['../hgdn_8h.html#a291e0f7d5af5414c18e0fc770a6ee2f9',1,'hgdn.h']]],
-  ['hgdn_5fplane_13',['hgdn_plane',['../unionhgdn__plane.html',1,'']]],
-  ['hgdn_5fprint_14',['hgdn_print',['../hgdn_8h.html#acf1fba45abd6265766c922f9153c6410',1,'hgdn.h']]],
-  ['hgdn_5fprint_5ferror_15',['HGDN_PRINT_ERROR',['../hgdn_8h.html#a942c2d27e885e98e7fb490c2d00be40b',1,'hgdn.h']]],
-  ['hgdn_5fprint_5ferror_16',['hgdn_print_error',['../hgdn_8h.html#a0a4b41395e4bac8eb5c359db515aab6b',1,'hgdn.h']]],
-  ['hgdn_5fprint_5fwarning_17',['hgdn_print_warning',['../hgdn_8h.html#a4b032652ac8c38d28962582cf1b3513b',1,'hgdn.h']]],
-  ['hgdn_5fprint_5fwarning_18',['HGDN_PRINT_WARNING',['../hgdn_8h.html#ae5cba99db584ed5928076b19c2dd7bd3',1,'hgdn.h']]],
-  ['hgdn_5fquat_19',['hgdn_quat',['../unionhgdn__quat.html',1,'']]],
-  ['hgdn_5frealloc_20',['hgdn_realloc',['../hgdn_8h.html#abbef99c4ad8265059b49fc8c5c7b93d4',1,'hgdn.h']]],
-  ['hgdn_5frect2_21',['hgdn_rect2',['../unionhgdn__rect2.html',1,'']]],
-  ['hgdn_5ftransform_22',['hgdn_transform',['../structhgdn__transform.html',1,'']]],
-  ['hgdn_5ftransform2d_23',['hgdn_transform2d',['../structhgdn__transform2d.html',1,'']]],
-  ['hgdn_5fvector2_24',['hgdn_vector2',['../unionhgdn__vector2.html',1,'']]],
-  ['hgdn_5fvector3_25',['hgdn_vector3',['../unionhgdn__vector3.html',1,'']]],
-  ['hgdn_5fvector4_26',['hgdn_vector4',['../unionhgdn__vector4.html',1,'']]],
-  ['high_20level_20gdnative_20c_2fc_2b_2b_20api_20_28hgdn_29_27',['High level GDNative C/C++ API (HGDN)',['../index.html',1,'']]]
+  ['custom_20math_20types_0',['Custom math types',['../group__custom__math__types.html',1,'']]]
 ];

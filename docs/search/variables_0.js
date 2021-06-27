@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hgdn_5flibrary_48',['hgdn_library',['../hgdn_8h.html#a291e0f7d5af5414c18e0fc770a6ee2f9',1,'hgdn.h']]]
+  ['hgdn_5flibrary_84',['hgdn_library',['../group__global.html#gaf73a503d38a0f601afc51871fb1ff3d4',1,'hgdn.h']]]
 ];

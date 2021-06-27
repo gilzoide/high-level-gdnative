@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20functions_128',['Memory functions',['../group__memory.html',1,'']]]
+  ['custom_20math_20types_90',['Custom math types',['../group__custom__math__types.html',1,'']]]
 ];
