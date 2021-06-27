@@ -72,7 +72,7 @@ $(function() {
 <li>Depends only on <a href="https://github.com/godotengine/godot-headers">godot-headers</a>, so GDNative libraries can be built with a single compiler invocation. No need to generate Godot API bindings if you only use core GDNative stuff.</li>
 <li><code>hgdn_gdnative_init</code> fetches all current GDNative APIs.</li>
 <li>Useful definitions for all math types, including Vector2, Vector3 and Color.</li>
-<li>Functions to get buffers from strings and pool arrays.</li>
+<li>Wrappers around strings and pool arrays with pointer and size available.</li>
 <li>Functions to get values from method arguments or native calls argument arrays.</li>
 <li>Functions to create Variants, Strings, Arrays, Pool Arrays and Dictionaries in single calls.</li>
 <li>Overloaded macro/functions to create Variants, available in C11 and C++.</li>
@@ -80,7 +80,7 @@ $(function() {
 </ul>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Documentation</h1>
-<p>Code is documented using <a href="https://www.doxygen.nl">Doxygen</a> and is available <a href="https://gilzoide.github.io/high-level-gdnative/">here</a>.</p>
+<p>Code is documented using <a href="https://www.doxygen.nl">Doxygen</a> and is available <a href="https://gilzoide.github.io/high-level-gdnative/">online here</a>.</p>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Usage example</h1>
 <div class="fragment"><div class="line"><span class="comment">// example.c</span></div>
@@ -104,7 +104,7 @@ Usage example</h1>
 <div class="line"> </div>
 <div class="line">godot_variant native_callback(<span class="keywordtype">void</span> *symbol, godot_array *array) {</div>
 <div class="line">    <span class="keywordflow">if</span> (symbol == &amp;MESSAGE) {</div>
-<div class="line">        <span class="comment">// `hgdn_new_variant` is type-dependant using C11 _Generic/C++ overloads</span></div>
+<div class="line">        <span class="comment">// `hgdn_new_variant` is type-aware using C11 _Generic/C++ overloads</span></div>
 <div class="line">        <span class="comment">// In this case, it calls `hgdn_new_string_variant_own`</span></div>
 <div class="line">        <span class="keywordflow">return</span> <a class="code" href="group__new__variant.html#gaa86bc4e8ba43dff211180296a43f15b8">hgdn_new_variant</a>(hgdn_new_string(MESSAGE));</div>
 <div class="line">    }</div>
@@ -140,7 +140,7 @@ Usage example</h1>
 <div class="line">GDN_EXPORT <span class="keywordtype">void</span> godot_gdnative_terminate(godot_gdnative_terminate_options *options) {</div>
 <div class="line">    hgdn_gdnative_terminate(options);</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__new__variant_html_gaa86bc4e8ba43dff211180296a43f15b8"><div class="ttname"><a href="group__new__variant.html#gaa86bc4e8ba43dff211180296a43f15b8">hgdn_new_variant</a></div><div class="ttdeci">#define hgdn_new_variant(value)</div><div class="ttdoc">Overloaded function/macro for creating Variants from any values. Available in C++ and C11.</div><div class="ttdef"><b>Definition:</b> hgdn.h:519</div></div>
+<div class="ttc" id="agroup__new__variant_html_gaa86bc4e8ba43dff211180296a43f15b8"><div class="ttname"><a href="group__new__variant.html#gaa86bc4e8ba43dff211180296a43f15b8">hgdn_new_variant</a></div><div class="ttdeci">#define hgdn_new_variant(value)</div><div class="ttdoc">Overloaded function/macro for creating Variants from any values. Available in C++ and C11.</div><div class="ttdef"><b>Definition:</b> hgdn.h:582</div></div>
 <div class="ttc" id="ahgdn_8h_html"><div class="ttname"><a href="hgdn_8h.html">hgdn.h</a></div><div class="ttdoc">hgdn.h – High level GDNative C/C++ API</div></div>
 <div class="ttc" id="ahgdn_8h_html_aec051db348354455eed5bd452771f1de"><div class="ttname"><a href="hgdn_8h.html#aec051db348354455eed5bd452771f1de">HGDN_ASSERT_ARRAY_SIZE</a></div><div class="ttdeci">#define HGDN_ASSERT_ARRAY_SIZE(arr, min_size)</div><div class="ttdoc">If arr doesn't have at least min_size elements, print error message and return nil Variant.</div><div class="ttdef"><b>Definition:</b> hgdn.h:269</div></div>
 <div class="ttc" id="astructhgdn__int__array_html"><div class="ttname"><a href="structhgdn__int__array.html">hgdn_int_array</a></div><div class="ttdef"><b>Definition:</b> hgdn.h:299</div></div>
