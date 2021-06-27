@@ -281,6 +281,64 @@ typedef struct hgdn_string {
 HGDN_DECL hgdn_string hgdn_string_get(const godot_string *str);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 
+// Pool Array helpers
+typedef struct hgdn_byte_array {
+    godot_pool_byte_array_read_access *gd_read_access;
+    const uint8_t *ptr;
+    godot_int size;
+} hgdn_byte_array;
+HGDN_DECL hgdn_byte_array hgdn_byte_array_get(const godot_pool_byte_array *array);
+HGDN_DECL void hgdn_byte_array_destroy(hgdn_byte_array *array);
+
+typedef struct hgdn_int_array {
+    godot_pool_int_array_read_access *gd_read_access;
+    const godot_int *ptr;
+    godot_int size;
+} hgdn_int_array;
+HGDN_DECL hgdn_int_array hgdn_int_array_get(const godot_pool_int_array *array);
+HGDN_DECL void hgdn_int_array_destroy(hgdn_int_array *array);
+
+typedef struct hgdn_real_array {
+    godot_pool_real_array_read_access *gd_read_access;
+    const godot_real *ptr;
+    godot_int size;
+} hgdn_real_array;
+HGDN_DECL hgdn_real_array hgdn_real_array_get(const godot_pool_real_array *array);
+HGDN_DECL void hgdn_real_array_destroy(hgdn_real_array *array);
+
+typedef struct hgdn_vector2_array {
+    godot_pool_vector2_array_read_access *gd_read_access;
+    const godot_vector2 *ptr;
+    godot_int size;
+} hgdn_vector2_array;
+HGDN_DECL hgdn_vector2_array hgdn_vector2_array_get(const godot_pool_vector2_array *array);
+HGDN_DECL void hgdn_vector2_array_destroy(hgdn_vector2_array *array);
+
+typedef struct hgdn_vector3_array {
+    godot_pool_vector3_array_read_access *gd_read_access;
+    const godot_vector3 *ptr;
+    godot_int size;
+} hgdn_vector3_array;
+HGDN_DECL hgdn_vector3_array hgdn_vector3_array_get(const godot_pool_vector3_array *array);
+HGDN_DECL void hgdn_vector3_array_destroy(hgdn_vector3_array *array);
+
+typedef struct hgdn_color_array {
+    godot_pool_color_array_read_access *gd_read_access;
+    const godot_color *ptr;
+    godot_int size;
+} hgdn_color_array;
+HGDN_DECL hgdn_color_array hgdn_color_array_get(const godot_pool_color_array *array);
+HGDN_DECL void hgdn_color_array_destroy(hgdn_color_array *array);
+
+typedef struct hgdn_string_array {
+    hgdn_string *strings;
+    const char **ptr;
+    godot_int size;
+} hgdn_string_array;
+HGDN_DECL hgdn_string_array hgdn_string_array_get(const godot_pool_string_array *array);
+HGDN_DECL void hgdn_string_array_destroy(hgdn_string_array *array);
+
+
 // Helper functions that allocate buffers and copy String/Pool*Array contents
 // Returned pointer must be freed with `hgdn_free`.
 // If `out_size` is not NULL, it will be filled with the string/array size.
@@ -899,7 +957,7 @@ godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own
     return dict;
 }
 
-// String wrapper
+// String helpers
 hgdn_string hgdn_string_get(const godot_string *str) {
     godot_char_string char_string = hgdn_core_api->godot_string_utf8(str);
     hgdn_string wrapper = {
@@ -912,6 +970,60 @@ hgdn_string hgdn_string_get(const godot_string *str) {
 
 void hgdn_string_destroy(hgdn_string *str) {
     hgdn_core_api->godot_char_string_destroy(&str->gd_char_string);
+}
+
+// Pool String helpers
+#define HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(kind, ctype) \
+    hgdn_##kind##_array hgdn_##kind##_array_get(const godot_pool_##kind##_array *array) { \
+        godot_pool_##kind##_array_read_access *access = hgdn_core_api->godot_pool_##kind##_array_read(array); \
+        hgdn_##kind##_array wrapper = { \
+            access, \
+            hgdn_core_api->godot_pool_##kind##_array_read_access_ptr(access), \
+            hgdn_core_api->godot_pool_##kind##_array_size(array), \
+        }; \
+        return wrapper; \
+    } \
+    void hgdn_##kind##_array_destroy(hgdn_##kind##_array *array) { \
+        hgdn_core_api->godot_pool_##kind##_array_read_access_destroy(array->gd_read_access); \
+    }
+
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(byte, uint8_t)
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(int, godot_int)
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(real, godot_real)
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(vector2, godot_vector2)
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(vector3, godot_vector3)
+HGDN_DECLARE_POOL_ARRAY_GET_DESTROY(color, godot_color)
+
+#undef HGDN_DECLARE_POOL_ARRAY_GET_DESTROY
+
+hgdn_string_array hgdn_string_array_get(const godot_pool_string_array *array) {
+    godot_int size = hgdn_core_api->godot_pool_string_array_size(array);
+    godot_pool_string_array_read_access *access = hgdn_core_api->godot_pool_string_array_read(array);
+    hgdn_string_array wrapper = {};
+    if ((wrapper.strings = (hgdn_string *) hgdn_alloc(size * sizeof(hgdn_string))) == NULL) {
+        return wrapper;
+    }
+    if ((wrapper.ptr = (const char **) hgdn_alloc(size * sizeof(char *))) == NULL) {
+        hgdn_free(wrapper.strings);
+        return wrapper;
+    }
+    wrapper.size = size;
+    const godot_string *gd_strings = hgdn_core_api->godot_pool_string_array_read_access_ptr(access);
+    for (godot_int i = 0; i < size; i++) {
+        hgdn_string str = hgdn_string_get(&gd_strings[i]);
+        wrapper.strings[i] = str;
+        wrapper.ptr[i] = str.ptr;
+    }
+    hgdn_core_api->godot_pool_string_array_read_access_destroy(access);
+    return wrapper;
+}
+
+void hgdn_string_array_destroy(hgdn_string_array *array) {
+    for (godot_int i = 0; i < array->size; i++) {
+        hgdn_string_destroy(&array->strings[i]);
+    }
+    hgdn_free(array->strings);
+    hgdn_free(array->ptr);
 }
 
 // Allocate arrays from Godot data types
