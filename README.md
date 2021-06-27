@@ -37,7 +37,7 @@ GDN_EXPORT godot_real square(godot_real x) {
     return x * x;
 }
 
-GDN_EXPORT int sum_ints(godot_int *buffer, size_t size) {
+GDN_EXPORT int sum_ints(const godot_int *buffer, size_t size) {
     int sum = 0;
     for (int i = 0; i < size; i++) {
         sum += buffer[i];
@@ -61,10 +61,9 @@ godot_variant native_callback(void *symbol, godot_array *array) {
     }
     else if (symbol == &sum_ints) {
         HGDN_ASSERT_ARRAY_SIZE(array, 1);
-        size_t size;
-        godot_int *buffer = hgdn_array_get_int_array(array, 0, &size);
-        int res = sum_ints(buffer, size);
-        hgdn_free(buffer);
+        hgdn_int_array int_array = hgdn_array_get_int_array(array, 0);
+        int res = sum_ints(int_array.ptr, int_array.size);
+        hgdn_int_array_destroy(&int_array);
         // Overloaded to `hgdn_new_int_variant(result)`
         return hgdn_new_variant(res);
     }
