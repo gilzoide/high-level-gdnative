@@ -9,7 +9,7 @@ high level API for C/C++.
   No need to generate Godot API bindings if you only use core GDNative stuff.
 - `hgdn_gdnative_init` fetches all current GDNative APIs.
 - Useful definitions for all math types, including Vector2, Vector3 and Color.
-- Functions to get buffers from strings and pool arrays.
+- Wrappers around strings and pool arrays with pointer and size available.
 - Functions to get values from method arguments or native calls
   argument arrays.
 - Functions to create Variants, Strings, Arrays, Pool Arrays and Dictionaries
@@ -20,7 +20,7 @@ high level API for C/C++.
 
 
 ## Documentation
-Code is documented using [Doxygen](https://www.doxygen.nl) and is available [here](https://gilzoide.github.io/high-level-gdnative/).
+Code is documented using [Doxygen](https://www.doxygen.nl) and is available [online here](https://gilzoide.github.io/high-level-gdnative/).
 
 
 ## Usage example
@@ -47,7 +47,7 @@ GDN_EXPORT int sum_ints(const godot_int *buffer, size_t size) {
 
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
-        // `hgdn_new_variant` is type-dependant using C11 _Generic/C++ overloads
+        // `hgdn_new_variant` is type-aware using C11 _Generic/C++ overloads
         // In this case, it calls `hgdn_new_string_variant_own`
         return hgdn_new_variant(hgdn_new_string(MESSAGE));
     }
