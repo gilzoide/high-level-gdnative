@@ -214,7 +214,7 @@ typedef hgdn_transform godot_transform;
 #include "gdnative_api_struct.gen.h"
 
 /// @defgroup global Global GDNative pointers
-/// Global API struct and GDNativeLibrary pointers
+/// Global API structs and GDNativeLibrary pointers
 /// @{
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
@@ -417,6 +417,69 @@ HGDN_DECL hgdn_vector2_array hgdn_args_get_vector2_array(const godot_variant **a
 HGDN_DECL hgdn_vector3_array hgdn_args_get_vector3_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_color_array hgdn_args_get_color_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_string_array hgdn_args_get_string_array(const godot_variant **args, const godot_int index);
+/// @}
+
+
+/// @defgroup dictionary_get Typed values from Dictionaries
+/// Helper functions to get values directly from a `godot_dictionary` with Variant or string key
+/// @{
+HGDN_DECL godot_bool hgdn_dictionary_get_bool(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL uint64_t hgdn_dictionary_get_uint(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL int64_t hgdn_dictionary_get_int(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL double hgdn_dictionary_get_real(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_vector2 hgdn_dictionary_get_vector2(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_vector3 hgdn_dictionary_get_vector3(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_rect2 hgdn_dictionary_get_rect2(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_plane hgdn_dictionary_get_plane(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_quat hgdn_dictionary_get_quat(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_aabb hgdn_dictionary_get_aabb(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_basis hgdn_dictionary_get_basis(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_transform2d hgdn_dictionary_get_transform2d(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_transform hgdn_dictionary_get_transform(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_color hgdn_dictionary_get_color(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_node_path hgdn_dictionary_get_node_path(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_rid hgdn_dictionary_get_rid(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_object *hgdn_dictionary_get_object(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_dictionary hgdn_dictionary_get_dictionary(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL godot_array hgdn_dictionary_get_array(const godot_dictionary *dict, const godot_variant *key);
+
+HGDN_DECL hgdn_string hgdn_dictionary_get_string(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_byte_array hgdn_dictionary_get_byte_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_int_array hgdn_dictionary_get_int_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_real_array hgdn_dictionary_get_real_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_vector2_array hgdn_dictionary_get_vector2_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_vector3_array hgdn_dictionary_get_vector3_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_color_array hgdn_dictionary_get_color_array(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_string_array hgdn_dictionary_get_string_array(const godot_dictionary *dict, const godot_variant *key);
+
+HGDN_DECL godot_bool hgdn_dictionary_string_get_bool(const godot_dictionary *dict, const char *key);
+HGDN_DECL uint64_t hgdn_dictionary_string_get_uint(const godot_dictionary *dict, const char *key);
+HGDN_DECL int64_t hgdn_dictionary_string_get_int(const godot_dictionary *dict, const char *key);
+HGDN_DECL double hgdn_dictionary_string_get_real(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_vector2 hgdn_dictionary_string_get_vector2(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_vector3 hgdn_dictionary_string_get_vector3(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_rect2 hgdn_dictionary_string_get_rect2(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_plane hgdn_dictionary_string_get_plane(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_quat hgdn_dictionary_string_get_quat(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_aabb hgdn_dictionary_string_get_aabb(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_basis hgdn_dictionary_string_get_basis(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_transform2d hgdn_dictionary_string_get_transform2d(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_transform hgdn_dictionary_string_get_transform(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_color hgdn_dictionary_string_get_color(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_node_path hgdn_dictionary_string_get_node_path(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_rid hgdn_dictionary_string_get_rid(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_object *hgdn_dictionary_string_get_object(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_dictionary hgdn_dictionary_string_get_dictionary(const godot_dictionary *dict, const char *key);
+HGDN_DECL godot_array hgdn_dictionary_string_get_array(const godot_dictionary *dict, const char *key);
+
+HGDN_DECL hgdn_string hgdn_dictionary_string_get_string(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_byte_array hgdn_dictionary_string_get_byte_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_int_array hgdn_dictionary_string_get_int_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_real_array hgdn_dictionary_string_get_real_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_vector2_array hgdn_dictionary_string_get_vector2_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_vector3_array hgdn_dictionary_string_get_vector3_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_color_array hgdn_dictionary_string_get_color_array(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_string_array hgdn_dictionary_string_get_string_array(const godot_dictionary *dict, const char *key);
 /// @}
 
 
@@ -1151,6 +1214,62 @@ HGDN_DECLARE_ARGS_GET_FROM_VARIANT(vector3_array)  // hgdn_args_get_vector3_arra
 HGDN_DECLARE_ARGS_GET_FROM_VARIANT(color_array)  // hgdn_args_get_color_array
 
 #undef HGDN_DECLARE_ARGS_GET_FROM_VARIANT
+
+// Get values from Dictionary
+#define HGDN_DECLARE_DICTIONARY_GET(kind, ctype) \
+    ctype hgdn_dictionary_get_##kind(const godot_dictionary *dict, const godot_variant *key) { \
+        return hgdn_core_api->godot_variant_as_##kind(hgdn_core_api->godot_dictionary_operator_index_const(dict, key)); \
+    } \
+    ctype hgdn_dictionary_string_get_##kind(const godot_dictionary *dict, const char *key) { \
+        godot_variant key_var = hgdn_new_cstring_variant(key); \
+        ctype value = hgdn_dictionary_get_##kind(dict, &key_var); \
+        hgdn_core_api->godot_variant_destroy(&key_var); \
+        return value; \
+    }
+
+HGDN_DECLARE_DICTIONARY_GET(bool, godot_bool)  // hgdn_dictionary_get_bool, hgdn_dictionary_string_get_bool
+HGDN_DECLARE_DICTIONARY_GET(uint, uint64_t)  // hgdn_dictionary_get_uint, hgdn_dictionary_string_get_uint
+HGDN_DECLARE_DICTIONARY_GET(int, int64_t)  // hgdn_dictionary_get_int, hgdn_dictionary_string_get_int
+HGDN_DECLARE_DICTIONARY_GET(real, double)  // hgdn_dictionary_get_real, hgdn_dictionary_string_get_real
+HGDN_DECLARE_DICTIONARY_GET(vector2, godot_vector2)  // hgdn_dictionary_get_vector2, hgdn_dictionary_string_get_vector2
+HGDN_DECLARE_DICTIONARY_GET(vector3, godot_vector3)  // hgdn_dictionary_get_vector3, hgdn_dictionary_string_get_vector3
+HGDN_DECLARE_DICTIONARY_GET(rect2, godot_rect2)  // hgdn_dictionary_get_rect2, hgdn_dictionary_string_get_rect2
+HGDN_DECLARE_DICTIONARY_GET(plane, godot_plane)  // hgdn_dictionary_get_plane, hgdn_dictionary_string_get_plane
+HGDN_DECLARE_DICTIONARY_GET(quat, godot_quat)  // hgdn_dictionary_get_quat, hgdn_dictionary_string_get_quat
+HGDN_DECLARE_DICTIONARY_GET(aabb, godot_aabb)  // hgdn_dictionary_get_aabb, hgdn_dictionary_string_get_aabb
+HGDN_DECLARE_DICTIONARY_GET(basis, godot_basis)  // hgdn_dictionary_get_basis, hgdn_dictionary_string_get_basis
+HGDN_DECLARE_DICTIONARY_GET(transform2d, godot_transform2d)  // hgdn_dictionary_get_transform2d, hgdn_dictionary_string_get_transform2d
+HGDN_DECLARE_DICTIONARY_GET(transform, godot_transform)  // hgdn_dictionary_get_transform, hgdn_dictionary_string_get_transform
+HGDN_DECLARE_DICTIONARY_GET(color, godot_color)  // hgdn_dictionary_get_color, hgdn_dictionary_string_get_color
+HGDN_DECLARE_DICTIONARY_GET(node_path, godot_node_path)  // hgdn_dictionary_get_node_path, hgdn_dictionary_string_get_node_path
+HGDN_DECLARE_DICTIONARY_GET(rid, godot_rid)  // hgdn_dictionary_get_rid, hgdn_dictionary_string_get_rid
+HGDN_DECLARE_DICTIONARY_GET(object, godot_object *)  // hgdn_dictionary_get_object, hgdn_dictionary_string_get_object
+HGDN_DECLARE_DICTIONARY_GET(dictionary, godot_dictionary)  // hgdn_dictionary_get_dictionary, hgdn_dictionary_string_get_dictionary
+HGDN_DECLARE_DICTIONARY_GET(array, godot_array)  // hgdn_dictionary_get_array, hgdn_dictionary_string_get_array
+
+#undef HGDN_DECLARE_DICTIONARY_GET
+
+#define HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(kind) \
+    hgdn_##kind hgdn_dictionary_get_##kind(const godot_dictionary *dict, const godot_variant *key) { \
+        return hgdn_##kind##_from_variant(hgdn_core_api->godot_dictionary_operator_index_const(dict, key)); \
+    } \
+    hgdn_##kind hgdn_dictionary_string_get_##kind(const godot_dictionary *dict, const char *key) { \
+        godot_variant key_var = hgdn_new_cstring_variant(key); \
+        hgdn_##kind value = hgdn_dictionary_get_##kind(dict, &key_var); \
+        hgdn_core_api->godot_variant_destroy(&key_var); \
+        return value; \
+    }
+
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(string)  // hgdn_dictionary_get_string, hgdn_dictionary_string_get_string
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(byte_array)  // hgdn_dictionary_get_byte_array, hgdn_dictionary_string_get_byte_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(int_array)  // hgdn_dictionary_get_int_array, hgdn_dictionary_string_get_int_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(real_array)  // hgdn_dictionary_get_real_array, hgdn_dictionary_string_get_real_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(string_array)  // hgdn_dictionary_get_string_array, hgdn_dictionary_string_get_string_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(vector2_array)  // hgdn_dictionary_get_vector2_array, hgdn_dictionary_string_get_vector2_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(vector3_array)  // hgdn_dictionary_get_vector3_array, hgdn_dictionary_string_get_vector3_array
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(color_array)  // hgdn_dictionary_get_color_array, hgdn_dictionary_string_get_color_array
+
+#undef HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT
 
 // Create variants
 godot_variant hgdn_new_variant_copy(const godot_variant *value) {
