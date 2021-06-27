@@ -52,6 +52,17 @@ extern "C" {
     #define HGDN_CONSTEXPR
 #endif
 
+// Macro magic to get the number of variable arguments
+// Ref: https://groups.google.com/g/comp.std.c/c/d-6Mj5Lko_s
+#define HGDN_NARG(...)  HGDN_NARG_(__VA_ARGS__, HGDN_NARG_RSEQ_N())
+#define HGDN_NARG_(...)  HGDN_NARG_N(__VA_ARGS__)
+#define HGDN_NARG_N(_1, _2, _3, _4, _5, _6, _7, _8, _9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,N,...)  N
+#define HGDN_NARG_RSEQ_N()  63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
+
+
+/// @defgroup custom_math_types Custom math types
+/// Useful definitions for Godot math types
+/// @{
 typedef union hgdn_vector2 {
     float elements[2];
     // xy
@@ -120,7 +131,7 @@ typedef union hgdn_vector4 {
 } hgdn_vector4;
 
 #ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
-// Color is present on Pool Arrays and as MultiMesh isntance data, so it's convenient having a full vector4 definition for it
+/// Color is present on Pool Arrays and as MultiMesh instance data, so it's convenient having a full vector4 definition for it
 typedef hgdn_vector4 godot_color;
 #define GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
 #endif
@@ -198,34 +209,13 @@ typedef struct hgdn_transform {
 typedef hgdn_transform godot_transform;
 #define GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
 #endif
+/// @}
 
 #include "gdnative_api_struct.gen.h"
 
-// Macro magic to get the number of variable arguments
-// Ref: https://groups.google.com/g/comp.std.c/c/d-6Mj5Lko_s
-#define HGDN_NARG(...) \
-         HGDN_NARG_(__VA_ARGS__, HGDN_RSEQ_N())
-#define HGDN_NARG_(...) \
-         HGDN_ARG_N(__VA_ARGS__)
-#define HGDN_ARG_N( \
-          _1, _2, _3, _4, _5, _6, _7, _8, _9,_10, \
-         _11,_12,_13,_14,_15,_16,_17,_18,_19,_20, \
-         _21,_22,_23,_24,_25,_26,_27,_28,_29,_30, \
-         _31,_32,_33,_34,_35,_36,_37,_38,_39,_40, \
-         _41,_42,_43,_44,_45,_46,_47,_48,_49,_50, \
-         _51,_52,_53,_54,_55,_56,_57,_58,_59,_60, \
-         _61,_62,_63,N,...) N
-#define HGDN_RSEQ_N() \
-         63,62,61,60,                   \
-         59,58,57,56,55,54,53,52,51,50, \
-         49,48,47,46,45,44,43,42,41,40, \
-         39,38,37,36,35,34,33,32,31,30, \
-         29,28,27,26,25,24,23,22,21,20, \
-         19,18,17,16,15,14,13,12,11,10, \
-         9,8,7,6,5,4,3,2,1,0
-
-
-// Global API pointers
+/// @defgroup global Global GDNative pointers
+/// Global API struct and GDNativeLibrary pointers
+/// @{
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 extern const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
@@ -239,35 +229,37 @@ extern const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 /// GDNativeLibrary object being initialized
-extern const godot_object *hgdn_library;
+extern godot_object *hgdn_library;
+/// @}
 
 
-/// Initialize globals. Call this on your own `godot_gdnative_init` before any other HGDN functions.
+/// @defgroup init_deinit Initialization and deinitialization
+/// Initialize and deinitialize library, to be called on your own `godot_gdnative_init` and `godot_gdnative_terminate` functions.
+/// @{
 HGDN_DECL void hgdn_gdnative_init(const godot_gdnative_init_options *options);
-/// Terminate globals. Call this on your own `godot_gdnative_terminate`
 HGDN_DECL void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options);
+/// @}
 
 
-/// Wrapper for `godot_alloc` compatible with `malloc`
-HGDN_DECL void *hgdn_alloc(size_t size);
-/// Wrapper for `godot_realloc` compatible with `realloc`
-HGDN_DECL void *hgdn_realloc(void *ptr, size_t size);
-/// Wrapper for `godot_free` compatible with `free`.
-/// It is safe to pass NULL without Godot triggering an error message.
+/// @defgroup memory Memory related functions
+/// `stdlib.h` compatible functions that track memory usage when Godot is running in debug mode
+/// @{
+HGDN_DECL void *hgdn_alloc(size_t size);  ///< Compatible with `malloc`
+HGDN_DECL void *hgdn_realloc(void *ptr, size_t size);  ///< Compatible with `realloc`
+/// Compatible with `free`. It is safe to pass NULL without triggering an error message.
 HGDN_DECL void hgdn_free(void *ptr);
-/// Helper to free an array of strings created from @ref hgdn_string_array_dup.
-HGDN_DECL void hgdn_free_string_array(char **ptr, size_t size);
+/// @}
 
-/// Outputs a `printf` formatted message to standard output.
+
+/// @defgroup print Printing functions
+/// Functions that print a `printf` formatted message to Godot's output
+/// @{
 HGDN_DECL void hgdn_print(const char *fmt, ...);
-/// Outputs a `printf` formatted message as warning. Use HGDN_PRINT_WARNING to use inferred current function name, file name and line
 HGDN_DECL void hgdn_print_warning(const char *funcname, const char *filename, int line, const char *fmt, ...);
-/// Outputs a `printf` formatted message as error. Use HGDN_PRINT_ERROR to use inferred current function name, file name and line
 HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int line, const char *fmt, ...);
-/// Calls `hgdn_print_warning` with current function name, file name and line
 #define HGDN_PRINT_WARNING(fmt, ...)  (hgdn_print_warning(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
-/// Calls `hgdn_print_error` with current function name, file name and line
 #define HGDN_PRINT_ERROR(fmt, ...)  (hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
+/// @}
 
 /// If `cond` is false, print formatted error message and return nil Variant
 #define HGDN_ASSERT_MSG(cond, fmt, ...)  if(!(cond)){ HGDN_PRINT_ERROR(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }
@@ -278,22 +270,30 @@ HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int 
 /// If `argc` isn't at least `min_size`, print error message and return nil Variant
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size)  HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
 
-// String helpers
+/// @defgroup string_wrapper String wrapper
+/// Wrapper around CharStrings with pointer and length
+/// @{
 typedef struct hgdn_string {
     godot_char_string gd_char_string;
     const char *ptr;
     godot_int length;
 } hgdn_string;
 HGDN_DECL hgdn_string hgdn_string_get(const godot_string *str);
+HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
+/// @}
 
-// Pool Array helpers
+
+/// @defgroup pool_array_wrapper Pool*Array wrapper
+/// Wrapper around Pool*Array types with pointer and array size
+/// @{
 typedef struct hgdn_byte_array {
     godot_pool_byte_array_read_access *gd_read_access;
     const uint8_t *ptr;
     godot_int size;
 } hgdn_byte_array;
 HGDN_DECL hgdn_byte_array hgdn_byte_array_get(const godot_pool_byte_array *array);
+HGDN_DECL hgdn_byte_array hgdn_byte_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_byte_array_destroy(hgdn_byte_array *array);
 
 typedef struct hgdn_int_array {
@@ -302,6 +302,7 @@ typedef struct hgdn_int_array {
     godot_int size;
 } hgdn_int_array;
 HGDN_DECL hgdn_int_array hgdn_int_array_get(const godot_pool_int_array *array);
+HGDN_DECL hgdn_int_array hgdn_int_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_int_array_destroy(hgdn_int_array *array);
 
 typedef struct hgdn_real_array {
@@ -310,6 +311,7 @@ typedef struct hgdn_real_array {
     godot_int size;
 } hgdn_real_array;
 HGDN_DECL hgdn_real_array hgdn_real_array_get(const godot_pool_real_array *array);
+HGDN_DECL hgdn_real_array hgdn_real_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_real_array_destroy(hgdn_real_array *array);
 
 typedef struct hgdn_vector2_array {
@@ -318,6 +320,7 @@ typedef struct hgdn_vector2_array {
     godot_int size;
 } hgdn_vector2_array;
 HGDN_DECL hgdn_vector2_array hgdn_vector2_array_get(const godot_pool_vector2_array *array);
+HGDN_DECL hgdn_vector2_array hgdn_vector2_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_vector2_array_destroy(hgdn_vector2_array *array);
 
 typedef struct hgdn_vector3_array {
@@ -326,6 +329,7 @@ typedef struct hgdn_vector3_array {
     godot_int size;
 } hgdn_vector3_array;
 HGDN_DECL hgdn_vector3_array hgdn_vector3_array_get(const godot_pool_vector3_array *array);
+HGDN_DECL hgdn_vector3_array hgdn_vector3_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_vector3_array_destroy(hgdn_vector3_array *array);
 
 typedef struct hgdn_color_array {
@@ -334,6 +338,7 @@ typedef struct hgdn_color_array {
     godot_int size;
 } hgdn_color_array;
 HGDN_DECL hgdn_color_array hgdn_color_array_get(const godot_pool_color_array *array);
+HGDN_DECL hgdn_color_array hgdn_color_array_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_color_array_destroy(hgdn_color_array *array);
 
 typedef struct hgdn_string_array {
@@ -342,21 +347,14 @@ typedef struct hgdn_string_array {
     godot_int size;
 } hgdn_string_array;
 HGDN_DECL hgdn_string_array hgdn_string_array_get(const godot_pool_string_array *array);
-HGDN_DECL void hgdn_string_array_destroy(hgdn_string_array *array);
-
-
-// Helper functions that wrap Variant String/Pool*Array content
-HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_byte_array hgdn_byte_array_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_int_array hgdn_int_array_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_real_array hgdn_real_array_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_vector2_array hgdn_vector2_array_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_vector3_array hgdn_vector3_array_from_variant(const godot_variant *var);
-HGDN_DECL hgdn_color_array hgdn_color_array_from_variant(const godot_variant *var);
 HGDN_DECL hgdn_string_array hgdn_string_array_from_variant(const godot_variant *var);
+HGDN_DECL void hgdn_string_array_destroy(hgdn_string_array *array);
+/// @}
 
 
-// Helper functions to get values directly from a godot_array position
+/// @defgroup array_get Typed values from Arrays
+/// Helper functions to get values directly from a `godot_array` position
+/// @{
 HGDN_DECL godot_bool hgdn_array_get_bool(const godot_array *array, const godot_int index);
 HGDN_DECL uint64_t hgdn_array_get_uint(const godot_array *array, const godot_int index);
 HGDN_DECL int64_t hgdn_array_get_int(const godot_array *array, const godot_int index);
@@ -385,9 +383,12 @@ HGDN_DECL hgdn_vector2_array hgdn_array_get_vector2_array(const godot_array *arr
 HGDN_DECL hgdn_vector3_array hgdn_array_get_vector3_array(const godot_array *array, const godot_int index);
 HGDN_DECL hgdn_color_array hgdn_array_get_color_array(const godot_array *array, const godot_int index);
 HGDN_DECL hgdn_string_array hgdn_array_get_string_array(const godot_array *array, const godot_int index);
+/// @}
 
 
-// Helper functions to get values directly from method arguments
+/// @defgroup args_get Typed values from method arguments
+/// Helper functions to get values directly from method arguments
+/// @{
 HGDN_DECL godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index);
 HGDN_DECL uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index);
 HGDN_DECL int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index);
@@ -416,9 +417,16 @@ HGDN_DECL hgdn_vector2_array hgdn_args_get_vector2_array(const godot_variant **a
 HGDN_DECL hgdn_vector3_array hgdn_args_get_vector3_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_color_array hgdn_args_get_color_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_string_array hgdn_args_get_string_array(const godot_variant **args, const godot_int index);
+/// @}
 
 
-// Helper functions to create Variant values
+/// @defgroup new_variant Variant constructors
+/// Helper functions to create Variant values
+///
+/// The `*_own` functions own the passed argument, destroying it. Useful
+/// when you create the object just for creating a Variant of it, enabling
+/// the idiom `hgdn_new_string_variant_own(hgdn_new_string("..."))`.
+/// @{
 HGDN_DECL godot_variant hgdn_new_variant_copy(const godot_variant *value);
 HGDN_DECL godot_variant hgdn_new_nil_variant();
 HGDN_DECL godot_variant hgdn_new_bool_variant(const godot_bool value);
@@ -449,8 +457,7 @@ HGDN_DECL godot_variant hgdn_new_pool_vector2_array_variant(const godot_pool_vec
 HGDN_DECL godot_variant hgdn_new_pool_vector3_array_variant(const godot_pool_vector3_array *value);
 HGDN_DECL godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color_array *value);
 HGDN_DECL godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
-// These functions own the passed godot object, destroying it
-// This enables the idiom: `hgdn_new_string_variant_own(hgdn_new_string("..."))`
+
 HGDN_DECL godot_variant hgdn_new_string_variant_own(godot_string value);
 HGDN_DECL godot_variant hgdn_new_dictionary_variant_own(godot_dictionary value);
 HGDN_DECL godot_variant hgdn_new_array_variant_own(godot_array value);
@@ -508,6 +515,7 @@ extern "C++" {
     HGDN_DECL HGDN_CONSTEXPR godot_variant hgdn_new_variant(godot_variant value);
 }
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+/// Overloaded function/macro for creating Variants from any values. Available in C++ and C11.
 #define hgdn_new_variant(value) \
     (_Generic((value), \
         godot_variant*: hgdn_new_variant_copy, \
@@ -554,31 +562,38 @@ extern "C++" {
         godot_pool_string_array: hgdn_new_pool_string_array_variant_own \
     )(value))
 #endif  // C++ or C11
+/// @}
 
 
-// Helper functions to create Strings
+/// @defgroup string String creation
+/// Helper functions to create Strings
+/// @{
 HGDN_DECL godot_string hgdn_new_string(const char *cstr);
 HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
 #define HGDN_NEW_STRING_LITERAL(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
-// `fmt` is a `printf` compatible format
+/// @param fmt A `printf` compatible format
 HGDN_DECL godot_string hgdn_new_formatted_string(const char *fmt, ...);
+/// @}
 
 
-// Helper functions to create Pool*Arrays/Arrays from sized buffers
+/// @defgroup array Pool*Array/Array creation
+/// Helper functions to create Pool*Array/Array objects from sized buffers
+///
+/// The `*_args` variadic functions/macros construct a temporary array and call
+/// the functions. On C++11 they are implemented using templates with parameter pack.
+/// @{
 HGDN_DECL godot_pool_byte_array hgdn_new_byte_array(const uint8_t *buffer, const godot_int size);
 HGDN_DECL godot_pool_int_array hgdn_new_int_array(const godot_int *buffer, const godot_int size);
 HGDN_DECL godot_pool_real_array hgdn_new_real_array(const godot_real *buffer, const godot_int size);
 HGDN_DECL godot_pool_vector2_array hgdn_new_vector2_array(const godot_vector2 *buffer, const godot_int size);
 HGDN_DECL godot_pool_vector3_array hgdn_new_vector3_array(const godot_vector3 *buffer, const godot_int size);
 HGDN_DECL godot_pool_color_array hgdn_new_color_array(const godot_color *buffer, const godot_int size);
-// All strings must be NULL terminated.
+/// @note All strings must be NULL terminated.
 HGDN_DECL godot_pool_string_array hgdn_new_string_array(const char *const *buffer, const godot_int size);
 HGDN_DECL godot_array hgdn_new_array(const godot_variant *const *buffer, const godot_int size);
-// Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Array
+/// @note Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Array
 HGDN_DECL godot_array hgdn_new_array_own(godot_variant *buffer, const godot_int size);
 
-
-// Helper variadic macros/templates to create Pool*Arrays/Arrays
 #if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
 extern "C++" {
     template<typename... Args> godot_pool_byte_array hgdn_new_byte_array_args(Args... args) {
@@ -627,28 +642,40 @@ extern "C++" {
 #define hgdn_new_color_array_args(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_string_array_args(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_array_args(...)  (hgdn_new_array((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+/// On C++11 the arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed
 #define hgdn_new_array_own_args(...)  (hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #endif
+/// @}
 
 
-// Helper functions to create Dictionaries
+/// @defgroup dictionary Dictionary creation
+/// Helper functions to create Dictionaries
+///
+/// The `*_own` functions own the passed Variants, destroying them. Useful
+/// when you create the Variants just for creating a Dictionary with them.
+/// @{
 typedef struct hgdn_dictionary_entry {
     godot_variant *key, *value;
 } hgdn_dictionary_entry;
+
 typedef struct hgdn_dictionary_entry_own {
     godot_variant key, value;
 } hgdn_dictionary_entry_own;
+
 typedef struct hgdn_dictionary_entry_string {
     const char *key;
     godot_variant *value;
 } hgdn_dictionary_entry_string;
+
 typedef struct hgdn_dictionary_entry_string_own {
     const char *key;
     godot_variant value;
 } hgdn_dictionary_entry_string_own;
+
 typedef struct hgdn_dictionary_entry_string_string {
     const char *key, *value;
 } hgdn_dictionary_entry_string_string;
+
 typedef struct hgdn_dictionary_entry_string_int {
     const char *key;
     godot_int value;
@@ -657,17 +684,16 @@ HGDN_DECL godot_dictionary hgdn_new_dictionary(const hgdn_dictionary_entry *buff
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string(const hgdn_dictionary_entry_string *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string_int(const hgdn_dictionary_entry_string_int *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string_string(const hgdn_dictionary_entry_string_string *buffer, const godot_int size);
-// Variants in `buffer` will be destroyed, convenient if you create Variants only for constructing the Dictionary
 HGDN_DECL godot_dictionary hgdn_new_dictionary_own(hgdn_dictionary_entry_own *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own *buffer, const godot_int size);
 
-// Helper variadic macros/templates to create Dictionaries
 #define hgdn_new_dictionary_args(...)  (hgdn_new_dictionary((const hgdn_dictionary_entry[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_string_args(...)  (hgdn_new_dictionary_string((const hgdn_dictionary_entry_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_string_int_args(...)  (hgdn_new_dictionary_string_int((const hgdn_dictionary_entry_string_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_string_string_args(...)  (hgdn_new_dictionary_string_string((const hgdn_dictionary_entry_string_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_own_args(...)  (hgdn_new_dictionary_own((hgdn_dictionary_entry_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_string_own_args(...)  (hgdn_new_dictionary_string_own((hgdn_dictionary_entry_string_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+/// @}
 
 #ifdef __cplusplus
 }
@@ -695,7 +721,7 @@ const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
 const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
-const godot_object *hgdn_library;
+godot_object *hgdn_library;
 
 char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
 #define HGDN__FILL_FORMAT_BUFFER(fmt, ...) \
@@ -784,13 +810,6 @@ void hgdn_free(void *ptr) {
     if (ptr) {
         hgdn_core_api->godot_free(ptr);
     }
-}
-
-void hgdn_free_string_array(char **ptr, size_t size) {
-    for (int i = 0; i < size; i++) {
-        hgdn_free(ptr[i]);
-    }
-    hgdn_free(ptr);
 }
 
 // Print functions
