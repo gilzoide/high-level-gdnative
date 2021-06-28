@@ -722,8 +722,12 @@ extern "C++" {
 #define hgdn_new_vector3_array_args(...)  (hgdn_new_vector3_array((const godot_vector3[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
 #define hgdn_new_color_array_args(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
 #define hgdn_new_string_array_args(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
-/// The arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
-#define hgdn_new_array_args(...)  (hgdn_new_array_own((godot_variant[]){ HGDN__MAP(hgdn_new_variant, __VA_ARGS__) }, HGDN__NARG(__VA_ARGS__)))
+    #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L  // C11
+        /// @note In C++ or C11, the arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
+        #define hgdn_new_array_args(...)  (hgdn_new_array_own((godot_variant[]){ HGDN__MAP(hgdn_new_variant, __VA_ARGS__) }, HGDN__NARG(__VA_ARGS__)))
+    #else
+        #define hgdn_new_array_args(...)  (hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+    #endif
 #endif
 /// @}
 
@@ -791,7 +795,7 @@ extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_obj
     return hgdn_object_callv_own(instance, method, args_array);
 }
 #else
-/// The arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
+/// @note In C++ or C11, the arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
 #define hgdn_object_call(instance, method, ...)  (hgdn_object_callv_own((instance), (method), hgdn_new_array_args(__VA_ARGS__)))
 #endif
 /// @}
