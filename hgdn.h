@@ -230,6 +230,8 @@ extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 /// GDNativeLibrary object being initialized
 extern godot_object *hgdn_library;
+extern godot_method_bind *hgdn_method_Object_get;
+extern godot_method_bind *hgdn_method_Object_set;
 /// @}
 
 
@@ -743,6 +745,7 @@ typedef struct hgdn_dictionary_entry_string_int {
     const char *key;
     godot_int value;
 } hgdn_dictionary_entry_string_int;
+
 HGDN_DECL godot_dictionary hgdn_new_dictionary(const hgdn_dictionary_entry *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string(const hgdn_dictionary_entry_string *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string_int(const hgdn_dictionary_entry_string_int *buffer, const godot_int size);
@@ -756,6 +759,15 @@ HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_
 #define hgdn_new_dictionary_string_string_args(...)  (hgdn_new_dictionary_string_string((const hgdn_dictionary_entry_string_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_own_args(...)  (hgdn_new_dictionary_own((hgdn_dictionary_entry_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
 #define hgdn_new_dictionary_string_own_args(...)  (hgdn_new_dictionary_string_own((hgdn_dictionary_entry_string_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+/// @}
+
+
+/// @defgroup object Object functions
+/// Helper functions to work with `godot_object`s
+/// @{
+HGDN_DECL godot_variant hgdn_object_get(godot_object *instance, const char *property);
+HGDN_DECL void hgdn_object_set(godot_object *instance, const char *property, const godot_variant *var);
+HGDN_DECL void hgdn_object_set_own(godot_object *instance, const char *property, godot_variant var);
 /// @}
 
 #ifdef __cplusplus
@@ -785,6 +797,8 @@ const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 godot_object *hgdn_library;
+godot_method_bind *hgdn_method_Object_get;
+godot_method_bind *hgdn_method_Object_set;
 
 char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
 #define HGDN__FILL_FORMAT_BUFFER(fmt, ...) \
@@ -854,6 +868,9 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
                 break;
         }
     }
+
+    hgdn_method_Object_get = hgdn_core_api->godot_method_bind_get_method("Object", "get");
+    hgdn_method_Object_set = hgdn_core_api->godot_method_bind_get_method("Object", "set");
 }
 
 void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
@@ -1270,6 +1287,31 @@ HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(vector3_array)  // hgdn_dictionary_get_
 HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(color_array)  // hgdn_dictionary_get_color_array, hgdn_dictionary_string_get_color_array
 
 #undef HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT
+
+// Object helpers
+godot_variant hgdn_object_get(godot_object *instance, const char *property) {
+    godot_variant var;
+    godot_string property_str = hgdn_new_string(property);
+    const void *args[] = { &property_str };
+    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_get, instance, args, &var);
+    hgdn_core_api->godot_string_destroy(&property_str);
+    return var;
+}
+
+void hgdn_object_set(godot_object *instance, const char *property, const godot_variant *var) {
+    godot_string property_str = hgdn_new_string(property);
+    const void *args[] = { &property_str, var };
+    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_set, instance, args, NULL);
+    hgdn_core_api->godot_string_destroy(&property_str);
+}
+
+void hgdn_object_set_own(godot_object *instance, const char *property, godot_variant var) {
+    godot_string property_str = hgdn_new_string(property);
+    const void *args[] = { &property_str, &var };
+    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_set, instance, args, NULL);
+    hgdn_core_api->godot_string_destroy(&property_str);
+    hgdn_core_api->godot_variant_destroy(&var);
+}
 
 // Create variants
 godot_variant hgdn_new_variant_copy(const godot_variant *value) {
