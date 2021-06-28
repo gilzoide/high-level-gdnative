@@ -248,10 +248,8 @@ extern const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
 extern const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
-/// GDNativeLibrary object being initialized
-extern godot_object *hgdn_library;
-extern godot_method_bind *hgdn_method_Object_get;
-extern godot_method_bind *hgdn_method_Object_set;
+extern godot_object *hgdn_library;  ///< GDNativeLibrary object being initialized
+extern godot_method_bind *hgdn_method_Object_callv;
 /// @}
 
 
@@ -782,9 +780,20 @@ HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_
 /// @defgroup object Object functions
 /// Helper functions to work with `godot_object`s
 /// @{
-HGDN_DECL godot_variant hgdn_object_get(godot_object *instance, const char *property);
-HGDN_DECL void hgdn_object_set(godot_object *instance, const char *property, const godot_variant *var);
-HGDN_DECL void hgdn_object_set_own(godot_object *instance, const char *property, godot_variant var);
+HGDN_DECL godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args);
+HGDN_DECL godot_variant hgdn_object_callv_own(godot_object *instance, const char *method, godot_array args);
+#define hgdn_object_get(instance, property)  hgdn_object_call(instance, "get", property)
+#define hgdn_object_set(instance, property, value)  hgdn_object_call(instance, "set", property, value)
+
+#if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
+extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_object *instance, const char *method, Args... args) {
+    godot_array args_array = hgdn_new_array_args(args...);
+    return hgdn_object_callv_own(instance, method, args_array);
+}
+#else
+/// The arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
+#define hgdn_object_call(instance, method, ...)  (hgdn_object_callv_own((instance), (method), hgdn_new_array_args(__VA_ARGS__)))
+#endif
 /// @}
 
 #ifdef __cplusplus
@@ -814,8 +823,7 @@ const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 godot_object *hgdn_library;
-godot_method_bind *hgdn_method_Object_get;
-godot_method_bind *hgdn_method_Object_set;
+godot_method_bind *hgdn_method_Object_callv;
 
 char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
 #define HGDN__FILL_FORMAT_BUFFER(fmt, ...) \
@@ -886,8 +894,7 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
         }
     }
 
-    hgdn_method_Object_get = hgdn_core_api->godot_method_bind_get_method("Object", "get");
-    hgdn_method_Object_set = hgdn_core_api->godot_method_bind_get_method("Object", "set");
+    hgdn_method_Object_callv = hgdn_core_api->godot_method_bind_get_method("Object", "callv");
 }
 
 void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
@@ -1306,28 +1313,19 @@ HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(color_array)  // hgdn_dictionary_get_co
 #undef HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT
 
 // Object helpers
-godot_variant hgdn_object_get(godot_object *instance, const char *property) {
-    godot_variant var;
-    godot_string property_str = hgdn_new_string(property);
-    const void *args[] = { &property_str };
-    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_get, instance, args, &var);
-    hgdn_core_api->godot_string_destroy(&property_str);
-    return var;
+godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args_array) {
+    godot_variant result;
+    godot_string method_str = hgdn_new_string(method);
+    const void *args[] = { &method_str, args_array };
+    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_callv, instance, args, &result);
+    hgdn_core_api->godot_string_destroy(&method_str);
+    return result;
 }
 
-void hgdn_object_set(godot_object *instance, const char *property, const godot_variant *var) {
-    godot_string property_str = hgdn_new_string(property);
-    const void *args[] = { &property_str, var };
-    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_set, instance, args, NULL);
-    hgdn_core_api->godot_string_destroy(&property_str);
-}
-
-void hgdn_object_set_own(godot_object *instance, const char *property, godot_variant var) {
-    godot_string property_str = hgdn_new_string(property);
-    const void *args[] = { &property_str, &var };
-    hgdn_core_api->godot_method_bind_ptrcall(hgdn_method_Object_set, instance, args, NULL);
-    hgdn_core_api->godot_string_destroy(&property_str);
-    hgdn_core_api->godot_variant_destroy(&var);
+godot_variant hgdn_object_callv_own(godot_object *instance, const char *method, godot_array args) {
+    godot_variant result = hgdn_object_callv(instance, method, &args);
+    hgdn_core_api->godot_array_destroy(&args);
+    return result;
 }
 
 // Create variants
