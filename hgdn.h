@@ -291,14 +291,25 @@ HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int 
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size)  HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
 
 /// @defgroup string_wrapper String wrapper
-/// Wrapper around CharStrings with pointer and length
+/// Wrapper around String/CharStrings with pointer and length
 /// @{
+typedef struct hgdn_wide_string {
+    godot_string gd_string;
+    const wchar_t *ptr;
+    godot_int length;
+} hgdn_wide_string;
+HGDN_DECL hgdn_wide_string hgdn_wide_string_get(const godot_string *str);
+HGDN_DECL hgdn_wide_string hgdn_wide_string_get_own(godot_string str);
+HGDN_DECL hgdn_wide_string hgdn_wide_string_from_variant(const godot_variant *var);
+HGDN_DECL void hgdn_wide_string_destroy(hgdn_wide_string *str);
+
 typedef struct hgdn_string {
     godot_char_string gd_char_string;
     const char *ptr;
     godot_int length;
 } hgdn_string;
 HGDN_DECL hgdn_string hgdn_string_get(const godot_string *str);
+HGDN_DECL hgdn_string hgdn_string_get_own(godot_string str);
 HGDN_DECL hgdn_string hgdn_string_from_variant(const godot_variant *var);
 HGDN_DECL void hgdn_string_destroy(hgdn_string *str);
 /// @}
@@ -396,6 +407,7 @@ HGDN_DECL godot_dictionary hgdn_array_get_dictionary(const godot_array *array, c
 HGDN_DECL godot_array hgdn_array_get_array(const godot_array *array, const godot_int index);
 
 HGDN_DECL hgdn_string hgdn_array_get_string(const godot_array *array, const godot_int index);
+HGDN_DECL hgdn_wide_string hgdn_array_get_wide_string(const godot_array *array, const godot_int index);
 HGDN_DECL hgdn_byte_array hgdn_array_get_byte_array(const godot_array *array, const godot_int index);
 HGDN_DECL hgdn_int_array hgdn_array_get_int_array(const godot_array *array, const godot_int index);
 HGDN_DECL hgdn_real_array hgdn_array_get_real_array(const godot_array *array, const godot_int index);
@@ -430,6 +442,7 @@ HGDN_DECL godot_dictionary hgdn_args_get_dictionary(const godot_variant **args, 
 HGDN_DECL godot_array hgdn_args_get_array(const godot_variant **args, const godot_int index);
 
 HGDN_DECL hgdn_string hgdn_args_get_string(const godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_wide_string hgdn_args_get_wide_string(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_byte_array hgdn_args_get_byte_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_int_array hgdn_args_get_int_array(const godot_variant **args, const godot_int index);
 HGDN_DECL hgdn_real_array hgdn_args_get_real_array(const godot_variant **args, const godot_int index);
@@ -464,6 +477,7 @@ HGDN_DECL godot_dictionary hgdn_dictionary_get_dictionary(const godot_dictionary
 HGDN_DECL godot_array hgdn_dictionary_get_array(const godot_dictionary *dict, const godot_variant *key);
 
 HGDN_DECL hgdn_string hgdn_dictionary_get_string(const godot_dictionary *dict, const godot_variant *key);
+HGDN_DECL hgdn_wide_string hgdn_dictionary_get_wide_string(const godot_dictionary *dict, const godot_variant *key);
 HGDN_DECL hgdn_byte_array hgdn_dictionary_get_byte_array(const godot_dictionary *dict, const godot_variant *key);
 HGDN_DECL hgdn_int_array hgdn_dictionary_get_int_array(const godot_dictionary *dict, const godot_variant *key);
 HGDN_DECL hgdn_real_array hgdn_dictionary_get_real_array(const godot_dictionary *dict, const godot_variant *key);
@@ -493,6 +507,7 @@ HGDN_DECL godot_dictionary hgdn_dictionary_string_get_dictionary(const godot_dic
 HGDN_DECL godot_array hgdn_dictionary_string_get_array(const godot_dictionary *dict, const char *key);
 
 HGDN_DECL hgdn_string hgdn_dictionary_string_get_string(const godot_dictionary *dict, const char *key);
+HGDN_DECL hgdn_wide_string hgdn_dictionary_string_get_wide_string(const godot_dictionary *dict, const char *key);
 HGDN_DECL hgdn_byte_array hgdn_dictionary_string_get_byte_array(const godot_dictionary *dict, const char *key);
 HGDN_DECL hgdn_int_array hgdn_dictionary_string_get_int_array(const godot_dictionary *dict, const char *key);
 HGDN_DECL hgdn_real_array hgdn_dictionary_string_get_real_array(const godot_dictionary *dict, const char *key);
@@ -531,6 +546,7 @@ HGDN_DECL godot_variant hgdn_new_rid_variant(const godot_rid value);
 HGDN_DECL godot_variant hgdn_new_object_variant(const godot_object *value);
 HGDN_DECL godot_variant hgdn_new_string_variant(const godot_string *value);
 HGDN_DECL godot_variant hgdn_new_cstring_variant(const char *value);
+HGDN_DECL godot_variant hgdn_new_wide_string_variant(const wchar_t *value);
 HGDN_DECL godot_variant hgdn_new_dictionary_variant(const godot_dictionary *value);
 HGDN_DECL godot_variant hgdn_new_array_variant(const godot_array *value);
 HGDN_DECL godot_variant hgdn_new_pool_byte_array_variant(const godot_pool_byte_array *value);
@@ -575,6 +591,7 @@ extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const godot_object *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_string *value);
     HGDN_DECL godot_variant hgdn_new_variant(const char *value);
+    HGDN_DECL godot_variant hgdn_new_variant(const wchar_t *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_dictionary *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_array *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_pool_byte_array *value);
@@ -625,6 +642,7 @@ extern "C++" {
         godot_object*: hgdn_new_object_variant, \
         godot_string*: hgdn_new_string_variant, \
         char*: hgdn_new_cstring_variant, \
+        wchar_t*: hgdn_new_wide_string_variant, \
         godot_dictionary*: hgdn_new_dictionary_variant, \
         godot_array*: hgdn_new_array_variant, \
         godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, \
@@ -653,6 +671,10 @@ HGDN_DECL godot_variant hgdn__variant_return(godot_variant value);
 /// @defgroup string String creation
 /// Helper functions to create Strings
 /// @{
+HGDN_DECL godot_string hgdn_new_wide_string(const wchar_t *wstr);
+HGDN_DECL godot_string hgdn_new_wide_string_with_len(const wchar_t *wstr, const godot_int len);
+#define HGDN_NEW_WIDE_STRING_LITERAL(literal_str) (hgdn_new_wide_string_with_len((literal_str), sizeof(literal_str) / sizeof(wchar_t)))
+
 HGDN_DECL godot_string hgdn_new_string(const char *cstr);
 HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
 #define HGDN_NEW_STRING_LITERAL(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
@@ -939,6 +961,18 @@ void hgdn_print_error(const char *funcname, const char *filename, int line, cons
 }
 
 // String creation API
+godot_string hgdn_new_wide_string(const wchar_t *wstr) {
+    godot_string str;
+    hgdn_core_api->godot_string_new_with_wide_string(&str, wstr, -1);
+    return str;
+}
+
+godot_string hgdn_new_wide_string_with_len(const wchar_t *wstr, const godot_int len) {
+    godot_string str;
+    hgdn_core_api->godot_string_new_with_wide_string(&str, wstr, len);
+    return str;
+}
+
 godot_string hgdn_new_string(const char *cstr) {
     return hgdn_core_api->godot_string_chars_to_utf8(cstr);
 }
@@ -1078,6 +1112,25 @@ godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own
 }
 
 // String helpers
+hgdn_wide_string hgdn_wide_string_get(const godot_string *str) {
+    godot_string new_str;
+    hgdn_core_api->godot_string_new_copy(&new_str, str);
+    return hgdn_wide_string_get_own(new_str);
+}
+
+hgdn_wide_string hgdn_wide_string_get_own(godot_string str) {
+    hgdn_wide_string wrapper = {
+        str,
+        hgdn_core_api->godot_string_wide_str(&str),
+        hgdn_core_api->godot_string_length(&str),
+    };
+    return wrapper;
+}
+
+void hgdn_wide_string_destroy(hgdn_wide_string *str) {
+    hgdn_core_api->godot_string_destroy(&str->gd_string);
+}
+
 hgdn_string hgdn_string_get(const godot_string *str) {
     godot_char_string char_string = hgdn_core_api->godot_string_utf8(str);
     hgdn_string wrapper = {
@@ -1085,6 +1138,12 @@ hgdn_string hgdn_string_get(const godot_string *str) {
         hgdn_core_api->godot_char_string_get_data(&char_string),
         hgdn_core_api->godot_char_string_length(&char_string),
     };
+    return wrapper;
+}
+
+hgdn_string hgdn_string_get_own(godot_string str) {
+    hgdn_string wrapper = hgdn_string_get(&str);
+    hgdn_core_api->godot_string_destroy(&str);
     return wrapper;
 }
 
@@ -1148,10 +1207,11 @@ void hgdn_string_array_destroy(hgdn_string_array *array) {
 
 // Get values from Variant
 hgdn_string hgdn_string_from_variant(const godot_variant *var) {
-    godot_string str = hgdn_core_api->godot_variant_as_string(var);
-    hgdn_string res = hgdn_string_get(&str);
-    hgdn_core_api->godot_string_destroy(&str);
-    return res;
+    return hgdn_string_get_own(hgdn_core_api->godot_variant_as_string(var));
+}
+
+hgdn_wide_string hgdn_wide_string_from_variant(const godot_variant *var) {
+    return hgdn_wide_string_get_own(hgdn_core_api->godot_variant_as_string(var));
 }
 
 #define HGDN_DECLARE_POOL_ARRAY_FROM_VARIANT(kind) \
@@ -1206,6 +1266,7 @@ HGDN_DECLARE_ARRAY_GET(array, godot_array)  // hgdn_array_get_array
     }
 
 HGDN_DECLARE_ARRAY_GET_FROM_VARIANT(string)  // hgdn_array_get_string
+HGDN_DECLARE_ARRAY_GET_FROM_VARIANT(wide_string)  // hgdn_array_get_wide_string
 HGDN_DECLARE_ARRAY_GET_FROM_VARIANT(byte_array)  // hgdn_array_get_byte_array
 HGDN_DECLARE_ARRAY_GET_FROM_VARIANT(int_array)  // hgdn_array_get_int_array
 HGDN_DECLARE_ARRAY_GET_FROM_VARIANT(real_array)  // hgdn_array_get_real_array
@@ -1250,6 +1311,7 @@ HGDN_DECLARE_ARGS_GET(array, godot_array)  // hgdn_args_get_array
     }
 
 HGDN_DECLARE_ARGS_GET_FROM_VARIANT(string)  // hgdn_args_get_string
+HGDN_DECLARE_ARGS_GET_FROM_VARIANT(wide_string)  // hgdn_args_get_wide_string
 HGDN_DECLARE_ARGS_GET_FROM_VARIANT(byte_array)  // hgdn_args_get_byte_array
 HGDN_DECLARE_ARGS_GET_FROM_VARIANT(int_array)  // hgdn_args_get_int_array
 HGDN_DECLARE_ARGS_GET_FROM_VARIANT(real_array)  // hgdn_args_get_real_array
@@ -1306,6 +1368,7 @@ HGDN_DECLARE_DICTIONARY_GET(array, godot_array)  // hgdn_dictionary_get_array, h
     }
 
 HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(string)  // hgdn_dictionary_get_string, hgdn_dictionary_string_get_string
+HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(wide_string)  // hgdn_dictionary_get_wide_string, hgdn_dictionary_string_get_wide_string
 HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(byte_array)  // hgdn_dictionary_get_byte_array, hgdn_dictionary_string_get_byte_array
 HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(int_array)  // hgdn_dictionary_get_int_array, hgdn_dictionary_string_get_int_array
 HGDN_DECLARE_DICTIONARY_GET_FROM_VARIANT(real_array)  // hgdn_dictionary_get_real_array, hgdn_dictionary_string_get_real_array
@@ -1380,8 +1443,12 @@ godot_variant hgdn_new_object_variant(const godot_object *value) {
     return var;
 }
 
-godot_variant hgdn_new_cstring_variant(const char *str) {
-    return hgdn_new_string_variant_own(hgdn_new_string(str));
+godot_variant hgdn_new_cstring_variant(const char *value) {
+    return hgdn_new_string_variant_own(hgdn_new_string(value));
+}
+
+godot_variant hgdn_new_wide_string_variant(const wchar_t *value) {
+    return hgdn_new_string_variant_own(hgdn_new_wide_string(value));
 }
 
 #define HGDN_DECLARE_NEW_COMPOUND_VARIANT(kind, ctype) \
@@ -1449,6 +1516,7 @@ godot_variant hgdn_new_variant(const godot_rid value) { return hgdn_new_rid_vari
 godot_variant hgdn_new_variant(const godot_object *value) { return hgdn_new_object_variant(value); }
 godot_variant hgdn_new_variant(const godot_string *value) { return hgdn_new_string_variant(value); }
 godot_variant hgdn_new_variant(const char *value) { return hgdn_new_cstring_variant(value); }
+godot_variant hgdn_new_variant(const wchar_t *value) { return hgdn_new_wide_string_variant(value); }
 godot_variant hgdn_new_variant(const godot_dictionary *value) { return hgdn_new_dictionary_variant(value); }
 godot_variant hgdn_new_variant(const godot_array *value) { return hgdn_new_array_variant(value); }
 godot_variant hgdn_new_variant(const godot_pool_byte_array *value) { return hgdn_new_pool_byte_array_variant(value); }
