@@ -519,7 +519,7 @@ HGDN_DECL hgdn_string_array hgdn_args_get_string_array(const godot_variant **arg
 
 
 /// @defgroup dictionary_get Typed values from Dictionaries
-/// Helper functions to get values directly from a `godot_dictionary` with Variant or string key
+/// Helper functions to get values directly from a `godot_dictionary` with Variant or String key
 /// @{
 HGDN_DECL godot_bool hgdn_dictionary_get_bool(const godot_dictionary *dict, const godot_variant *key);
 HGDN_DECL uint64_t hgdn_dictionary_get_uint(const godot_dictionary *dict, const godot_variant *key);
@@ -736,15 +736,13 @@ HGDN_DECL godot_variant hgdn__variant_return(godot_variant value);
 /// @defgroup string String creation
 /// Helper functions to create Strings
 /// @{
-HGDN_DECL godot_string hgdn_new_wide_string(const wchar_t *wstr);
-HGDN_DECL godot_string hgdn_new_wide_string_with_len(const wchar_t *wstr, const godot_int len);
-#define HGDN_NEW_WIDE_STRING_LITERAL(literal_str) (hgdn_new_wide_string_with_len((literal_str), sizeof(literal_str) / sizeof(wchar_t)))
-
 HGDN_DECL godot_string hgdn_new_string(const char *cstr);
 HGDN_DECL godot_string hgdn_new_string_with_len(const char *cstr, const godot_int len);
-#define HGDN_NEW_STRING_LITERAL(literal_str) (hgdn_new_string_with_len((literal_str), sizeof(literal_str)))
 /// @param fmt A `printf` compatible format
 HGDN_DECL godot_string hgdn_new_formatted_string(const char *fmt, ...);
+
+HGDN_DECL godot_string hgdn_new_wide_string(const wchar_t *wstr);
+HGDN_DECL godot_string hgdn_new_wide_string_with_len(const wchar_t *wstr, const godot_int len);
 /// @}
 
 
