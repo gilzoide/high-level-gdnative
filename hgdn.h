@@ -683,8 +683,6 @@ extern "C++" {
 /// Overloaded function/macro for creating Variants from any values. Available in C++ and C11.
 #define hgdn_new_variant(value) \
     (_Generic((value), \
-        godot_variant: hgdn__variant_return, \
-        godot_variant*: hgdn_new_variant_copy, \
         godot_bool: hgdn_new_bool_variant, \
         unsigned int: hgdn_new_uint_variant, \
         uint64_t: hgdn_new_uint_variant, \
@@ -726,7 +724,9 @@ extern "C++" {
         godot_pool_vector2_array: hgdn_new_pool_vector2_array_variant_own, \
         godot_pool_vector3_array: hgdn_new_pool_vector3_array_variant_own, \
         godot_pool_color_array: hgdn_new_pool_color_array_variant_own, \
-        godot_pool_string_array: hgdn_new_pool_string_array_variant_own \
+        godot_pool_string_array: hgdn_new_pool_string_array_variant_own, \
+        godot_variant*: hgdn_new_variant_copy, \
+        godot_variant: hgdn__variant_return \
     )(value))
 HGDN_DECL godot_variant hgdn__variant_return(godot_variant value);
 #endif  // C++ or C11

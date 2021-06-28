@@ -48,8 +48,8 @@ GDN_EXPORT int sum_ints(const godot_int *buffer, size_t size) {
 godot_variant native_callback(void *symbol, godot_array *array) {
     if (symbol == &MESSAGE) {
         // `hgdn_new_variant` is type-aware using C11 _Generic/C++ overloads
-        // In this case, it calls `hgdn_new_string_variant_own`
-        return hgdn_new_variant(hgdn_new_string(MESSAGE));
+        // In this case, it calls `hgdn_new_cstring_variant`
+        return hgdn_new_variant(MESSAGE);
     }
     else if (symbol == &square) {
         // returns null and prints an error if array size < 1
