@@ -54,10 +54,30 @@ extern "C" {
 
 // Macro magic to get the number of variable arguments
 // Ref: https://groups.google.com/g/comp.std.c/c/d-6Mj5Lko_s
-#define HGDN_NARG(...)  HGDN_NARG_(__VA_ARGS__, HGDN_NARG_RSEQ_N())
-#define HGDN_NARG_(...)  HGDN_NARG_N(__VA_ARGS__)
-#define HGDN_NARG_N(_1, _2, _3, _4, _5, _6, _7, _8, _9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,N,...)  N
-#define HGDN_NARG_RSEQ_N()  63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
+#define HGDN__NARG(...)  HGDN__NARG_(__VA_ARGS__, HGDN__NARG_RSEQ_N())
+#define HGDN__NARG_(...)  HGDN__NARG_N(__VA_ARGS__)
+#define HGDN__NARG_N(_1, _2, _3, _4, _5, _6, _7, _8, _9,_10,_11,_12,_13,_14,_15,_16,_17,_18,_19,_20,_21,_22,_23,_24,_25,_26,_27,_28,_29,_30,_31,_32,_33,_34,_35,_36,_37,_38,_39,_40,_41,_42,_43,_44,_45,_46,_47,_48,_49,_50,_51,_52,_53,_54,_55,_56,_57,_58,_59,_60,_61,_62,_63,N,...)  N
+#define HGDN__NARG_RSEQ_N()  63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0
+
+// Macro magic to apply a function macro to variadic arguments
+// Ref: https://stackoverflow.com/questions/6707148/foreach-macro-on-macros-arguments/13459454#13459454
+#define HGDN__EVAL0(...)  __VA_ARGS__
+#define HGDN__EVAL1(...)  HGDN__EVAL0(HGDN__EVAL0(HGDN__EVAL0(__VA_ARGS__)))
+#define HGDN__EVAL2(...)  HGDN__EVAL1(HGDN__EVAL1(HGDN__EVAL1(__VA_ARGS__)))
+#define HGDN__EVAL3(...)  HGDN__EVAL2(HGDN__EVAL2(HGDN__EVAL2(__VA_ARGS__)))
+#define HGDN__EVAL4(...)  HGDN__EVAL3(HGDN__EVAL3(HGDN__EVAL3(__VA_ARGS__)))
+#define HGDN__EVAL(...)  HGDN__EVAL4(HGDN__EVAL4(HGDN__EVAL4(__VA_ARGS__)))
+#define HGDN__MAP_END(...)
+#define HGDN__MAP_OUT
+#define HGDN__MAP_COMMA ,
+#define HGDN__MAP_GET_END()  0, HGDN__MAP_END
+#define HGDN__MAP_NEXT0(item, next, ...)  next HGDN__MAP_OUT
+#define HGDN__MAP_NEXT1(item, next)  HGDN__MAP_NEXT0(item, HGDN__MAP_COMMA next, 0)
+#define HGDN__MAP_NEXT(item, next)  HGDN__MAP_NEXT1(HGDN__MAP_GET_END item, next)
+#define HGDN__MAP0(f, x, peek, ...)  f(x)  HGDN__MAP_NEXT(peek, HGDN__MAP1)(f, peek, __VA_ARGS__)
+#define HGDN__MAP1(f, x, peek, ...)  f(x)  HGDN__MAP_NEXT(peek, HGDN__MAP0)(f, peek, __VA_ARGS__)
+#define HGDN__MAP(f, ...)  HGDN__EVAL(HGDN__MAP1(f, __VA_ARGS__, (), 0))
+
 
 
 /// @defgroup custom_math_types Custom math types
@@ -579,10 +599,11 @@ extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const godot_variant *value);
     HGDN_DECL HGDN_CONSTEXPR godot_variant hgdn_new_variant(godot_variant value);
 }
-#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L  // C11
 /// Overloaded function/macro for creating Variants from any values. Available in C++ and C11.
 #define hgdn_new_variant(value) \
     (_Generic((value), \
+        godot_variant: hgdn__variant_return, \
         godot_variant*: hgdn_new_variant_copy, \
         godot_bool: hgdn_new_bool_variant, \
         unsigned int: hgdn_new_uint_variant, \
@@ -626,6 +647,7 @@ extern "C++" {
         godot_pool_color_array: hgdn_new_pool_color_array_variant_own, \
         godot_pool_string_array: hgdn_new_pool_string_array_variant_own \
     )(value))
+HGDN_DECL godot_variant hgdn__variant_return(godot_variant value);
 #endif  // C++ or C11
 /// @}
 
@@ -690,25 +712,20 @@ extern "C++" {
         return hgdn_new_string_array(buffer, sizeof...(args));
     }
     template<typename... Args> godot_array hgdn_new_array_args(Args... args) {
-        godot_variant *const buffer[] = { args... };
-        return hgdn_new_array(buffer, sizeof...(args));
-    }
-    template<typename... Args> godot_array hgdn_new_array_own_args(Args... args) {
         godot_variant buffer[] = { hgdn_new_variant(args)... };
         return hgdn_new_array_own(buffer, sizeof...(args));
     }
 }
-#else  // C++11
-#define hgdn_new_byte_array_args(...)  (hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_int_array_args(...)  (hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_real_array_args(...)  (hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_vector2_array_args(...)  (hgdn_new_vector2_array((const godot_vector2[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_vector3_array_args(...)  (hgdn_new_vector3_array((const godot_vector3[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_color_array_args(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_string_array_args(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_array_args(...)  (hgdn_new_array((const godot_variant *const []){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-/// On C++11 the arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed
-#define hgdn_new_array_own_args(...)  (hgdn_new_array_own((godot_variant[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#else
+#define hgdn_new_byte_array_args(...)  (hgdn_new_byte_array((const uint8_t[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_int_array_args(...)  (hgdn_new_int_array((const godot_int[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_real_array_args(...)  (hgdn_new_real_array((const godot_real[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_vector2_array_args(...)  (hgdn_new_vector2_array((const godot_vector2[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_vector3_array_args(...)  (hgdn_new_vector3_array((const godot_vector3[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_color_array_args(...)  (hgdn_new_color_array((const godot_color[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_string_array_args(...)  (hgdn_new_string_array((const char *const []){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+/// The arguments passed are transformed by `hgdn_new_variant`, so primitive C data can be passed directly
+#define hgdn_new_array_args(...)  (hgdn_new_array_own((godot_variant[]){ HGDN__MAP(hgdn_new_variant, __VA_ARGS__) }, HGDN__NARG(__VA_ARGS__)))
 #endif
 /// @}
 
@@ -753,12 +770,12 @@ HGDN_DECL godot_dictionary hgdn_new_dictionary_string_string(const hgdn_dictiona
 HGDN_DECL godot_dictionary hgdn_new_dictionary_own(hgdn_dictionary_entry_own *buffer, const godot_int size);
 HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_string_own *buffer, const godot_int size);
 
-#define hgdn_new_dictionary_args(...)  (hgdn_new_dictionary((const hgdn_dictionary_entry[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_dictionary_string_args(...)  (hgdn_new_dictionary_string((const hgdn_dictionary_entry_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_dictionary_string_int_args(...)  (hgdn_new_dictionary_string_int((const hgdn_dictionary_entry_string_int[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_dictionary_string_string_args(...)  (hgdn_new_dictionary_string_string((const hgdn_dictionary_entry_string_string[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_dictionary_own_args(...)  (hgdn_new_dictionary_own((hgdn_dictionary_entry_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
-#define hgdn_new_dictionary_string_own_args(...)  (hgdn_new_dictionary_string_own((hgdn_dictionary_entry_string_own[]){ __VA_ARGS__ }, HGDN_NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_args(...)  (hgdn_new_dictionary((const hgdn_dictionary_entry[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_args(...)  (hgdn_new_dictionary_string((const hgdn_dictionary_entry_string[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_int_args(...)  (hgdn_new_dictionary_string_int((const hgdn_dictionary_entry_string_int[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_string_args(...)  (hgdn_new_dictionary_string_string((const hgdn_dictionary_entry_string_string[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_own_args(...)  (hgdn_new_dictionary_own((hgdn_dictionary_entry_own[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
+#define hgdn_new_dictionary_string_own_args(...)  (hgdn_new_dictionary_string_own((hgdn_dictionary_entry_string_own[]){ __VA_ARGS__ }, HGDN__NARG(__VA_ARGS__)))
 /// @}
 
 
@@ -1451,6 +1468,8 @@ godot_variant hgdn_new_variant(godot_pool_color_array value) { return hgdn_new_p
 godot_variant hgdn_new_variant(godot_pool_string_array value) { return hgdn_new_pool_string_array_variant_own(value); }
 godot_variant hgdn_new_variant(const godot_variant *value) { return hgdn_new_variant_copy(value); }
 HGDN_CONSTEXPR godot_variant hgdn_new_variant(godot_variant value) { return value; }
+#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L  // C11
+godot_variant hgdn__variant_return(godot_variant value) { return value; }
 #endif  // __cplusplus
 
 #undef HGDN__FILL_FORMAT_BUFFER
