@@ -702,19 +702,19 @@ extern "C++" {
         godot_color: hgdn_new_color_variant, \
         godot_node_path: hgdn_new_node_path_variant, \
         godot_rid: hgdn_new_rid_variant, \
-        godot_object*: hgdn_new_object_variant, \
-        godot_string*: hgdn_new_string_variant, \
-        char*: hgdn_new_cstring_variant, \
-        wchar_t*: hgdn_new_wide_string_variant, \
-        godot_dictionary*: hgdn_new_dictionary_variant, \
-        godot_array*: hgdn_new_array_variant, \
-        godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, \
-        godot_pool_int_array*: hgdn_new_pool_int_array_variant, \
-        godot_pool_real_array*: hgdn_new_pool_real_array_variant, \
-        godot_pool_vector2_array*: hgdn_new_pool_vector2_array_variant, \
-        godot_pool_vector3_array*: hgdn_new_pool_vector3_array_variant, \
-        godot_pool_color_array*: hgdn_new_pool_color_array_variant, \
-        godot_pool_string_array*: hgdn_new_pool_string_array_variant, \
+        godot_object*: hgdn_new_object_variant, const godot_object*: hgdn_new_object_variant, \
+        godot_string*: hgdn_new_string_variant, const godot_string*: hgdn_new_string_variant, \
+        char*: hgdn_new_cstring_variant, const char*: hgdn_new_cstring_variant, \
+        wchar_t*: hgdn_new_wide_string_variant, const wchar_t*: hgdn_new_wide_string_variant, \
+        godot_dictionary*: hgdn_new_dictionary_variant, const godot_dictionary*: hgdn_new_dictionary_variant, \
+        godot_array*: hgdn_new_array_variant, const godot_array*: hgdn_new_array_variant, \
+        godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, const godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, \
+        godot_pool_int_array*: hgdn_new_pool_int_array_variant, const godot_pool_int_array*: hgdn_new_pool_int_array_variant, \
+        godot_pool_real_array*: hgdn_new_pool_real_array_variant, const godot_pool_real_array*: hgdn_new_pool_real_array_variant, \
+        godot_pool_vector2_array*: hgdn_new_pool_vector2_array_variant, const godot_pool_vector2_array*: hgdn_new_pool_vector2_array_variant, \
+        godot_pool_vector3_array*: hgdn_new_pool_vector3_array_variant, const godot_pool_vector3_array*: hgdn_new_pool_vector3_array_variant, \
+        godot_pool_color_array*: hgdn_new_pool_color_array_variant, const godot_pool_color_array*: hgdn_new_pool_color_array_variant, \
+        godot_pool_string_array*: hgdn_new_pool_string_array_variant, const godot_pool_string_array*: hgdn_new_pool_string_array_variant, \
         godot_string: hgdn_new_string_variant_own, \
         godot_dictionary: hgdn_new_dictionary_variant_own, \
         godot_array: hgdn_new_array_variant_own, \
@@ -725,7 +725,7 @@ extern "C++" {
         godot_pool_vector3_array: hgdn_new_pool_vector3_array_variant_own, \
         godot_pool_color_array: hgdn_new_pool_color_array_variant_own, \
         godot_pool_string_array: hgdn_new_pool_string_array_variant_own, \
-        godot_variant*: hgdn_new_variant_copy, \
+        godot_variant*: hgdn_new_variant_copy, const godot_variant*: hgdn_new_variant_copy, \
         godot_variant: hgdn__variant_return \
     )(value))
 HGDN_DECL godot_variant hgdn__variant_return(godot_variant value);
@@ -867,12 +867,12 @@ HGDN_DECL godot_dictionary hgdn_new_dictionary_string_own(hgdn_dictionary_entry_
 
 
 /// @defgroup object Object functions
-/// Helper functions to work with `godot_object`s
+/// Helper functions to work with `godot_object` values
 /// @{
 HGDN_DECL godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args);
 HGDN_DECL godot_variant hgdn_object_callv_own(godot_object *instance, const char *method, godot_array args);
-#define hgdn_object_get(instance, property)  hgdn_object_call(instance, "get", property)
-#define hgdn_object_set(instance, property, value)  hgdn_object_call(instance, "set", property, value)
+#define hgdn_object_get(instance, property)  (hgdn_object_call(instance, "get", property))
+#define hgdn_object_set(instance, property, value)  (hgdn_object_call(instance, "set", property, value))
 
 #if defined(__cplusplus) && __cplusplus >= 201103L  // Parameter pack is a C++11 feature
 extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_object *instance, const char *method, Args... args) {
