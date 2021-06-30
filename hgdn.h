@@ -904,6 +904,15 @@ typedef struct hgdn_class_info {
 } hgdn_class_info;
 
 HGDN_DECL void hgdn_register_class(void *gdnative_handle, const hgdn_class_info *class_info);
+
+/// Function that allocates and returns zero-initialized `alloc_size` bytes, to be used as instance create function
+HGDN_DECL void *hgdn_instance_alloc(godot_object *instance, uintptr_t alloc_size);
+/// Create a `godot_instance_create_func` that allocates a zero-initialized `ctype`
+#define hgdn_instance_create_func_alloc(ctype) ((const godot_instance_create_func){ (void *(*)(godot_object*, void*)) &hgdn_instance_alloc, (void *) sizeof(ctype) })
+/// Function that frees data with `hgdn_free`, to be used as instance destroy function
+HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, void *data);
+/// Create a `godot_instance_destroy_func` that frees instance data
+#define hgdn_instance_destroy_func_free() ((const godot_instance_destroy_func){ &hgdn_instance_free })
 /// @}
 
 #ifdef __cplusplus
@@ -1575,6 +1584,18 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
     else {
         hgdn_nativescript_api->godot_nativescript_register_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
     }
+}
+
+void *hgdn_instance_alloc(godot_object *instance, uintptr_t alloc_size) {
+    void *buffer = hgdn_alloc(alloc_size);
+    if (buffer) {
+        memset(buffer, 0, alloc_size);
+    }
+    return buffer;
+}
+
+void hgdn_instance_free(godot_object *instance, void *method_data, void *data) {
+    hgdn_free(data);
 }
 
 #undef HGDN__FILL_FORMAT_BUFFER
