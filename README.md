@@ -24,6 +24,9 @@ Code is documented using [Doxygen](https://www.doxygen.nl) and is available [onl
 
 
 ## Usage example
+For a working example with full Godot project, check out the
+[high-level-gdnative-example](https://github.com/gilzoide/high-level-gdnative-example)
+repository.
 
 ```c
 // example.c
@@ -92,7 +95,7 @@ extends Reference
 func _ready() -> void:
     var example = GDNative.new()
     example.library = preload("res://path_to_gdnativelibrary.gdnlib")
-    example.initialize()
+    example.initialize()  # --> "GDNative initialized"
     print(example.call_native("native", "MESSAGE", []))  # --> "Hello world!"
     print(example.call_native("native", "square", [5]))  # --> 25
     print(example.call_native("native", "sum_ints", [[1, 2.5, 3]]))  # --> 6
