@@ -281,14 +281,21 @@ HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int 
 #define HGDN_PRINT_ERROR(fmt, ...)  (hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
 /// @}
 
+/// @defgroup assert Runtime assertions
+/// Macros that check for a condition, aborting current function if this condition is false
+///
+/// If condition is false, prints an error message and return a nil variant, so
+/// they are meant to be used in GDNative functions that return `godot_variant`
+/// like native calls or methods.
+/// @{
+#define HGDN_ASSERT(cond)  HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
 /// If `cond` is false, print formatted error message and return nil Variant
 #define HGDN_ASSERT_MSG(cond, fmt, ...)  if(!(cond)){ HGDN_PRINT_ERROR(fmt, ##__VA_ARGS__); return hgdn_new_nil_variant(); }
-/// If `cond` is false, print a generic error message and return nil Variant
-#define HGDN_ASSERT(cond)  HGDN_ASSERT_MSG((cond), "Assertion error: !(" #cond ")")
 /// If `arr` doesn't have at least `min_size` elements, print error message and return nil Variant
 #define HGDN_ASSERT_ARRAY_SIZE(arr, min_size)  HGDN_ASSERT_MSG(hgdn_core_api->godot_array_size((arr)) >= (min_size), "Error: array should have size of at least " #min_size ", got %d", hgdn_core_api->godot_array_size((arr)))
 /// If `argc` isn't at least `min_size`, print error message and return nil Variant
 #define HGDN_ASSERT_ARGS_SIZE(argc, min_size)  HGDN_ASSERT_MSG((argc) >= (min_size), "Error: expected at least " #min_size " arguments, got %d", argc)
+/// @}
 
 /// @defgroup string_wrapper String wrapper
 /// Wrapper around String/CharStrings with pointer and length
