@@ -921,6 +921,8 @@ typedef struct hgdn_class_info {
     /// @see @ref hgdn_properties
     hgdn_property_info *properties;
     godot_bool tool;
+    /// NativeScript 1.1 documentation
+    const char *documentation;
 } hgdn_class_info;
 
 HGDN_DECL void hgdn_register_class(void *gdnative_handle, const hgdn_class_info *class_info);
@@ -1606,6 +1608,12 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
     }
     else {
         hgdn_nativescript_api->godot_nativescript_register_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
+    }
+
+    if (hgdn_nativescript_1_1_api && class_info->documentation) {
+        godot_string documentation = hgdn_new_string(class_info->documentation);
+        hgdn_nativescript_1_1_api->godot_nativescript_set_class_documentation(handle, class_info->name, documentation);
+        hgdn_core_api->godot_string_destroy(&documentation);
     }
 
     if (class_info->properties) {
