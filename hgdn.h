@@ -493,35 +493,35 @@ HGDN_DECL hgdn_string_array hgdn_array_get_string_array(const godot_array *array
 /// @defgroup args_get Typed values from method arguments
 /// Helper functions to get values directly from method arguments
 /// @{
-HGDN_DECL godot_bool hgdn_args_get_bool(const godot_variant **args, const godot_int index);
-HGDN_DECL uint64_t hgdn_args_get_uint(const godot_variant **args, const godot_int index);
-HGDN_DECL int64_t hgdn_args_get_int(const godot_variant **args, const godot_int index);
-HGDN_DECL double hgdn_args_get_real(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_vector2 hgdn_args_get_vector2(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_vector3 hgdn_args_get_vector3(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_rect2 hgdn_args_get_rect2(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_plane hgdn_args_get_plane(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_quat hgdn_args_get_quat(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_aabb hgdn_args_get_aabb(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_basis hgdn_args_get_basis(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_transform2d hgdn_args_get_transform2d(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_transform hgdn_args_get_transform(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_color hgdn_args_get_color(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_node_path hgdn_args_get_node_path(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_rid hgdn_args_get_rid(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_object *hgdn_args_get_object(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_dictionary hgdn_args_get_dictionary(const godot_variant **args, const godot_int index);
-HGDN_DECL godot_array hgdn_args_get_array(const godot_variant **args, const godot_int index);
+HGDN_DECL godot_bool hgdn_args_get_bool(godot_variant **args, const godot_int index);
+HGDN_DECL uint64_t hgdn_args_get_uint(godot_variant **args, const godot_int index);
+HGDN_DECL int64_t hgdn_args_get_int(godot_variant **args, const godot_int index);
+HGDN_DECL double hgdn_args_get_real(godot_variant **args, const godot_int index);
+HGDN_DECL godot_vector2 hgdn_args_get_vector2(godot_variant **args, const godot_int index);
+HGDN_DECL godot_vector3 hgdn_args_get_vector3(godot_variant **args, const godot_int index);
+HGDN_DECL godot_rect2 hgdn_args_get_rect2(godot_variant **args, const godot_int index);
+HGDN_DECL godot_plane hgdn_args_get_plane(godot_variant **args, const godot_int index);
+HGDN_DECL godot_quat hgdn_args_get_quat(godot_variant **args, const godot_int index);
+HGDN_DECL godot_aabb hgdn_args_get_aabb(godot_variant **args, const godot_int index);
+HGDN_DECL godot_basis hgdn_args_get_basis(godot_variant **args, const godot_int index);
+HGDN_DECL godot_transform2d hgdn_args_get_transform2d(godot_variant **args, const godot_int index);
+HGDN_DECL godot_transform hgdn_args_get_transform(godot_variant **args, const godot_int index);
+HGDN_DECL godot_color hgdn_args_get_color(godot_variant **args, const godot_int index);
+HGDN_DECL godot_node_path hgdn_args_get_node_path(godot_variant **args, const godot_int index);
+HGDN_DECL godot_rid hgdn_args_get_rid(godot_variant **args, const godot_int index);
+HGDN_DECL godot_object *hgdn_args_get_object(godot_variant **args, const godot_int index);
+HGDN_DECL godot_dictionary hgdn_args_get_dictionary(godot_variant **args, const godot_int index);
+HGDN_DECL godot_array hgdn_args_get_array(godot_variant **args, const godot_int index);
 
-HGDN_DECL hgdn_string hgdn_args_get_string(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_wide_string hgdn_args_get_wide_string(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_byte_array hgdn_args_get_byte_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_int_array hgdn_args_get_int_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_real_array hgdn_args_get_real_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_vector2_array hgdn_args_get_vector2_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_vector3_array hgdn_args_get_vector3_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_color_array hgdn_args_get_color_array(const godot_variant **args, const godot_int index);
-HGDN_DECL hgdn_string_array hgdn_args_get_string_array(const godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_string hgdn_args_get_string(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_wide_string hgdn_args_get_wide_string(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_byte_array hgdn_args_get_byte_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_int_array hgdn_args_get_int_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_real_array hgdn_args_get_real_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_vector2_array hgdn_args_get_vector2_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_vector3_array hgdn_args_get_vector3_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_color_array hgdn_args_get_color_array(godot_variant **args, const godot_int index);
+HGDN_DECL hgdn_string_array hgdn_args_get_string_array(godot_variant **args, const godot_int index);
 /// @}
 
 
@@ -1350,7 +1350,7 @@ void hgdn_string_array_destroy(hgdn_string_array *array) {
         return hgdn_variant_get_##kind(hgdn_core_api->godot_array_operator_index_const(array, index)); \
     }
 #define HGDN_DECLARE_ARGS_GET(kind, ctype) \
-    ctype hgdn_args_get_##kind(const godot_variant **args, const godot_int index) { \
+    ctype hgdn_args_get_##kind(godot_variant **args, const godot_int index) { \
         return hgdn_variant_get_##kind(args[index]); \
     }
 #define HGDN_DECLARE_DICTIONARY_GET(kind, ctype) \
