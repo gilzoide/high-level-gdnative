@@ -52,6 +52,10 @@ extern "C" {
     #define HGDN_CONSTEXPR
 #endif
 
+#ifndef HGDN_METHOD_ARGUMENTS_INFO_MAX
+    #define HGDN_METHOD_ARGUMENTS_INFO_MAX 16
+#endif
+
 // Macro magic to get the number of variable arguments
 // Ref: https://groups.google.com/g/comp.std.c/c/d-6Mj5Lko_s
 #define HGDN__NARG(...)  HGDN__NARG_(__VA_ARGS__, HGDN__NARG_RSEQ_N())
@@ -907,9 +911,29 @@ typedef struct hgdn_property_info {
     const char *hint_string;
     godot_property_usage_flags usage;
     godot_variant default_value;
-    // NativeScript 1.1 documentation
+    /// NativeScript 1.1 documentation
     const char *documentation;
 } hgdn_property_info;
+
+typedef struct hgdn_method_argument_info {
+	const char *name;
+	godot_variant_type type;
+	godot_property_hint hint;
+	const char *hint_string;
+} hgdn_method_argument_info;
+
+typedef struct hgdn_method_info {
+    const char *name;
+    godot_instance_method method;
+    // godot_method_attributes
+	godot_method_rpc_mode rpc_type;
+    /// NativeScript 1.1 documentation
+    const char *documentation;
+    /// NULL-terminated array of argument info. If NULL, no documentation is registered.
+    /// When a property with NULL `name` is encountered, stops registering.
+    /// @see @ref hgdn_method_arguments
+    hgdn_method_argument_info *arguments_info;
+} hgdn_method_info;
 
 typedef struct hgdn_class_info {
     const char *name;
@@ -920,6 +944,10 @@ typedef struct hgdn_class_info {
     /// When a property with NULL `path` is encountered, stops registering.
     /// @see @ref hgdn_properties
     hgdn_property_info *properties;
+    /// NULL-terminated array of methods. If NULL, no methods are registered.
+    /// When a method with NULL `name` is encountered, stops registering.
+    /// @see @ref hgdn_methods
+    hgdn_method_info *methods;
     godot_bool tool;
     /// NativeScript 1.1 documentation
     const char *documentation;
@@ -938,6 +966,10 @@ HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, voi
 
 /// Helper for a literal NULL-terminated array of `hgdn_property_info`
 #define hgdn_properties(...)  ((hgdn_property_info[]){ __VA_ARGS__, {} })
+/// Helper for a literal NULL-terminated array of `hgdn_method_info`
+#define hgdn_methods(...)  ((hgdn_method_info[]){ __VA_ARGS__, {} })
+/// Helper for a literal NULL-terminated array of `hgdn_method_argument_info`
+#define hgdn_method_arguments(...)  ((hgdn_method_argument_info[]){ __VA_ARGS__, {} })
 /// @}
 
 #ifdef __cplusplus
@@ -1632,6 +1664,38 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
                 godot_string documentation = hgdn_new_string(property->documentation);
                 hgdn_nativescript_1_1_api->godot_nativescript_set_property_documentation(handle, class_info->name, property->path, documentation);
                 hgdn_core_api->godot_string_destroy(&documentation);
+            }
+        }
+    }
+
+    if (class_info->methods) {
+        for (hgdn_method_info *method = class_info->methods; method->name; method++) {
+            godot_method_attributes attr = { method->rpc_type };
+            hgdn_nativescript_api->godot_nativescript_register_method(handle, class_info->name, method->name, attr, method->method);
+            if (hgdn_nativescript_1_1_api) {
+                if (method->documentation) {
+                    godot_string documentation = hgdn_new_string(method->documentation);
+                    hgdn_nativescript_1_1_api->godot_nativescript_set_method_documentation(handle, class_info->name, method->name, documentation);
+                    hgdn_core_api->godot_string_destroy(&documentation);
+                }
+                if (method->arguments_info) {
+                    godot_method_arg gd_args[HGDN_METHOD_ARGUMENTS_INFO_MAX];
+                    int num_args = 0;
+                    for (hgdn_method_argument_info *argument = method->arguments_info; argument->name; argument++) {
+                        gd_args[num_args] = (godot_method_arg){
+                            hgdn_new_string(argument->name),
+                            argument->type,
+                            argument->hint,
+                            hgdn_new_string(argument->hint_string),
+                        };
+                        num_args++;
+                    }
+                    hgdn_nativescript_1_1_api->godot_nativescript_set_method_argument_information(handle, class_info->name, method->name, num_args, gd_args);
+                    for (int i = 0; i < num_args; i++) {
+                        hgdn_core_api->godot_string_destroy(&gd_args[i].name);
+                        hgdn_core_api->godot_string_destroy(&gd_args[i].hint_string);
+                    }
+                }
             }
         }
     }
