@@ -892,14 +892,34 @@ extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_obj
 #endif
 /// @}
 
+
 /// @defgroup nativescript NativeScript helpers
 /// Definitions that help registering classes in Godot, focusing on wrapping C structs
 /// @{
+typedef struct hgdn_property_info {
+    const char *path;
+    godot_property_set_func setter;
+    godot_property_get_func getter;
+    // godot_property_attributes
+    godot_method_rpc_mode rset_type;
+    godot_int type;
+    godot_property_hint hint;
+    const char *hint_string;
+    godot_property_usage_flags usage;
+    godot_variant default_value;
+    // NativeScript 1.1 documentation
+    const char *documentation;
+} hgdn_property_info;
+
 typedef struct hgdn_class_info {
     const char *name;
     const char *base;
     godot_instance_create_func create;
     godot_instance_destroy_func destroy;
+    /// NULL-terminated array of properties. If NULL, no properties are registered.
+    /// When a property with NULL `path` is encountered, stops registering.
+    /// @see @ref hgdn_properties
+    hgdn_property_info *properties;
     godot_bool tool;
 } hgdn_class_info;
 
@@ -913,6 +933,9 @@ HGDN_DECL void *hgdn_instance_alloc(godot_object *instance, uintptr_t alloc_size
 HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, void *data);
 /// Create a `godot_instance_destroy_func` that frees instance data
 #define hgdn_instance_destroy_func_free() ((const godot_instance_destroy_func){ &hgdn_instance_free })
+
+/// Helper for a literal NULL-terminated array of `hgdn_property_info`
+#define hgdn_properties(...)  ((hgdn_property_info[]){ __VA_ARGS__, {} })
 /// @}
 
 #ifdef __cplusplus
@@ -1583,6 +1606,26 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
     }
     else {
         hgdn_nativescript_api->godot_nativescript_register_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
+    }
+
+    if (class_info->properties) {
+        for (hgdn_property_info *property = class_info->properties; property->path; property++) {
+            godot_property_attributes attr = {
+                property->rset_type,
+                property->type,
+                property->hint,
+                hgdn_new_string(property->hint_string),
+                property->usage,
+                property->default_value,
+            };
+            hgdn_nativescript_api->godot_nativescript_register_property(handle, class_info->name, property->path, &attr, property->setter, property->getter);
+            hgdn_core_api->godot_string_destroy(&attr.hint_string);
+            if (hgdn_nativescript_1_1_api && property->documentation) {
+                godot_string documentation = hgdn_new_string(property->documentation);
+                hgdn_nativescript_1_1_api->godot_nativescript_set_property_documentation(handle, class_info->name, property->path, documentation);
+                hgdn_core_api->godot_string_destroy(&documentation);
+            }
+        }
     }
 }
 
