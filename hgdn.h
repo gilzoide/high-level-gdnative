@@ -892,6 +892,20 @@ extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_obj
 #endif
 /// @}
 
+/// @defgroup nativescript NativeScript helpers
+/// Definitions that help registering classes in Godot, focusing on wrapping C structs
+/// @{
+typedef struct hgdn_class_info {
+    const char *name;
+    const char *base;
+    godot_instance_create_func create;
+    godot_instance_destroy_func destroy;
+    godot_bool tool;
+} hgdn_class_info;
+
+HGDN_DECL void hgdn_register_class(void *gdnative_handle, const hgdn_class_info *class_info);
+/// @}
+
 #ifdef __cplusplus
 }
 #endif
@@ -1552,6 +1566,16 @@ HGDN_CONSTEXPR godot_variant hgdn_new_variant(godot_variant value) { return valu
 #elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L  // C11
 godot_variant hgdn__variant_return(godot_variant value) { return value; }
 #endif  // __cplusplus
+
+// NativeScript
+void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
+    if (class_info->tool) {
+        hgdn_nativescript_api->godot_nativescript_register_tool_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
+    }
+    else {
+        hgdn_nativescript_api->godot_nativescript_register_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
+    }
+}
 
 #undef HGDN__FILL_FORMAT_BUFFER
 
