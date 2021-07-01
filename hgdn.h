@@ -935,6 +935,23 @@ typedef struct hgdn_method_info {
     hgdn_method_argument_info *arguments_info;
 } hgdn_method_info;
 
+typedef struct hgdn_signal_argument_info {
+    const char *name;
+	godot_int type;
+	godot_property_hint hint;
+	const char *hint_string;
+	godot_property_usage_flags usage;
+	godot_variant default_value;
+} hgdn_signal_argument_info;
+
+typedef struct hgdn_signal_info {
+    const char *name;
+    hgdn_signal_argument_info *arguments_info;
+    int num_default_args;
+    /// NativeScript 1.1 documentation
+    const char *documentation;
+} hgdn_signal_info;
+
 typedef struct hgdn_class_info {
     const char *name;
     const char *base;
@@ -948,6 +965,10 @@ typedef struct hgdn_class_info {
     /// When a method with NULL `name` is encountered, stops registering.
     /// @see @ref hgdn_methods
     hgdn_method_info *methods;
+    /// NULL-terminated array of signals. If NULL, no signals are registered.
+    /// When a signal with NULL `name` is encountered, stops registering.
+    /// @see @ref hgdn_signals
+    hgdn_signal_info *signals;
     godot_bool tool;
     /// NativeScript 1.1 documentation
     const char *documentation;
@@ -970,6 +991,10 @@ HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, voi
 #define hgdn_methods(...)  ((hgdn_method_info[]){ __VA_ARGS__, {} })
 /// Helper for a literal NULL-terminated array of `hgdn_method_argument_info`
 #define hgdn_method_arguments(...)  ((hgdn_method_argument_info[]){ __VA_ARGS__, {} })
+/// Helper for a literal NULL-terminated array of `hgdn_signal_info`
+#define hgdn_signals(...)  ((hgdn_signal_info[]){ __VA_ARGS__, {} })
+/// Helper for a literal NULL-terminated array of `hgdn_signal_argument_info`
+#define hgdn_signal_arguments(...)  ((hgdn_signal_argument_info[]){ __VA_ARGS__, {} })
 /// @}
 
 #ifdef __cplusplus
@@ -1696,6 +1721,43 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
                         hgdn_core_api->godot_string_destroy(&gd_args[i].hint_string);
                     }
                 }
+            }
+        }
+    }
+
+    if (class_info->signals) {
+        for (hgdn_signal_info *signal = class_info->signals; signal->name; signal++) {
+            godot_signal_argument gd_args[HGDN_METHOD_ARGUMENTS_INFO_MAX];
+            int num_args = 0;
+            for (hgdn_signal_argument_info *argument = signal->arguments_info; argument->name; argument++) {
+                gd_args[num_args] = (godot_signal_argument){
+                    hgdn_new_string(argument->name),
+                    argument->type,
+                    argument->hint,
+                    hgdn_new_string(argument->hint_string),
+                    argument->usage,
+                    argument->default_value,
+                };
+                num_args++;
+            }
+            godot_string signal_name = hgdn_new_string(signal->name);
+            godot_signal gd_signal = {
+                signal_name,
+                num_args,
+                gd_args,
+                signal->num_default_args,
+                NULL,
+            };
+            hgdn_nativescript_api->godot_nativescript_register_signal(handle, class_info->name, &gd_signal);
+            hgdn_core_api->godot_string_destroy(&signal_name);
+            for (int i = 0; i < num_args; i++) {
+                hgdn_core_api->godot_string_destroy(&gd_args[i].name);
+                hgdn_core_api->godot_string_destroy(&gd_args[i].hint_string);
+            }
+            if (hgdn_nativescript_1_1_api && signal->documentation) {
+                godot_string documentation = hgdn_new_string(signal->documentation);
+                hgdn_nativescript_1_1_api->godot_nativescript_set_signal_documentation(handle, class_info->name, signal->name, documentation);
+                hgdn_core_api->godot_string_destroy(&documentation);
             }
         }
     }
