@@ -1738,7 +1738,7 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
                     argument->type,
                     argument->hint,
                     hgdn_new_string(argument->hint_string),
-                    0,
+                    (godot_property_usage_flags) 0,
                     argument->default_value,
                 };
                 num_args++;
