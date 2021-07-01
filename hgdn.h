@@ -905,12 +905,12 @@ typedef struct hgdn_property_info {
     godot_property_set_func setter;
     godot_property_get_func getter;
     // godot_property_attributes
-    godot_method_rpc_mode rset_type;
     godot_int type;
     godot_property_hint hint;
     const char *hint_string;
     godot_property_usage_flags usage;
     godot_variant default_value;
+    godot_method_rpc_mode rset_type;
     /// NativeScript 1.1 documentation
     const char *documentation;
 } hgdn_property_info;
@@ -974,17 +974,6 @@ typedef struct hgdn_class_info {
     const char *documentation;
 } hgdn_class_info;
 
-HGDN_DECL void hgdn_register_class(void *gdnative_handle, const hgdn_class_info *class_info);
-
-/// Function that allocates and returns zero-initialized `alloc_size` bytes, to be used as instance create function
-HGDN_DECL void *hgdn_instance_alloc(godot_object *instance, uintptr_t alloc_size);
-/// Create a `godot_instance_create_func` that allocates a zero-initialized `ctype`
-#define hgdn_instance_create_func_alloc(ctype) ((const godot_instance_create_func){ (void *(*)(godot_object*, void*)) &hgdn_instance_alloc, (void *) sizeof(ctype) })
-/// Function that frees data with `hgdn_free`, to be used as instance destroy function
-HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, void *data);
-/// Create a `godot_instance_destroy_func` that frees instance data
-#define hgdn_instance_destroy_func_free() ((const godot_instance_destroy_func){ &hgdn_instance_free })
-
 /// Helper for a literal NULL-terminated array of `hgdn_property_info`
 #define hgdn_properties(...)  ((hgdn_property_info[]){ __VA_ARGS__, {} })
 /// Helper for a literal NULL-terminated array of `hgdn_method_info`
@@ -995,6 +984,26 @@ HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, voi
 #define hgdn_signals(...)  ((hgdn_signal_info[]){ __VA_ARGS__, {} })
 /// Helper for a literal NULL-terminated array of `hgdn_signal_argument_info`
 #define hgdn_signal_arguments(...)  ((hgdn_signal_argument_info[]){ __VA_ARGS__, {} })
+
+HGDN_DECL void hgdn_register_class(void *gdnative_handle, const hgdn_class_info *class_info);
+
+/// Function that allocates and returns zero-initialized `alloc_size` bytes, to be used as instance create function
+HGDN_DECL void *hgdn_instance_alloc(godot_object *instance, void *alloc_size);
+/// Create a `godot_instance_create_func` that allocates a zero-initialized `ctype`
+#define hgdn_instance_create_func_alloc(ctype) ((const godot_instance_create_func){ &hgdn_instance_alloc, (void *) sizeof(ctype) })
+/// Function that frees data with `hgdn_free`, to be used as instance destroy function
+HGDN_DECL void hgdn_instance_free(godot_object *instance, void *method_data, void *data);
+/// Create a `godot_instance_destroy_func` that frees instance data
+#define hgdn_instance_destroy_func_free() ((const godot_instance_destroy_func){ &hgdn_instance_free })
+
+HGDN_DECL godot_variant *hgdn_property_constant_alloc(godot_variant value);
+HGDN_DECL void hgdn_property_constant_free(void *value);
+HGDN_DECL godot_variant hgdn_property_constant_get(godot_object *instance, void *value, void *data);
+#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L  // C11
+    #define hgdn_property_constant(value)  ((const godot_property_get_func){ &hgdn_property_constant_get, (void *) hgdn_property_constant_alloc(hgdn_new_variant((value))), &hgdn_property_constant_free })
+#else
+    #define hgdn_property_constant(value)  ((const godot_property_get_func){ &hgdn_property_constant_get, (void *) hgdn_property_constant_alloc((value)), &hgdn_property_constant_free })
+#endif
 /// @}
 
 #ifdef __cplusplus
@@ -1763,16 +1772,35 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
     }
 }
 
-void *hgdn_instance_alloc(godot_object *instance, uintptr_t alloc_size) {
-    void *buffer = hgdn_alloc(alloc_size);
+void *hgdn_instance_alloc(godot_object *instance, void *alloc_size) {
+    void *buffer = hgdn_alloc((uintptr_t) alloc_size);
     if (buffer) {
-        memset(buffer, 0, alloc_size);
+        memset(buffer, 0, (uintptr_t) alloc_size);
     }
     return buffer;
 }
 
 void hgdn_instance_free(godot_object *instance, void *method_data, void *data) {
     hgdn_free(data);
+}
+
+godot_variant *hgdn_property_constant_alloc(godot_variant value) {
+    godot_variant *buffer = (godot_variant *) hgdn_alloc(sizeof(godot_variant));
+    if (buffer) {
+        *buffer = value;
+    }
+    return buffer;
+}
+
+void hgdn_property_constant_free(void *value) {
+    if (value) {
+        hgdn_core_api->godot_variant_destroy((godot_variant *) value);
+        hgdn_core_api->godot_free(value);
+    }
+}
+
+godot_variant hgdn_property_constant_get(godot_object *instance, void *value, void *data) {
+    return hgdn_new_variant_copy((const godot_variant *) value);
 }
 
 #undef HGDN__FILL_FORMAT_BUFFER
