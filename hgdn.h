@@ -938,7 +938,6 @@ typedef struct hgdn_signal_argument_info {
 	godot_int type;
 	godot_property_hint hint;
 	const char *hint_string;
-	godot_property_usage_flags usage;
 	godot_variant default_value;
 } hgdn_signal_argument_info;
 
@@ -1739,7 +1738,7 @@ void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
                     argument->type,
                     argument->hint,
                     hgdn_new_string(argument->hint_string),
-                    argument->usage,
+                    0,
                     argument->default_value,
                 };
                 num_args++;
