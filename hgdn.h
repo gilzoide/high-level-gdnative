@@ -607,6 +607,9 @@ HGDN_DECL godot_variant hgdn_new_bool_variant(const godot_bool value);
 HGDN_DECL godot_variant hgdn_new_uint_variant(const uint64_t value);
 HGDN_DECL godot_variant hgdn_new_int_variant(const int64_t value);
 HGDN_DECL godot_variant hgdn_new_real_variant(const double value);
+HGDN_DECL godot_variant hgdn_new_string_variant(const godot_string *value);
+HGDN_DECL godot_variant hgdn_new_cstring_variant(const char *value);
+HGDN_DECL godot_variant hgdn_new_wide_string_variant(const wchar_t *value);
 HGDN_DECL godot_variant hgdn_new_vector2_variant(const godot_vector2 value);
 HGDN_DECL godot_variant hgdn_new_vector3_variant(const godot_vector3 value);
 HGDN_DECL godot_variant hgdn_new_rect2_variant(const godot_rect2 value);
@@ -617,12 +620,9 @@ HGDN_DECL godot_variant hgdn_new_basis_variant(const godot_basis value);
 HGDN_DECL godot_variant hgdn_new_transform2d_variant(const godot_transform2d value);
 HGDN_DECL godot_variant hgdn_new_transform_variant(const godot_transform value);
 HGDN_DECL godot_variant hgdn_new_color_variant(const godot_color value);
-HGDN_DECL godot_variant hgdn_new_node_path_variant(const godot_node_path value);
-HGDN_DECL godot_variant hgdn_new_rid_variant(const godot_rid value);
+HGDN_DECL godot_variant hgdn_new_node_path_variant(const godot_node_path *value);
+HGDN_DECL godot_variant hgdn_new_rid_variant(const godot_rid *value);
 HGDN_DECL godot_variant hgdn_new_object_variant(const godot_object *value);
-HGDN_DECL godot_variant hgdn_new_string_variant(const godot_string *value);
-HGDN_DECL godot_variant hgdn_new_cstring_variant(const char *value);
-HGDN_DECL godot_variant hgdn_new_wide_string_variant(const wchar_t *value);
 HGDN_DECL godot_variant hgdn_new_dictionary_variant(const godot_dictionary *value);
 HGDN_DECL godot_variant hgdn_new_array_variant(const godot_array *value);
 HGDN_DECL godot_variant hgdn_new_pool_byte_array_variant(const godot_pool_byte_array *value);
@@ -634,6 +634,7 @@ HGDN_DECL godot_variant hgdn_new_pool_color_array_variant(const godot_pool_color
 HGDN_DECL godot_variant hgdn_new_pool_string_array_variant(const godot_pool_string_array *value);
 
 HGDN_DECL godot_variant hgdn_new_string_variant_own(godot_string value);
+HGDN_DECL godot_variant hgdn_new_node_path_variant_own(godot_node_path value);
 HGDN_DECL godot_variant hgdn_new_dictionary_variant_own(godot_dictionary value);
 HGDN_DECL godot_variant hgdn_new_array_variant_own(godot_array value);
 HGDN_DECL godot_variant hgdn_new_pool_byte_array_variant_own(godot_pool_byte_array value);
@@ -652,6 +653,9 @@ extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const int value);
     HGDN_DECL godot_variant hgdn_new_variant(const int64_t value);
     HGDN_DECL godot_variant hgdn_new_variant(const double value);
+    HGDN_DECL godot_variant hgdn_new_variant(const godot_string *value);
+    HGDN_DECL godot_variant hgdn_new_variant(const char *value);
+    HGDN_DECL godot_variant hgdn_new_variant(const wchar_t *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_vector2 value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_vector3 value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_rect2 value);
@@ -662,12 +666,9 @@ extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const godot_transform2d value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_transform value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_color value);
-    HGDN_DECL godot_variant hgdn_new_variant(const godot_node_path value);
-    HGDN_DECL godot_variant hgdn_new_variant(const godot_rid value);
+    HGDN_DECL godot_variant hgdn_new_variant(const godot_node_path *value);
+    HGDN_DECL godot_variant hgdn_new_variant(const godot_rid *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_object *value);
-    HGDN_DECL godot_variant hgdn_new_variant(const godot_string *value);
-    HGDN_DECL godot_variant hgdn_new_variant(const char *value);
-    HGDN_DECL godot_variant hgdn_new_variant(const wchar_t *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_dictionary *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_array *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_pool_byte_array *value);
@@ -678,6 +679,7 @@ extern "C++" {
     HGDN_DECL godot_variant hgdn_new_variant(const godot_pool_color_array *value);
     HGDN_DECL godot_variant hgdn_new_variant(const godot_pool_string_array *value);
     HGDN_DECL godot_variant hgdn_new_variant(godot_string value);
+    HGDN_DECL godot_variant hgdn_new_variant(godot_node_path value);
     HGDN_DECL godot_variant hgdn_new_variant(godot_dictionary value);
     HGDN_DECL godot_variant hgdn_new_variant(godot_array value);
     HGDN_DECL godot_variant hgdn_new_variant(godot_pool_byte_array value);
@@ -701,6 +703,9 @@ extern "C++" {
         int64_t: hgdn_new_int_variant, \
         float: hgdn_new_real_variant, \
         double: hgdn_new_real_variant, \
+        godot_string*: hgdn_new_string_variant, const godot_string*: hgdn_new_string_variant, \
+        char*: hgdn_new_cstring_variant, const char*: hgdn_new_cstring_variant, \
+        wchar_t*: hgdn_new_wide_string_variant, const wchar_t*: hgdn_new_wide_string_variant, \
         godot_vector2: hgdn_new_vector2_variant, \
         godot_vector3: hgdn_new_vector3_variant, \
         godot_rect2: hgdn_new_rect2_variant, \
@@ -711,12 +716,9 @@ extern "C++" {
         godot_transform2d: hgdn_new_transform2d_variant, \
         godot_transform: hgdn_new_transform_variant, \
         godot_color: hgdn_new_color_variant, \
-        godot_node_path: hgdn_new_node_path_variant, \
-        godot_rid: hgdn_new_rid_variant, \
+        godot_node_path*: hgdn_new_node_path_variant, const godot_node_path*: hgdn_new_node_path_variant, \
+        godot_rid*: hgdn_new_rid_variant, const godot_rid*: hgdn_new_rid_variant, \
         godot_object*: hgdn_new_object_variant, const godot_object*: hgdn_new_object_variant, \
-        godot_string*: hgdn_new_string_variant, const godot_string*: hgdn_new_string_variant, \
-        char*: hgdn_new_cstring_variant, const char*: hgdn_new_cstring_variant, \
-        wchar_t*: hgdn_new_wide_string_variant, const wchar_t*: hgdn_new_wide_string_variant, \
         godot_dictionary*: hgdn_new_dictionary_variant, const godot_dictionary*: hgdn_new_dictionary_variant, \
         godot_array*: hgdn_new_array_variant, const godot_array*: hgdn_new_array_variant, \
         godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, const godot_pool_byte_array*: hgdn_new_pool_byte_array_variant, \
@@ -727,6 +729,7 @@ extern "C++" {
         godot_pool_color_array*: hgdn_new_pool_color_array_variant, const godot_pool_color_array*: hgdn_new_pool_color_array_variant, \
         godot_pool_string_array*: hgdn_new_pool_string_array_variant, const godot_pool_string_array*: hgdn_new_pool_string_array_variant, \
         godot_string: hgdn_new_string_variant_own, \
+        godot_node_path: hgdn_new_node_path_varian_own, \
         godot_dictionary: hgdn_new_dictionary_variant_own, \
         godot_array: hgdn_new_array_variant_own, \
         godot_pool_byte_array: hgdn_new_pool_byte_array_variant_own, \
@@ -1548,6 +1551,8 @@ HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(pool_vector2_array, godot_pool_vector2_array 
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(pool_vector3_array, godot_pool_vector3_array *)  // hgdn_new_pool_vector3_array_variant
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(pool_color_array, godot_pool_color_array *)  // hgdn_new_pool_color_array_variant
 HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(pool_string_array, godot_pool_string_array *)  // hgdn_new_pool_string_array_variant
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(node_path, godot_node_path *)  // hgdn_new_node_path_variant
+HGDN_DECLARE_NEW_PRIMITIVE_VARIANT(rid, godot_rid *)  // hgdn_new_rid_variant
 
 #undef HGDN_DECLARE_NEW_PRIMITIVE_VARIANT
 
@@ -1587,8 +1592,6 @@ HGDN_DECLARE_NEW_COMPOUND_VARIANT(basis, godot_basis)  // hgdn_new_basis_variant
 HGDN_DECLARE_NEW_COMPOUND_VARIANT(transform2d, godot_transform2d)  // hgdn_new_transform2d_variant
 HGDN_DECLARE_NEW_COMPOUND_VARIANT(transform, godot_transform)  // hgdn_new_transform_variant
 HGDN_DECLARE_NEW_COMPOUND_VARIANT(color, godot_color)  // hgdn_new_color_variant
-HGDN_DECLARE_NEW_COMPOUND_VARIANT(node_path, godot_node_path)  // hgdn_new_node_path_variant
-HGDN_DECLARE_NEW_COMPOUND_VARIANT(rid, godot_rid)  // hgdn_new_rid_variant
 
 #undef HGDN_DECLARE_NEW_COMPOUND_VARIANT
 
@@ -1610,6 +1613,7 @@ HGDN_DECLARE_NEW_OWNED_VARIANT(pool_vector2_array, godot_pool_vector2_array)  //
 HGDN_DECLARE_NEW_OWNED_VARIANT(pool_vector3_array, godot_pool_vector3_array)  // hgdn_new_pool_vector3_array_variant_own
 HGDN_DECLARE_NEW_OWNED_VARIANT(pool_color_array, godot_pool_color_array)  // hgdn_new_pool_color_array_variant_own
 HGDN_DECLARE_NEW_OWNED_VARIANT(pool_string_array, godot_pool_string_array)  // hgdn_new_pool_string_array_variant_own
+HGDN_DECLARE_NEW_OWNED_VARIANT(node_path, godot_node_path)  // hgdn_new_node_path_variant_own
 
 #undef HGDN_DECLARE_NEW_OWNED_VARIANT
 
@@ -1620,6 +1624,9 @@ godot_variant hgdn_new_variant(const uint64_t value) { return hgdn_new_uint_vari
 godot_variant hgdn_new_variant(const int value) { return hgdn_new_int_variant(value); }
 godot_variant hgdn_new_variant(const int64_t value) { return hgdn_new_int_variant(value); }
 godot_variant hgdn_new_variant(const double value) { return hgdn_new_real_variant(value); }
+godot_variant hgdn_new_variant(const godot_string *value) { return hgdn_new_string_variant(value); }
+godot_variant hgdn_new_variant(const char *value) { return hgdn_new_cstring_variant(value); }
+godot_variant hgdn_new_variant(const wchar_t *value) { return hgdn_new_wide_string_variant(value); }
 godot_variant hgdn_new_variant(const godot_vector2 value) { return hgdn_new_vector2_variant(value); }
 godot_variant hgdn_new_variant(const godot_vector3 value) { return hgdn_new_vector3_variant(value); }
 godot_variant hgdn_new_variant(const godot_rect2 value) { return hgdn_new_rect2_variant(value); }
@@ -1630,12 +1637,9 @@ godot_variant hgdn_new_variant(const godot_basis value) { return hgdn_new_basis_
 godot_variant hgdn_new_variant(const godot_transform2d value) { return hgdn_new_transform2d_variant(value); }
 godot_variant hgdn_new_variant(const godot_transform value) { return hgdn_new_transform_variant(value); }
 godot_variant hgdn_new_variant(const godot_color value) { return hgdn_new_color_variant(value); }
-godot_variant hgdn_new_variant(const godot_node_path value) { return hgdn_new_node_path_variant(value); }
-godot_variant hgdn_new_variant(const godot_rid value) { return hgdn_new_rid_variant(value); }
+godot_variant hgdn_new_variant(const godot_node_path *value) { return hgdn_new_node_path_variant(value); }
+godot_variant hgdn_new_variant(const godot_rid *value) { return hgdn_new_rid_variant(value); }
 godot_variant hgdn_new_variant(const godot_object *value) { return hgdn_new_object_variant(value); }
-godot_variant hgdn_new_variant(const godot_string *value) { return hgdn_new_string_variant(value); }
-godot_variant hgdn_new_variant(const char *value) { return hgdn_new_cstring_variant(value); }
-godot_variant hgdn_new_variant(const wchar_t *value) { return hgdn_new_wide_string_variant(value); }
 godot_variant hgdn_new_variant(const godot_dictionary *value) { return hgdn_new_dictionary_variant(value); }
 godot_variant hgdn_new_variant(const godot_array *value) { return hgdn_new_array_variant(value); }
 godot_variant hgdn_new_variant(const godot_pool_byte_array *value) { return hgdn_new_pool_byte_array_variant(value); }
@@ -1646,6 +1650,7 @@ godot_variant hgdn_new_variant(const godot_pool_vector3_array *value) { return h
 godot_variant hgdn_new_variant(const godot_pool_color_array *value) { return hgdn_new_pool_color_array_variant(value); }
 godot_variant hgdn_new_variant(const godot_pool_string_array *value) { return hgdn_new_pool_string_array_variant(value); }
 godot_variant hgdn_new_variant(godot_string value) { return hgdn_new_string_variant_own(value); }
+godot_variant hgdn_new_variant(godot_node_path value) { return hgdn_new_node_path_variant_own(value); }
 godot_variant hgdn_new_variant(godot_dictionary value) { return hgdn_new_dictionary_variant_own(value); }
 godot_variant hgdn_new_variant(godot_array value) { return hgdn_new_array_variant_own(value); }
 godot_variant hgdn_new_variant(godot_pool_byte_array value) { return hgdn_new_pool_byte_array_variant_own(value); }
