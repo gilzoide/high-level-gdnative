@@ -1364,7 +1364,7 @@ HGDN_DECLARE_POOL_ARRAY_API(color, godot_color)  // hgdn_color_array_get, hgdn_c
 hgdn_string_array hgdn_string_array_get(const godot_pool_string_array *array) {
     godot_int size = hgdn_core_api->godot_pool_string_array_size(array);
     godot_pool_string_array_read_access *access = hgdn_core_api->godot_pool_string_array_read(array);
-    hgdn_string_array wrapper = {};
+    hgdn_string_array wrapper = {0};
     if ((wrapper.strings = (hgdn_string *) hgdn_alloc(size * sizeof(hgdn_string))) == NULL) {
         return wrapper;
     }
@@ -1394,7 +1394,7 @@ void hgdn_string_array_destroy(hgdn_string_array *array) {
         hgdn_string_destroy(&array->strings[i]);
     }
     hgdn_free(array->strings);
-    hgdn_free(array->ptr);
+    hgdn_free((void *) array->ptr);
 }
 
 // Get values from Variant, Array, Dictionary and method arguments helpers
