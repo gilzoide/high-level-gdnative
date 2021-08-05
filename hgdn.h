@@ -281,8 +281,13 @@ HGDN_DECL void hgdn_free(void *ptr);
 HGDN_DECL void hgdn_print(const char *fmt, ...);
 HGDN_DECL void hgdn_print_warning(const char *funcname, const char *filename, int line, const char *fmt, ...);
 HGDN_DECL void hgdn_print_error(const char *funcname, const char *filename, int line, const char *fmt, ...);
+#ifdef _MSC_VER
+#define HGDN_PRINT_WARNING(fmt, ...)  (hgdn_print_warning(__FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
+#define HGDN_PRINT_ERROR(fmt, ...)  (hgdn_print_error(__FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
+#else
 #define HGDN_PRINT_WARNING(fmt, ...)  (hgdn_print_warning(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
 #define HGDN_PRINT_ERROR(fmt, ...)  (hgdn_print_error(__PRETTY_FUNCTION__, __FILE__, __LINE__, fmt, ##__VA_ARGS__))
+#endif
 /// @}
 
 /// @defgroup assert Runtime assertions
