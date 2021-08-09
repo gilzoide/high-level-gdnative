@@ -734,7 +734,7 @@ extern "C++" {
         godot_pool_color_array*: hgdn_new_pool_color_array_variant, const godot_pool_color_array*: hgdn_new_pool_color_array_variant, \
         godot_pool_string_array*: hgdn_new_pool_string_array_variant, const godot_pool_string_array*: hgdn_new_pool_string_array_variant, \
         godot_string: hgdn_new_string_variant_own, \
-        godot_node_path: hgdn_new_node_path_varian_own, \
+        godot_node_path: hgdn_new_node_path_variant_own, \
         godot_dictionary: hgdn_new_dictionary_variant_own, \
         godot_array: hgdn_new_array_variant_own, \
         godot_pool_byte_array: hgdn_new_pool_byte_array_variant_own, \
