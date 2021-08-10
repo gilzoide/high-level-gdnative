@@ -1037,7 +1037,7 @@ const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
 godot_object *hgdn_library;
 godot_method_bind *hgdn_method_Object_callv;
 
-char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
+static char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
 #define HGDN__FILL_FORMAT_BUFFER(fmt, ...) \
     va_list args; \
     va_start(args, fmt); \
@@ -1047,6 +1047,7 @@ char hgdn__format_string_buffer[HGDN_STRING_FORMAT_BUFFER_SIZE];
     } \
     va_end(args)
 
+static godot_array hgdn__empty_array;
 
 // Init and terminate
 void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
@@ -1107,10 +1108,11 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
     }
 
     hgdn_method_Object_callv = hgdn_core_api->godot_method_bind_get_method("Object", "callv");
+    hgdn_core_api->godot_array_new(&hgdn__empty_array);
 }
 
 void hgdn_gdnative_terminate(const godot_gdnative_terminate_options *options) {
-    // Noop for now
+    hgdn_core_api->godot_array_destroy(&hgdn__empty_array);
 }
 
 // Memory API
@@ -1508,6 +1510,9 @@ HGDN_DECLARE_VARIANT_GET_POOL_ARRAY(color_array, hgdn_color_array)  // hgdn_vari
 
 // Object helpers
 godot_variant hgdn_object_callv(godot_object *instance, const char *method, const godot_array *args_array) {
+    if (!args_array) {
+        args_array = &hgdn__empty_array;
+    }
     godot_variant result;
     godot_string method_str = hgdn_new_string(method);
     const void *args[] = { &method_str, args_array };
