@@ -198,18 +198,20 @@ typedef hgdn_quat godot_quat;
 #define GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
 #endif
 
-typedef struct hgdn_basis {
-    hgdn_vector3 elements[3];
+typedef union hgdn_basis {
+    float elements[9];
+    hgdn_vector3 rows[3];
 } hgdn_basis;
-#define HGDN_BASIS_IDENTITY ((hgdn_basis){{1, 0, 0}, {0, 1, 0}, {0, 0, 1}})
+#define HGDN_BASIS_IDENTITY ((hgdn_basis){ {1, 0, 0, 0, 1, 0, 0, 0, 1} })
 
 #ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
 typedef hgdn_basis godot_basis;
 #define GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
 #endif
 
-typedef struct hgdn_aabb {
-    hgdn_vector3 position, size;
+typedef union hgdn_aabb {
+    float elements[6];
+    struct { hgdn_vector3 position, size; };
 } hgdn_aabb;
 
 #ifndef GODOT_CORE_API_GODOT_AABB_TYPE_DEFINED
@@ -217,21 +219,22 @@ typedef hgdn_aabb godot_aabb;
 #define GODOT_CORE_API_GODOT_AABB_TYPE_DEFINED
 #endif
 
-typedef struct hgdn_transform2d {
-    hgdn_vector2 elements[3];
+typedef union hgdn_transform2d {
+    float elements[6];
+    hgdn_vector2 columns[3];
 } hgdn_transform2d;
-#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0}, {0, 1}, {0, 0} })
+#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0, 0, 1, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 typedef hgdn_transform2d godot_transform2d;
 #define GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 #endif
 
-typedef struct hgdn_transform {
-    hgdn_basis basis;
-    hgdn_vector3 origin;
+typedef union hgdn_transform {
+    float elements[12];
+    struct { hgdn_basis basis; hgdn_vector3 origin; };
 } hgdn_transform;
-#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform3d){ HGDN_BASIS_IDENTITY, {} })
+#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform){ {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
 typedef hgdn_transform godot_transform;
