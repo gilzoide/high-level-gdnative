@@ -222,6 +222,7 @@ typedef hgdn_aabb godot_aabb;
 typedef union hgdn_transform2d {
     float elements[6];
     hgdn_vector2 columns[3];
+    struct { hgdn_vector2 x, y, origin; };
 } hgdn_transform2d;
 #define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0, 0, 1, 0, 0} })
 
