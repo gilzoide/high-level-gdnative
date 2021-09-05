@@ -137,21 +137,24 @@ typedef union hgdn_vector4 {
     // xyzw
     struct { float x, y, z, w; };
     struct { hgdn_vector2 xy; hgdn_vector2 zw; };
-    struct { hgdn_vector3 xyz; float _0; };
-    struct { float _1; hgdn_vector3 yzw; };
+    struct { float _0; hgdn_vector2 yz; float _1; };
+    struct { hgdn_vector3 xyz; float _2; };
+    struct { float _3; hgdn_vector3 yzw; };
     // rgba
     struct { float r, g, b, a; };
     struct { hgdn_vector2 rg; hgdn_vector2 ba; };
-    struct { hgdn_vector3 rgb; float _2; };
-    struct { float _3; hgdn_vector3 gba; };
+    struct { float _4; hgdn_vector2 gb; float _5; };
+    struct { hgdn_vector3 rgb; float _6; };
+    struct { float _7; hgdn_vector3 gba; };
     // stpq
     struct { float s, t, p, q; };
     struct { hgdn_vector2 st; hgdn_vector2 pq; };
-    struct { hgdn_vector3 stp; float _6; };
-    struct { float _7; hgdn_vector3 tpq; };
+    struct { float _8; hgdn_vector2 tp; float _9; };
+    struct { hgdn_vector3 stp; float _10; };
+    struct { float _11; hgdn_vector3 tpq; };
     // uv
-    struct { float u, v; float _4[2]; };
-    struct { hgdn_vector2 uv; float _5[2]; };
+    struct { float u, v; float _12[2]; };
+    struct { hgdn_vector2 uv; float _13[2]; };
 } hgdn_vector4;
 
 #ifndef GODOT_CORE_API_GODOT_COLOR_TYPE_DEFINED
@@ -185,8 +188,9 @@ typedef union hgdn_quat {
     float elements[4];
     struct { float x, y, z, w; };
     struct { hgdn_vector2 xy; hgdn_vector2 zw; };
-    struct { hgdn_vector3 xyz; float _0; };
-    struct { float _1; hgdn_vector3 yzw; };
+    struct { float _0; hgdn_vector2 yz; float _1; };
+    struct { hgdn_vector3 xyz; float _2; };
+    struct { float _3; hgdn_vector3 yzw; };
 } hgdn_quat;
 
 #ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
@@ -922,17 +926,17 @@ typedef struct hgdn_property_info {
 } hgdn_property_info;
 
 typedef struct hgdn_method_argument_info {
-	const char *name;
-	godot_variant_type type;
-	godot_property_hint hint;
-	const char *hint_string;
+    const char *name;
+    godot_variant_type type;
+    godot_property_hint hint;
+    const char *hint_string;
 } hgdn_method_argument_info;
 
 typedef struct hgdn_method_info {
     const char *name;
     godot_instance_method method;
     // godot_method_attributes
-	godot_method_rpc_mode rpc_type;
+    godot_method_rpc_mode rpc_type;
     /// NativeScript 1.1 documentation
     const char *documentation;
     /// NULL-terminated array of argument info. If NULL, no documentation is registered.
@@ -943,10 +947,10 @@ typedef struct hgdn_method_info {
 
 typedef struct hgdn_signal_argument_info {
     const char *name;
-	godot_int type;
-	godot_property_hint hint;
-	const char *hint_string;
-	godot_variant default_value;
+    godot_int type;
+    godot_property_hint hint;
+    const char *hint_string;
+    godot_variant default_value;
 } hgdn_signal_argument_info;
 
 typedef struct hgdn_signal_info {
@@ -1055,10 +1059,10 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
     hgdn_core_api = options->api_struct;
     for (const godot_gdnative_api_struct *ext = hgdn_core_api->next; ext; ext = ext->next) {
         if (ext->version.major == 1 && ext->version.minor == 1) {
-			hgdn_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
-		} else if (ext->version.major == 1 && ext->version.minor == 2) {
-			hgdn_core_1_2_api = (const godot_gdnative_core_1_2_api_struct *) ext;
-		}
+            hgdn_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
+        } else if (ext->version.major == 1 && ext->version.minor == 2) {
+            hgdn_core_1_2_api = (const godot_gdnative_core_1_2_api_struct *) ext;
+        }
     }
 
     for (unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
