@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['pool_2aarray_20wrapper_45',['Pool*Array wrapper',['../group__pool__array__wrapper.html',1,'']]],
-  ['pool_2aarray_2farray_20creation_46',['Pool*Array/Array creation',['../group__array.html',1,'']]],
-  ['printing_20functions_47',['Printing functions',['../group__print.html',1,'']]]
+  ['memory_20related_20functions_0',['Memory related functions',['../group__memory.html',1,'']]],
+  ['methods_1',['methods',['../structhgdn__class__info.html#a100feecfa11a6d5b0f0314987881d85b',1,'hgdn_class_info']]]
 ];

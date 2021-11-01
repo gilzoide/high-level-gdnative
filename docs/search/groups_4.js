@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20related_20functions_95',['Memory related functions',['../group__memory.html',1,'']]]
+  ['memory_20related_20functions_0',['Memory related functions',['../group__memory.html',1,'']]]
 ];

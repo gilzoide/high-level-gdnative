@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['custom_20math_20types_0',['Custom math types',['../group__custom__math__types.html',1,'']]]
+  ['arguments_5finfo_0',['arguments_info',['../structhgdn__method__info.html#ae191e850669383701aaf484f03989fd3',1,'hgdn_method_info']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20related_20functions_44',['Memory related functions',['../group__memory.html',1,'']]]
+  ['initialization_20and_20deinitialization_0',['Initialization and deinitialization',['../group__init__deinit.html',1,'']]]
 ];

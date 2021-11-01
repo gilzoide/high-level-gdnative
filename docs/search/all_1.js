@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dictionary_20creation_1',['Dictionary creation',['../group__dictionary.html',1,'']]]
+  ['custom_20math_20types_0',['Custom math types',['../group__custom__math__types.html',1,'']]]
 ];
