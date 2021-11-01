@@ -937,8 +937,9 @@ EXCLUDE_PATTERNS       =
 # exclude all test directories use the pattern */test/*
 
 EXCLUDE_SYMBOLS        = GODOT_CORE_API_GODOT_*_TYPE_DEFINED \
-                         HGDN_NARG* \
-                         HGDN_CONSTEXPR
+                         HGDN_CONSTEXPR \
+                         HGDN__* \
+                         hgdn__*
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include
