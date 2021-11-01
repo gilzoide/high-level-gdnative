@@ -25,6 +25,13 @@
  *   Function declaration prefix (default: `extern` or `static` depending on HGDN_STATIC)
  * - HGDN_STRING_FORMAT_BUFFER_SIZE:
  *   Size of the global char buffer used for `hgdn_print*` functions. Defaults to 1024
+ * - HGDN_NO_EXT_NATIVESCRIPT:
+ * - HGDN_NO_EXT_PLUGINSCRIPT:
+ * - HGDN_NO_EXT_ANDROID:
+ * - HGDN_NO_EXT_ARVR:
+ * - HGDN_NO_EXT_VIDEOCODER:
+ * - HGDN_NO_EXT_NET:
+ *   Disable global pointers to extensions. If NativeScript is disabled, its helper functions will not be available as well.
  */
 #ifndef __HGDN_H__
 #define __HGDN_H__
@@ -251,15 +258,27 @@ typedef hgdn_transform godot_transform;
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 extern const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#ifndef HGDN_NO_EXT_NATIVESCRIPT
 extern const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 extern const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
+#endif
+#ifndef HGDN_NO_EXT_PLUGINSCRIPT
 extern const godot_gdnative_ext_pluginscript_api_struct *hgdn_pluginscript_api;
+#endif
+#ifndef HGDN_NO_EXT_ANDROID
 extern const godot_gdnative_ext_android_api_struct *hgdn_android_api;
+#endif
+#ifndef HGDN_NO_EXT_ARVR
 extern const godot_gdnative_ext_arvr_api_struct *hgdn_arvr_api;
 extern const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
+#endif
+#ifndef HGDN_NO_EXT_VIDEOCODER
 extern const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
+#endif
+#ifndef HGDN_NO_EXT_NET
 extern const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 extern const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
+#endif
 extern godot_object *hgdn_library;  ///< GDNativeLibrary object being initialized
 extern godot_method_bind *hgdn_method_Object_callv;
 /// @}
@@ -914,6 +933,7 @@ extern "C++" template<typename... Args> godot_variant hgdn_object_call(godot_obj
 /// @defgroup nativescript NativeScript helpers
 /// Definitions that help registering classes in Godot, focusing on wrapping C structs
 /// @{
+#ifndef HGDN_NO_EXT_NATIVESCRIPT
 typedef struct hgdn_property_info {
     const char *path;
     godot_property_set_func setter;
@@ -1014,6 +1034,7 @@ HGDN_DECL void hgdn_property_constant_free(void *value);
 HGDN_DECL godot_variant hgdn_property_constant_get(godot_object *instance, void *value, void *data);
 /// @note In C++ and C11 the value passed is transformed by `hgdn_new_variant`, so primitive C data can be passed directly
 #define hgdn_property_constant(value)  ((const godot_property_get_func){ &hgdn_property_constant_get, (void *) hgdn_property_constant_alloc(hgdn_new_variant((value))), &hgdn_property_constant_free })
+#endif  // HGDN_NO_EXT_NATIVESCRIPT
 /// @}
 
 #ifdef __cplusplus
@@ -1033,15 +1054,27 @@ HGDN_DECL godot_variant hgdn_property_constant_get(godot_object *instance, void 
 const godot_gdnative_core_api_struct *hgdn_core_api;
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#ifndef HGDN_NO_EXT_NATIVESCRIPT
 const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
+#endif
+#ifndef HGDN_NO_EXT_PLUGINSCRIPT
 const godot_gdnative_ext_pluginscript_api_struct *hgdn_pluginscript_api;
+#endif
+#ifndef HGDN_NO_EXT_ANDROID
 const godot_gdnative_ext_android_api_struct *hgdn_android_api;
+#endif
+#ifndef HGDN_NO_EXT_ARVR
 const godot_gdnative_ext_arvr_api_struct *hgdn_arvr_api;
 const godot_gdnative_ext_arvr_1_2_api_struct *hgdn_arvr_1_2_api;
+#endif
+#ifndef HGDN_NO_EXT_VIDEOCODER
 const godot_gdnative_ext_videodecoder_api_struct *hgdn_videodecoder_api;
+#endif
+#ifndef HGDN_NO_EXT_NET
 const godot_gdnative_ext_net_api_struct *hgdn_net_api;
 const godot_gdnative_ext_net_3_2_api_struct *hgdn_net_3_2_api;
+#endif
 godot_object *hgdn_library;
 godot_method_bind *hgdn_method_Object_callv;
 
@@ -1071,6 +1104,7 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
 
     for (unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
         switch(hgdn_core_api->extensions[i]->type) {
+#ifndef HGDN_NO_EXT_NATIVESCRIPT
             case GDNATIVE_EXT_NATIVESCRIPT:
                 hgdn_nativescript_api = (const godot_gdnative_ext_nativescript_api_struct *) hgdn_core_api->extensions[i];
                 for (const godot_gdnative_api_struct *ext = hgdn_nativescript_api->next; ext; ext = ext->next) {
@@ -1079,15 +1113,18 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
                     }
                 }
                 break;
-
+#endif
+#ifndef HGDN_NO_EXT_PLUGINSCRIPT
             case GDNATIVE_EXT_PLUGINSCRIPT:
                 hgdn_pluginscript_api = (const godot_gdnative_ext_pluginscript_api_struct *) hgdn_core_api->extensions[i];
                 break;
-
+#endif
+#ifndef HGDN_NO_EXT_ANDROID
             case GDNATIVE_EXT_ANDROID:
                 hgdn_android_api = (const godot_gdnative_ext_android_api_struct *) hgdn_core_api->extensions[i];
                 break;
-
+#endif
+#ifndef HGDN_NO_EXT_ARVR
             case GDNATIVE_EXT_ARVR:
                 hgdn_arvr_api = (const godot_gdnative_ext_arvr_api_struct *) hgdn_core_api->extensions[i];
                 for (const godot_gdnative_api_struct *ext = hgdn_arvr_api->next; ext; ext = ext->next) {
@@ -1096,11 +1133,13 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
                     }
                 }
                 break;
-
+#endif
+#ifndef HGDN_NO_EXT_VIDEOCODER
             case GDNATIVE_EXT_VIDEODECODER:
                 hgdn_videodecoder_api = (const godot_gdnative_ext_videodecoder_api_struct *) hgdn_core_api->extensions[i];
                 break;
-
+#endif
+#ifndef HGDN_NO_EXT_NET
             case GDNATIVE_EXT_NET:
                 hgdn_net_api = (const godot_gdnative_ext_net_api_struct *) hgdn_core_api->extensions[i];
                 for (const godot_gdnative_api_struct *ext = hgdn_net_api->next; ext; ext = ext->next) {
@@ -1109,7 +1148,7 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
                     }
                 }
                 break;
-
+#endif
             default:
                 break;
         }
@@ -1685,6 +1724,7 @@ godot_variant hgdn__variant_return(godot_variant value) { return value; }
 #endif  // __cplusplus
 
 // NativeScript
+#ifndef HGDN_NO_EXT_NATIVESCRIPT
 void hgdn_register_class(void *handle, const hgdn_class_info *class_info) {
     if (class_info->tool) {
         hgdn_nativescript_api->godot_nativescript_register_tool_class(handle, class_info->name, class_info->base, class_info->create, class_info->destroy);
@@ -1819,6 +1859,7 @@ void hgdn_property_constant_free(void *value) {
 godot_variant hgdn_property_constant_get(godot_object *instance, void *value, void *data) {
     return hgdn_new_variant_copy((const godot_variant *) value);
 }
+#endif  // HGDN_NO_EXT_NATIVESCRIPT
 
 #undef HGDN__FILL_FORMAT_BUFFER
 
