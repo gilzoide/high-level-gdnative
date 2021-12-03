@@ -36,6 +36,8 @@
 #ifndef __HGDN_H__
 #define __HGDN_H__
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -95,6 +97,9 @@ extern "C" {
 /// Useful definitions for Godot math types
 /// @{
 typedef union hgdn_vector2 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[2])];
+    // float elements
     float elements[2];
     // xy
     struct { float x, y; };
@@ -114,6 +119,9 @@ typedef hgdn_vector2 godot_vector2;
 #endif
 
 typedef union hgdn_vector3 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[3])];
+    // float elements
     float elements[3];
     // xyz
     struct { float x, y, z; };
@@ -140,6 +148,9 @@ typedef hgdn_vector3 godot_vector3;
 #endif
 
 typedef union hgdn_vector4 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
+    // float elements
     float elements[4];
     // xyzw
     struct { float x, y, z, w; };
@@ -171,6 +182,8 @@ typedef hgdn_vector4 godot_color;
 #endif
 
 typedef union hgdn_rect2 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { float x, y, width, height; };
     struct { hgdn_vector2 position; hgdn_vector2 size; };
@@ -182,6 +195,8 @@ typedef hgdn_rect2 godot_rect2;
 #endif
 
 typedef union hgdn_plane {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { hgdn_vector3 normal; float d; };
 } hgdn_plane;
@@ -192,6 +207,8 @@ typedef hgdn_plane godot_plane;
 #endif
 
 typedef union hgdn_quat {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { float x, y, z, w; };
     struct { hgdn_vector2 xy; hgdn_vector2 zw; };
@@ -206,10 +223,12 @@ typedef hgdn_quat godot_quat;
 #endif
 
 typedef union hgdn_basis {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[9])];
     float elements[9];
     hgdn_vector3 rows[3];
 } hgdn_basis;
-#define HGDN_BASIS_IDENTITY ((hgdn_basis){ {1, 0, 0, 0, 1, 0, 0, 0, 1} })
+#define HGDN_BASIS_IDENTITY ((hgdn_basis){ .elements = {1, 0, 0, 0, 1, 0, 0, 0, 1} })
 
 #ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
 typedef hgdn_basis godot_basis;
@@ -217,6 +236,8 @@ typedef hgdn_basis godot_basis;
 #endif
 
 typedef union hgdn_aabb {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[6])];
     float elements[6];
     struct { hgdn_vector3 position, size; };
 } hgdn_aabb;
@@ -227,11 +248,13 @@ typedef hgdn_aabb godot_aabb;
 #endif
 
 typedef union hgdn_transform2d {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[6])];
     float elements[6];
     hgdn_vector2 columns[3];
     struct { hgdn_vector2 x, y, origin; };
 } hgdn_transform2d;
-#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0, 0, 1, 0, 0} })
+#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ .elements = {1, 0, 0, 1, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 typedef hgdn_transform2d godot_transform2d;
@@ -239,10 +262,12 @@ typedef hgdn_transform2d godot_transform2d;
 #endif
 
 typedef union hgdn_transform {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[12])];
     float elements[12];
     struct { hgdn_basis basis; hgdn_vector3 origin; };
 } hgdn_transform;
-#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform){ {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0} })
+#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform){ .elements = {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
 typedef hgdn_transform godot_transform;
