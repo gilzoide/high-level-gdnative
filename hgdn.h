@@ -216,6 +216,7 @@ typedef union hgdn_quat {
     struct { hgdn_vector3 xyz; float _2; };
     struct { float _3; hgdn_vector3 yzw; };
 } hgdn_quat;
+#define HGDN_QUAT_IDENTITY ((hgdn_quat){ .elements = {0, 0, 0, 1} })
 
 #ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
 typedef hgdn_quat godot_quat;
