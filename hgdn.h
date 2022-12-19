@@ -25,6 +25,9 @@
  *   Function declaration prefix (default: `extern` or `static` depending on HGDN_STATIC)
  * - HGDN_STRING_FORMAT_BUFFER_SIZE:
  *   Size of the global char buffer used for `hgdn_print*` functions. Defaults to 1024
+ * - HGDN_NO_CORE_1_1:
+ * - HGDN_NO_CORE_1_2:
+ * - HGDN_NO_CORE_1_3:
  * - HGDN_NO_EXT_NATIVESCRIPT:
  * - HGDN_NO_EXT_PLUGINSCRIPT:
  * - HGDN_NO_EXT_ANDROID:
@@ -282,8 +285,15 @@ typedef hgdn_transform godot_transform;
 /// Global API structs and GDNativeLibrary pointers
 /// @{
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
+#ifndef HGDN_NO_CORE_1_1
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+#endif
+#ifndef HGDN_NO_CORE_1_2
 extern const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#endif
+#ifndef HGDN_NO_CORE_1_3
+extern const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
+#endif
 #ifndef HGDN_NO_EXT_NATIVESCRIPT
 extern const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 extern const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
@@ -1078,8 +1088,15 @@ HGDN_DECL godot_variant hgdn_property_constant_get(godot_object *instance, void 
 #include <string.h>
 
 const godot_gdnative_core_api_struct *hgdn_core_api;
+#ifndef HGDN_NO_CORE_1_1
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+#endif
+#ifndef HGDN_NO_CORE_1_2
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#endif
+#ifndef HGDN_NO_CORE_1_3
+const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
+#endif
 #ifndef HGDN_NO_EXT_NATIVESCRIPT
 const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
@@ -1121,11 +1138,21 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
     hgdn_library = options->gd_native_library;
     hgdn_core_api = options->api_struct;
     for (const godot_gdnative_api_struct *ext = hgdn_core_api->next; ext; ext = ext->next) {
+#ifndef HGDN_NO_CORE_1_1
         if (ext->version.major == 1 && ext->version.minor == 1) {
             hgdn_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
-        } else if (ext->version.major == 1 && ext->version.minor == 2) {
+        }
+#endif
+#ifndef HGDN_NO_CORE_1_2
+        if (ext->version.major == 1 && ext->version.minor == 2) {
             hgdn_core_1_2_api = (const godot_gdnative_core_1_2_api_struct *) ext;
         }
+#endif
+#ifndef HGDN_NO_CORE_1_3
+        if (ext->version.major == 1 && ext->version.minor == 3) {
+            hgdn_core_1_3_api = (const godot_gdnative_core_1_3_api_struct *) ext;
+        }
+#endif
     }
 
     for (unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
