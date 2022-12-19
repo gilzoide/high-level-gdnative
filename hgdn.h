@@ -25,6 +25,9 @@
  *   Function declaration prefix (default: `extern` or `static` depending on HGDN_STATIC)
  * - HGDN_STRING_FORMAT_BUFFER_SIZE:
  *   Size of the global char buffer used for `hgdn_print*` functions. Defaults to 1024
+ * - HGDN_NO_CORE_1_1:
+ * - HGDN_NO_CORE_1_2:
+ * - HGDN_NO_CORE_1_3:
  * - HGDN_NO_EXT_NATIVESCRIPT:
  * - HGDN_NO_EXT_PLUGINSCRIPT:
  * - HGDN_NO_EXT_ANDROID:
@@ -35,6 +38,8 @@
  */
 #ifndef __HGDN_H__
 #define __HGDN_H__
+
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -95,6 +100,9 @@ extern "C" {
 /// Useful definitions for Godot math types
 /// @{
 typedef union hgdn_vector2 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[2])];
+    // float elements
     float elements[2];
     // xy
     struct { float x, y; };
@@ -114,6 +122,9 @@ typedef hgdn_vector2 godot_vector2;
 #endif
 
 typedef union hgdn_vector3 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[3])];
+    // float elements
     float elements[3];
     // xyz
     struct { float x, y, z; };
@@ -140,6 +151,9 @@ typedef hgdn_vector3 godot_vector3;
 #endif
 
 typedef union hgdn_vector4 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
+    // float elements
     float elements[4];
     // xyzw
     struct { float x, y, z, w; };
@@ -171,6 +185,8 @@ typedef hgdn_vector4 godot_color;
 #endif
 
 typedef union hgdn_rect2 {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { float x, y, width, height; };
     struct { hgdn_vector2 position; hgdn_vector2 size; };
@@ -182,6 +198,8 @@ typedef hgdn_rect2 godot_rect2;
 #endif
 
 typedef union hgdn_plane {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { hgdn_vector3 normal; float d; };
 } hgdn_plane;
@@ -192,6 +210,8 @@ typedef hgdn_plane godot_plane;
 #endif
 
 typedef union hgdn_quat {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[4])];
     float elements[4];
     struct { float x, y, z, w; };
     struct { hgdn_vector2 xy; hgdn_vector2 zw; };
@@ -199,6 +219,7 @@ typedef union hgdn_quat {
     struct { hgdn_vector3 xyz; float _2; };
     struct { float _3; hgdn_vector3 yzw; };
 } hgdn_quat;
+#define HGDN_QUAT_IDENTITY ((hgdn_quat){ .elements = {0, 0, 0, 1} })
 
 #ifndef GODOT_CORE_API_GODOT_QUAT_TYPE_DEFINED
 typedef hgdn_quat godot_quat;
@@ -206,10 +227,12 @@ typedef hgdn_quat godot_quat;
 #endif
 
 typedef union hgdn_basis {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[9])];
     float elements[9];
     hgdn_vector3 rows[3];
 } hgdn_basis;
-#define HGDN_BASIS_IDENTITY ((hgdn_basis){ {1, 0, 0, 0, 1, 0, 0, 0, 1} })
+#define HGDN_BASIS_IDENTITY ((hgdn_basis){ .elements = {1, 0, 0, 0, 1, 0, 0, 0, 1} })
 
 #ifndef GODOT_CORE_API_GODOT_BASIS_TYPE_DEFINED
 typedef hgdn_basis godot_basis;
@@ -217,6 +240,8 @@ typedef hgdn_basis godot_basis;
 #endif
 
 typedef union hgdn_aabb {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[6])];
     float elements[6];
     struct { hgdn_vector3 position, size; };
 } hgdn_aabb;
@@ -227,11 +252,13 @@ typedef hgdn_aabb godot_aabb;
 #endif
 
 typedef union hgdn_transform2d {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[6])];
     float elements[6];
     hgdn_vector2 columns[3];
     struct { hgdn_vector2 x, y, origin; };
 } hgdn_transform2d;
-#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ {1, 0, 0, 1, 0, 0} })
+#define HGDN_TRANSFORM2D_IDENTITY  ((hgdn_transform2d){ .elements = {1, 0, 0, 1, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM2D_TYPE_DEFINED
 typedef hgdn_transform2d godot_transform2d;
@@ -239,10 +266,12 @@ typedef hgdn_transform2d godot_transform2d;
 #endif
 
 typedef union hgdn_transform {
+    // raw data, must be the first field for guaranteeing ABI compatibility with Godot
+    uint8_t data[sizeof(float[12])];
     float elements[12];
     struct { hgdn_basis basis; hgdn_vector3 origin; };
 } hgdn_transform;
-#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform){ {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0} })
+#define HGDN_TRANSFORM3D_IDENTITY  ((hgdn_transform){ .elements = {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0} })
 
 #ifndef GODOT_CORE_API_GODOT_TRANSFORM_TYPE_DEFINED
 typedef hgdn_transform godot_transform;
@@ -256,8 +285,15 @@ typedef hgdn_transform godot_transform;
 /// Global API structs and GDNativeLibrary pointers
 /// @{
 extern const godot_gdnative_core_api_struct *hgdn_core_api;
+#ifndef HGDN_NO_CORE_1_1
 extern const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+#endif
+#ifndef HGDN_NO_CORE_1_2
 extern const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#endif
+#ifndef HGDN_NO_CORE_1_3
+extern const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
+#endif
 #ifndef HGDN_NO_EXT_NATIVESCRIPT
 extern const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 extern const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
@@ -1052,8 +1088,15 @@ HGDN_DECL godot_variant hgdn_property_constant_get(godot_object *instance, void 
 #include <string.h>
 
 const godot_gdnative_core_api_struct *hgdn_core_api;
+#ifndef HGDN_NO_CORE_1_1
 const godot_gdnative_core_1_1_api_struct *hgdn_core_1_1_api;
+#endif
+#ifndef HGDN_NO_CORE_1_2
 const godot_gdnative_core_1_2_api_struct *hgdn_core_1_2_api;
+#endif
+#ifndef HGDN_NO_CORE_1_3
+const godot_gdnative_core_1_3_api_struct *hgdn_core_1_3_api;
+#endif
 #ifndef HGDN_NO_EXT_NATIVESCRIPT
 const godot_gdnative_ext_nativescript_api_struct *hgdn_nativescript_api;
 const godot_gdnative_ext_nativescript_1_1_api_struct *hgdn_nativescript_1_1_api;
@@ -1095,11 +1138,21 @@ void hgdn_gdnative_init(const godot_gdnative_init_options *options) {
     hgdn_library = options->gd_native_library;
     hgdn_core_api = options->api_struct;
     for (const godot_gdnative_api_struct *ext = hgdn_core_api->next; ext; ext = ext->next) {
+#ifndef HGDN_NO_CORE_1_1
         if (ext->version.major == 1 && ext->version.minor == 1) {
             hgdn_core_1_1_api = (const godot_gdnative_core_1_1_api_struct *) ext;
-        } else if (ext->version.major == 1 && ext->version.minor == 2) {
+        }
+#endif
+#ifndef HGDN_NO_CORE_1_2
+        if (ext->version.major == 1 && ext->version.minor == 2) {
             hgdn_core_1_2_api = (const godot_gdnative_core_1_2_api_struct *) ext;
         }
+#endif
+#ifndef HGDN_NO_CORE_1_3
+        if (ext->version.major == 1 && ext->version.minor == 3) {
+            hgdn_core_1_3_api = (const godot_gdnative_core_1_3_api_struct *) ext;
+        }
+#endif
     }
 
     for (unsigned int i = 0; i < hgdn_core_api->num_extensions; i++) {
